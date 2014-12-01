@@ -2,12 +2,20 @@ import QtQuick 2.1
 import QtQuick.Window 2.0
 
 Window {
-    id: rootWindow
-    objectName: "rootWindow"
-    visible: true
-    width: 640
-    height: 480
+    SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
-    minimumWidth: 640
+    objectName: "rootWindow"
+
+    visible: true
+    height: 480
+    width: 640
     minimumHeight: 480
+    minimumWidth: 640
+
+    color: sysPalette.window
+
+    Component.onCompleted: {
+        var rootWindow = Qt.createComponent("rootWindow.qml")
+        rootWindow.createObject(this, {"sysPalette": sysPalette})
+    }
 }
