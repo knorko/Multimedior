@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>rootWindow.qml</file>
-        <file>boid.qml</file>
+        <file>Boid.qml</file>
+        <file>RenderCanvas.qml</file>
+        <file>SettingsPanel.qml</file>
+        <file>BoidSettings.qml</file>
     </qresource>
 </RCC>
