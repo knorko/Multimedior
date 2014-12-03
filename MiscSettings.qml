@@ -6,9 +6,10 @@ Rectangle {
 
     Label {
         id: label_title
-        x: 98
+        x: 77
         y: 8
-        text: qsTr("Boids")
+        text: qsTr("Miscellaneous")
+        opacity: 1
     }
 
     id: rectangle1
@@ -31,9 +32,9 @@ Rectangle {
                 target: label_title
                 x: 8
                 y: 8
-                text: qsTr("Boids:")
+                text: qsTr("Miscellaneous:")
                 anchors.verticalCenterOffset: -97
-                anchors.horizontalCenterOffset: -90
+                anchors.horizontalCenterOffset: -67
             }
         }
     ]

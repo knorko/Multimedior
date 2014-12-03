@@ -5,5 +5,7 @@
         <file>RenderCanvas.qml</file>
         <file>SettingsPanel.qml</file>
         <file>BoidSettings.qml</file>
+        <file>MiscSettings.qml</file>
+        <file>PredatorSettings.qml</file>
     </qresource>
 </RCC>
