@@ -2,11 +2,11 @@ TEMPLATE = app
 
 QT += qml quick
 
+QMAKE_CXXFLAGS += -std=c++11
+
 SOURCES += main.cpp \
     System/boid.cpp \
-    System/coordinate.cpp \
-    System/management.cpp \
-    System/navigation.cpp
+    System/management.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,8 +18,6 @@ include(deployment.pri)
 
 HEADERS += \
     System/boid.h \
-    System/coordinate.h \
-    System/management.h \
-    System/navigation.h
+    System/management.h
 
 OTHER_FILES +=

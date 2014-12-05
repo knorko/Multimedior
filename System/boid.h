@@ -1,17 +1,21 @@
 #ifndef BOID_H
 #define BOID_H
 
-#include "coordinate.h"
+#include <QDebug>
+#include <QObject>
+#include <QQmlComponent>
+
+#include "management.h"
 
 class boid{
 private:
-    const int count = 500;
-    Coordinate c;
+    QObject *object;
+    QQmlComponent *component;
 
 public:
     boid();
+    ~boid();
 
-    void fixedUpdate();
     void Update();
 };
 

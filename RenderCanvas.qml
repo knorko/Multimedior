@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: canvas_root
+    objectName: "canvas"
     height: 200
     width: 200
 
@@ -14,13 +15,6 @@ Rectangle {
     anchors.topMargin: 1
     anchors.fill: parent
     border.width: 0
-
-    Canvas {
-        id: canvas
-        x: 0
-        y: 0
-        anchors.fill: parent
-    }
 }
 
 }
