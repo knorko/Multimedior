@@ -17,13 +17,14 @@ class Management : public QObject {
 private:
     list<boid*> objList;
 
+    Q_OBJECT
 public:
     static QQmlApplicationEngine *engine;
     static QObject *canvas;
 
     explicit Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot);
 
-    Q_INVOKABLE void init(int count);
+    Q_INVOKABLE void init(uint count);
     Q_INVOKABLE void run();
 };
 

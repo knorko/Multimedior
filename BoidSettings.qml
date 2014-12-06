@@ -8,7 +8,7 @@ Rectangle {
         id: label_title
         x: 98
         y: 8
-        text: qsTr("Boids")
+        text: "Boids"
     }
 
     id: rectangle1
@@ -31,7 +31,7 @@ Rectangle {
                 target: label_title
                 x: 8
                 y: 8
-                text: qsTr("Boids:")
+                text: "Boids:"
                 anchors.verticalCenterOffset: -97
                 anchors.horizontalCenterOffset: -90
             }

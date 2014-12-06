@@ -17,7 +17,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    System/boid.h \
-    System/management.h
+    System/management.h \
+    System/boid.h
 
 OTHER_FILES +=
