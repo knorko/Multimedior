@@ -7,5 +7,6 @@
         <file>BoidSettings.qml</file>
         <file>MiscSettings.qml</file>
         <file>PredatorSettings.qml</file>
+        <file>Controls.qml</file>
     </qresource>
 </RCC>

@@ -45,5 +45,31 @@ Window {
             anchors.bottom: parent.bottom
             anchors.top: parent.top
         }
+
+        Controls {
+            id: controls1
+            x: 217
+            y: 429
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+        }
+    }
+
+    Timer {
+        id: updateTick
+        interval: 16
+
+        onTriggered: {
+            var startTime = Date.now()
+            management.run()
+
+            startTime = (16 - (Date.now() - startTime))
+            if(startTime < 1)
+                startTime = 1
+
+            interval = startTime
+            start()
+        }
     }
 }
