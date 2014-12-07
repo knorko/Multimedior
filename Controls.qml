@@ -4,18 +4,32 @@ import QtQuick.Controls 1.2
 Rectangle {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
+    property int count: 0
+    onCountChanged: startButton.enabled = count != 0
+
+    signal changeRunning(bool value)
+    onChangeRunning: {
+        if(value) {
+            background.state = "PLAYBACK"
+        }
+        else {
+            background.state = ""
+        }
+    }
+
     id: background
     width: 150
     height: 39
     color: sysPalette.dark
     radius: 4
-    opacity: 0.1
     border.color: sysPalette.mid
 
-    Behavior on opacity { NumberAnimation { easing.type: Easing.InQuint}}
+    Behavior on opacity { NumberAnimation{ duration: 350; easing.type: Easing.InExpo} }
+
 
     MouseArea {
         id: showArea
+        enabled: false
         anchors.bottomMargin: -8
         hoverEnabled: true
         anchors.rightMargin: -8
@@ -28,44 +42,84 @@ Rectangle {
 
         Button {
             id: startButton
+            x: 16
             y: 16
-            width: 64
+            height: 23
             text: "Start"
-            anchors.left: parent.left
+            enabled: false
+            opacity: 1
+            anchors.rightMargin: 16
             anchors.leftMargin: 16
-            //        enabled: false
-            anchors.top: parent.top
-            anchors.topMargin: 16
+            anchors.right: parent.right
+            anchors.left: parent.left
 
             onClicked: {
-                if(updateTick.running || pauseButton.checked) {
-                    pauseButton.checked = false
-                    updateTick.stop()
-                    pauseButton.enabled = false
-                    text = "Start"
-                }
-                else {
-                    updateTick.restart()
-                    pauseButton.enabled = true
-                    text = "Stop"
-                }
+                init(count)
+                running = true
+            }
         }
-    }
 
         Button {
             id: pauseButton
-            x: 99
+            x: 16
             y: 16
             width: 64
             text: "Pause"
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.top: parent.top
-            anchors.topMargin: 16
+            enabled: false
+            opacity: 0
             checkable: true
 
-            onCheckedChanged: updateTick.running = !checked
+            onCheckedChanged: pause(checked)
         }
-//        onHoveredChanged: background.opacity = containsMouse ? 1 : 0.1
+
+        Button {
+            id: stopButton
+            x: 86
+            y: 16
+            width: 64
+            text: qsTr("Stop")
+            enabled: false
+            opacity: 0
+
+            onClicked: {
+                pauseButton.checked = false;
+                pauseButton.enabled = false;
+                running = false;
+            }
+        }
+
     }
+    states: [
+        State {
+            name: "PLAYBACK"
+
+            PropertyChanges {
+                target: showArea
+                enabled: true
+            }
+
+            PropertyChanges {
+                target: background
+                opacity: 0.1
+            }
+
+            PropertyChanges {
+                target: pauseButton
+                enabled: true
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: startButton
+                enabled: true
+                opacity: 0
+            }
+
+            PropertyChanges {
+                target: stopButton
+                opacity: 1
+                enabled: true
+            }
+        }
+    ]
 }

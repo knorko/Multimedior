@@ -4,6 +4,35 @@ import QtQuick.Window 2.0
 Window {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
+    property bool running: false
+    onRunningChanged: {
+        settingsPanel1.changeRunning(running)
+        controls1.changeRunning(running)
+
+        if(running)
+            updateTick.start()
+        else {
+            updateTick.stop()
+            management.clear()
+        }
+    }
+
+    signal init(int count)
+    onInit: {
+        management.init(count)
+    }
+
+    signal pause(bool pause)
+    onPause: {
+        if(running) {
+            if(pause)
+                updateTick.stop()
+            else
+                updateTick.start()
+        }
+    }
+
+
     id: root
     objectName: "rootWindow"
     visible: true

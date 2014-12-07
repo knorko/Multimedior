@@ -18,4 +18,25 @@ boid::~boid() {
 
 void boid::Update() {
     // Logic goes here
+    qDebug() << "Update";
+}
+
+// Returns the current x coordinate of the boid
+double boid::getX() {
+    return object->property("x").value<double>();
+}
+
+// Sets the current x coordinate
+void boid::setX(double value) {
+    object->setProperty("x", value);
+}
+
+// Returns the current y coordinate of the boid
+double boid::getY() {
+    return object->property("y").value<double>();
+}
+
+// Sets the current y coordinate
+void boid::setY(double value) {
+    object->setProperty("y", value);
 }

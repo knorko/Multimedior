@@ -3,6 +3,14 @@ import QtQuick 2.0
 Item {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
+    signal changeRunning(bool value)
+    onChangeRunning: {
+        if(value)
+            state = "HIDDEN"
+
+        boidSettings1.changeRunning(value)
+    }
+
     id: settings_root
     width: 260
     height: 480
@@ -106,7 +114,7 @@ Item {
             id: hideText
             x: -179
             y: 232
-            text: qsTr("Hide Settings")
+            text: "Hide Settings"
             color: sysPalette.text
             rotation: 270
             anchors.horizontalCenter: parent.horizontalCenter
@@ -118,7 +126,7 @@ Item {
             id: showText
             x: -150
             y: 232
-            text: qsTr("Show Settings")
+            text: "Show Settings"
             anchors.horizontalCenterOffset: 32
             opacity: 0
             color: sysPalette.text

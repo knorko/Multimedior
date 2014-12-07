@@ -15,7 +15,10 @@ class boid;
 class Management : public QObject {
 
 private:
-    list<boid*> objList;
+    static list<boid*> objList;
+
+    static void addBoid();
+    static void removeBoid();
 
     Q_OBJECT
 public:
@@ -26,6 +29,7 @@ public:
 
     Q_INVOKABLE void init(uint count);
     Q_INVOKABLE void run();
+    Q_INVOKABLE void clear();
 };
 
 #endif // MANAGEMENT_H

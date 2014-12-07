@@ -2,7 +2,7 @@
 
 QQmlApplicationEngine *Management::engine = nullptr;
 QObject *Management::canvas = nullptr;
-list<boid*> objList;
+list<boid*> Management::objList;
 
 Management::Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     engine = mainEngine;
@@ -11,20 +11,28 @@ Management::Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
 
 void Management::init(uint count) {
     // Populate the list with the desired amount of boids
-    if(objList.size() < count) {
-        for(uint i=objList.size(); i<count; i++)
-            objList.push_back(new boid());
-    }
-    else if(objList.size() > count) {
-        for(uint i=objList.size(); i>count; i--) {
-            delete objList.front();
-            objList.pop_front();
-        }
-    }
+    void (*operation)() = objList.size() < count ? &addBoid : &removeBoid;
+
+    while(objList.size() != count)
+        operation();
 }
 
 void Management::run() {
-    foreach (boid *obj, objList) {
+    foreach (boid *obj, objList)
         obj->Update();
-    }
+}
+
+void Management::clear() {
+    // Clear the list entirely
+    while(!objList.empty())
+        removeBoid();
+}
+
+void Management::addBoid() {
+    objList.push_back(new boid());
+}
+
+void Management::removeBoid() {
+    delete objList.front();
+    objList.pop_front();
 }

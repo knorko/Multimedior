@@ -8,7 +8,7 @@ Rectangle {
         id: label_title
         x: 89
         y: 8
-        text: qsTr("Predators")
+        text: "Predators"
         opacity: 1
     }
 
@@ -32,7 +32,7 @@ Rectangle {
                 target: label_title
                 x: 8
                 y: 8
-                text: qsTr("Predators:")
+                text: "Predators:"
                 anchors.verticalCenterOffset: -97
                 anchors.horizontalCenterOffset: -67
             }

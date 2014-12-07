@@ -8,7 +8,7 @@ Rectangle {
         id: label_title
         x: 77
         y: 8
-        text: qsTr("Miscellaneous")
+        text: "Miscellaneous"
         opacity: 1
     }
 
@@ -32,7 +32,7 @@ Rectangle {
                 target: label_title
                 x: 8
                 y: 8
-                text: qsTr("Miscellaneous:")
+                text: "Miscellaneous:"
                 anchors.verticalCenterOffset: -97
                 anchors.horizontalCenterOffset: -67
             }

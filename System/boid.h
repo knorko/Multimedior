@@ -12,6 +12,11 @@ private:
     QObject *object;
     QQmlComponent *component;
 
+    double getX();
+    void setX(double value);
+    double getY();
+    void setY(double value);
+
 public:
     boid();
     ~boid();
