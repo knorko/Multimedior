@@ -8,7 +8,6 @@
 
 #include "boid.h"
 
-
 using namespace std;
 
 class boid;

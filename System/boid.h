@@ -5,17 +5,11 @@
 #include <QObject>
 #include <QQmlComponent>
 
+#include "boidhelper.h"
 #include "management.h"
 
-class boid{
-private:
-    QObject *object;
-    QQmlComponent *component;
 
-    double getX();
-    void setX(double value);
-    double getY();
-    void setY(double value);
+class boid : private boidHelper {
 
 public:
     boid();
