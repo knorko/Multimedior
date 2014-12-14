@@ -77,7 +77,7 @@ Rectangle {
             x: 86
             y: 16
             width: 64
-            text: qsTr("Stop")
+            text: "Stop"
             enabled: false
             opacity: 0
 

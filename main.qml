@@ -25,10 +25,14 @@ Window {
     signal pause(bool pause)
     onPause: {
         if(running) {
-            if(pause)
+            if(pause) {
+                updateTick.paused = true
                 updateTick.stop()
-            else
+            }
+            else {
+                updateTick.paused = false
                 updateTick.start()
+            }
         }
     }
 
@@ -89,16 +93,20 @@ Window {
         id: updateTick
         interval: 16
 
+        property bool paused: false
+
         onTriggered: {
-            var startTime = Date.now()
-            management.run()
+            if(!paused) {
+                var startTime = Date.now()
+                management.run()
 
-            startTime = (16 - (Date.now() - startTime))
-            if(startTime < 1)
-                startTime = 1
+                startTime = (16 - (Date.now() - startTime))
+                if(startTime < 1)
+                    startTime = 1
 
-            interval = startTime
-            start()
+                interval = startTime
+                start()
+            }
         }
     }
 }
