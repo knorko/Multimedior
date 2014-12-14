@@ -6,6 +6,8 @@
 #include <QQmlComponent>
 
 class boidHelper {
+protected:
+    double velocity[2];
 
 public:
     QObject *object;
@@ -13,6 +15,10 @@ public:
 
     boidHelper();
     ~boidHelper();
+
+    void prepare();
+    void finalize();
+
     double getX();
     void setX(double x);
     double getY();

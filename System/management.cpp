@@ -18,8 +18,11 @@ void Management::init(uint count) {
 }
 
 void Management::run() {
-    foreach (boid *obj, objList)
+    foreach (boid *obj, objList) {
+        obj->prepare();
         obj->Update();
+        obj->finalize();
+    }
 }
 
 void Management::clear() {

@@ -9,7 +9,7 @@
 #include "management.h"
 
 
-class boid : private boidHelper {
+class boid : public boidHelper {
 
 public:
     boid();

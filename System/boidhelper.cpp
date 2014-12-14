@@ -1,14 +1,27 @@
 #include "boidhelper.h"
 
 boidHelper::boidHelper() {
-
+    velocity[0] = 0;
+    velocity[1] = 0;
 }
 
 boidHelper::~boidHelper() {
 
 }
 
-double boidHelper::getX(){
+// This is executed before each update
+void boidHelper::prepare() {
+
+}
+
+// This is executed after each update
+void boidHelper::finalize() {
+    // Set the position based on the velocity
+    setX(getX() + velocity[0]);
+    setY(getY() + velocity[1]);
+}
+
+double boidHelper::getX() {
     return object->property("x").value<double>();
 }
 
