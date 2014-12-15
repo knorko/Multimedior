@@ -8,7 +8,7 @@ SOURCES += main.cpp \
     System/boid.cpp \
     System/management.cpp \
     System/boidhelper.cpp \
-    System/kdtree.cpp
+    System/kdtree.c
 
 RESOURCES += qml.qrc
 
