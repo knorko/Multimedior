@@ -1,7 +1,7 @@
 #ifndef MANAGEMENT_H
 #define MANAGEMENT_H
 
-#include <list>
+#include <vector>
 
 #include <QObject>
 #include <QQmlApplicationEngine>
@@ -14,7 +14,7 @@ class boid;
 class management : public QObject {
 
 private:
-    static list<boid*> objList;
+    static vector<boid*> objList;
 
     static void addBoid();
     static void removeBoid();
