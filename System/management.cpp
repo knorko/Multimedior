@@ -2,7 +2,7 @@
 
 QQmlApplicationEngine *management::engine = nullptr;
 QObject *management::canvas = nullptr;
-list<boid*> management::objList;
+vector<boid*> management::objList;
 
 double management::canvasHeight = 472;
 double management::canvasWidth = 612;
@@ -52,6 +52,6 @@ void management::addBoid() {
 }
 
 void management::removeBoid() {
-    delete objList.front();
-    objList.pop_front();
+    delete objList.back();
+    objList.pop_back();
 }

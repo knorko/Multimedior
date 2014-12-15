@@ -1,13 +1,14 @@
 #include "boidhelper.h"
 #include "management.h"
 
+vector2 *velocity;
+
 boidHelper::boidHelper() {
-    velocity[0] = 0;
-    velocity[1] = 0;
+    velocity = new vector2(0, 0);
 }
 
 boidHelper::~boidHelper() {
-
+    delete velocity;
 }
 
 // This is executed before each update
@@ -18,8 +19,8 @@ void boidHelper::prepare() {
 // This is executed after each update
 void boidHelper::finalize() {
     // Set the position based on the velocity
-    setX(getX() + velocity[0] * management::speed);
-    setY(getY() + velocity[1] * management::speed);
+    setX(getX() + velocity->getX() * management::speed);
+    setY(getY() + velocity->getY() * management::speed);
 }
 
 double boidHelper::getX() {

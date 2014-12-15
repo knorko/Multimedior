@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     System/boid.cpp \
     System/management.cpp \
     System/boidhelper.cpp \
-    System/kdtree.c
+    System/kdtree.c \
+    System/vector2.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,6 +23,7 @@ HEADERS += \
     System/management.h \
     System/boid.h \
     System/boidhelper.h \
-    System/kdtree.h
+    System/kdtree.h \
+    System/vector2.h
 
 OTHER_FILES +=
