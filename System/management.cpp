@@ -4,6 +4,9 @@ QQmlApplicationEngine *Management::engine = nullptr;
 QObject *Management::canvas = nullptr;
 list<boid*> Management::objList;
 
+double Management::canvasHeight;
+double Management::canvasWidth;
+
 Management::Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     engine = mainEngine;
     canvas = canvasRoot;
@@ -29,6 +32,14 @@ void Management::clear() {
     // Clear the list entirely
     while(!objList.empty())
         removeBoid();
+}
+
+void Management::setCanvasHeight(double height) {
+    canvasHeight = height;
+}
+
+void Management::setCanvasWidth(double width) {
+    canvasWidth = width;
 }
 
 void Management::addBoid() {

@@ -23,12 +23,16 @@ private:
 public:
     static QQmlApplicationEngine *engine;
     static QObject *canvas;
+    static double canvasHeight;
+    static double canvasWidth;
 
     explicit Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot);
 
     Q_INVOKABLE void init(uint count);
     Q_INVOKABLE void run();
     Q_INVOKABLE void clear();
+    Q_INVOKABLE void setCanvasHeight(double height);
+    Q_INVOKABLE void setCanvasWidth(double width);
 };
 
 #endif // MANAGEMENT_H

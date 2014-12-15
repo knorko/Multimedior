@@ -9,6 +9,9 @@ boid::boid() {
     }
     else
         qDebug() << component->errorString();
+
+    setX(50 + ((double)rand()/(double)(RAND_MAX)) * (Management::canvasWidth - 100));
+    setY(50 + ((double)rand()/(double)(RAND_MAX)) * (Management::canvasHeight - 100));
 }
 
 boid::~boid() {
