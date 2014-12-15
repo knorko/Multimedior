@@ -87,6 +87,7 @@ Rectangle {
 
             onValueChanged: {
                 label_currentspeed.text = value.toFixed(2)
+                management.setSpeed(value)
             }
         }
     }

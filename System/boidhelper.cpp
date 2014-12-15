@@ -1,4 +1,5 @@
 #include "boidhelper.h"
+#include "management.h"
 
 boidHelper::boidHelper() {
     velocity[0] = 0;
@@ -17,8 +18,8 @@ void boidHelper::prepare() {
 // This is executed after each update
 void boidHelper::finalize() {
     // Set the position based on the velocity
-    setX(getX() + velocity[0]);
-    setY(getY() + velocity[1]);
+    setX(getX() + velocity[0] * Management::speed);
+    setY(getY() + velocity[1] * Management::speed);
 }
 
 double boidHelper::getX() {

@@ -4,8 +4,9 @@ QQmlApplicationEngine *Management::engine = nullptr;
 QObject *Management::canvas = nullptr;
 list<boid*> Management::objList;
 
-double Management::canvasHeight;
-double Management::canvasWidth;
+double Management::canvasHeight = 472;
+double Management::canvasWidth = 612;
+double Management::speed = 1;
 
 Management::Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     engine = mainEngine;
@@ -40,6 +41,10 @@ void Management::setCanvasHeight(double height) {
 
 void Management::setCanvasWidth(double width) {
     canvasWidth = width;
+}
+
+void Management::setSpeed(double newSpeed) {
+    speed = newSpeed;
 }
 
 void Management::addBoid() {

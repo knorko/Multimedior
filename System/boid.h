@@ -8,7 +8,7 @@
 #include "boidhelper.h"
 #include "management.h"
 
-
+class Management;
 class boid : public boidHelper {
 
 public:

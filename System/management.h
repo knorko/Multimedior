@@ -25,6 +25,7 @@ public:
     static QObject *canvas;
     static double canvasHeight;
     static double canvasWidth;
+    static double speed;
 
     explicit Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot);
 
@@ -33,6 +34,7 @@ public:
     Q_INVOKABLE void clear();
     Q_INVOKABLE void setCanvasHeight(double height);
     Q_INVOKABLE void setCanvasWidth(double width);
+    Q_INVOKABLE void setSpeed(double newSpeed);
 };
 
 #endif // MANAGEMENT_H
