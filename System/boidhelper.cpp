@@ -18,8 +18,8 @@ void boidHelper::prepare() {
 // This is executed after each update
 void boidHelper::finalize() {
     // Set the position based on the velocity
-    setX(getX() + velocity[0] * Management::speed);
-    setY(getY() + velocity[1] * Management::speed);
+    setX(getX() + velocity[0] * management::speed);
+    setY(getY() + velocity[1] * management::speed);
 }
 
 double boidHelper::getX() {

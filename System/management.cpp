@@ -1,19 +1,19 @@
 #include "management.h"
 
-QQmlApplicationEngine *Management::engine = nullptr;
-QObject *Management::canvas = nullptr;
-list<boid*> Management::objList;
+QQmlApplicationEngine *management::engine = nullptr;
+QObject *management::canvas = nullptr;
+list<boid*> management::objList;
 
-double Management::canvasHeight = 472;
-double Management::canvasWidth = 612;
-double Management::speed = 1;
+double management::canvasHeight = 472;
+double management::canvasWidth = 612;
+double management::speed = 1;
 
-Management::Management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
+management::management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     engine = mainEngine;
     canvas = canvasRoot;
 }
 
-void Management::init(uint count) {
+void management::init(uint count) {
     // Populate the list with the desired amount of boids
     void (*operation)() = objList.size() < count ? &addBoid : &removeBoid;
 
@@ -21,7 +21,7 @@ void Management::init(uint count) {
         operation();
 }
 
-void Management::run() {
+void management::run() {
     foreach (boid *obj, objList) {
         obj->prepare();
         obj->Update();
@@ -29,29 +29,29 @@ void Management::run() {
     }
 }
 
-void Management::clear() {
+void management::clear() {
     // Clear the list entirely
     while(!objList.empty())
         removeBoid();
 }
 
-void Management::setCanvasHeight(double height) {
+void management::setCanvasHeight(double height) {
     canvasHeight = height;
 }
 
-void Management::setCanvasWidth(double width) {
+void management::setCanvasWidth(double width) {
     canvasWidth = width;
 }
 
-void Management::setSpeed(double newSpeed) {
+void management::setSpeed(double newSpeed) {
     speed = newSpeed;
 }
 
-void Management::addBoid() {
+void management::addBoid() {
     objList.push_back(new boid());
 }
 
-void Management::removeBoid() {
+void management::removeBoid() {
     delete objList.front();
     objList.pop_front();
 }

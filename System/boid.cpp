@@ -1,17 +1,17 @@
 #include "boid.h"
 
 boid::boid() {
-    component = new QQmlComponent(Management::engine, QUrl(QStringLiteral("qrc:/Boid.qml")));
+    component = new QQmlComponent(management::engine, QUrl(QStringLiteral("qrc:/Boid.qml")));
     if(component->status() == component->Ready) {
-        object = component->create(Management::engine->rootContext());
-        object->setProperty("parent", QVariant::fromValue(Management::canvas));
+        object = component->create(management::engine->rootContext());
+        object->setProperty("parent", QVariant::fromValue(management::canvas));
         QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
     }
     else
         qDebug() << component->errorString();
 
-    setX(50 + ((double)rand()/(double)(RAND_MAX)) * (Management::canvasWidth - 100));
-    setY(50 + ((double)rand()/(double)(RAND_MAX)) * (Management::canvasHeight - 100));
+    setX(50 + ((double)rand()/(double)(RAND_MAX)) * (management::canvasWidth - 100));
+    setY(50 + ((double)rand()/(double)(RAND_MAX)) * (management::canvasHeight - 100));
 }
 
 boid::~boid() {
