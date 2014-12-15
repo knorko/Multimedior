@@ -1,0 +1,29 @@
+#ifndef VECTOR2_H
+#define VECTOR2_H
+
+#include <cmath>
+
+class vector2 {
+private:
+    double x;
+    double y;
+
+public:
+    vector2(double x, double y);
+    ~vector2();
+
+    vector2 operator +(const vector2 &rhs);
+    vector2 operator -(const vector2 &rhs);
+    vector2 operator *(const double &scalar);
+    vector2 operator /(const double &scalar);
+    bool operator ==(const vector2 &rhs);
+    bool operator !=(const vector2 &rhs);
+
+    double getX();
+    double getY();
+
+    float getSqrMagnitude();
+    float getMagnitude();
+};
+
+#endif // VECTOR2_H

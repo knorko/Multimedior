@@ -5,9 +5,11 @@
 #include <QObject>
 #include <QQmlComponent>
 
+#include "vector2.h"
+
 class boidHelper {
 protected:
-    double velocity[2];
+    vector2 *velocity;
 
 public:
     QObject *object;

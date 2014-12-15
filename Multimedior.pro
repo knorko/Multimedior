@@ -7,7 +7,8 @@ QMAKE_CXXFLAGS += -std=c++11
 SOURCES += main.cpp \
     System/boid.cpp \
     System/management.cpp \
-    System/boidhelper.cpp
+    System/boidhelper.cpp \
+    System/vector2.cpp
 
 RESOURCES += qml.qrc
 
@@ -20,6 +21,7 @@ include(deployment.pri)
 HEADERS += \
     System/management.h \
     System/boid.h \
-    System/boidhelper.h
+    System/boidhelper.h \
+    System/vector2.h
 
 OTHER_FILES +=
