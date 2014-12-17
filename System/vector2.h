@@ -22,6 +22,9 @@ public:
     double getX();
     double getY();
 
+    void setX(double x);
+    void setY(double y);
+
     float getSqrMagnitude();
     float getMagnitude();
 };

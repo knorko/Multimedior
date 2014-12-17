@@ -48,6 +48,14 @@ double vector2::getY() {
     return position[1];
 }
 
+void vector2::setX(double x) {
+    position[0] = x;
+}
+
+void vector2::setY(double y) {
+    position[1] = y;
+}
+
 float vector2::getSqrMagnitude() {
     return position[0]*position[0] + position[1]*position[1];
 }
