@@ -7,6 +7,8 @@ Rectangle {
     property int count: 0
     onCountChanged: startButton.enabled = count != 0
 
+    property int size: 10
+
     signal changeRunning(bool value)
     onChangeRunning: {
         if(value) {
@@ -54,7 +56,7 @@ Rectangle {
             anchors.left: parent.left
 
             onClicked: {
-                init(count)
+                init(count, size)
                 running = true
             }
         }

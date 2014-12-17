@@ -13,12 +13,18 @@ management::management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     canvas = canvasRoot;
 }
 
-void management::init(uint count) {
+void management::init(uint count, uint size) {
     // Populate the list with the desired amount of boids
     void (*operation)() = objList.size() < count ? &addBoid : &removeBoid;
 
     while(objList.size() != count)
         operation();
+
+    // Set the desire size
+    boidHelper::initialize(size);
+    foreach (boid *obj, objList) {
+        obj->setSize(size);
+    }
 }
 
 void management::run() {

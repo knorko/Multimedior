@@ -2,6 +2,7 @@
 #include "management.h"
 
 vector2 *velocity;
+double boidHelper::size = 15;
 
 boidHelper::boidHelper() {
     velocity = new vector2(0, 0);
@@ -9,6 +10,10 @@ boidHelper::boidHelper() {
 
 boidHelper::~boidHelper() {
     delete velocity;
+}
+
+void boidHelper::initialize(uint size) {
+    boidHelper::size = size;
 }
 
 // This is executed before each update
@@ -27,7 +32,7 @@ void boidHelper::finalize() {
     if(x <= 0) {
         velocity->setX(-velocity->getX());
     }
-    else if(x >= management::canvasWidth) {
+    else if(x >= management::canvasWidth - size) {
         velocity->setX(-velocity->getX());
     }
 
@@ -35,7 +40,7 @@ void boidHelper::finalize() {
     if(y <= 0) {
         velocity->setY(-velocity->getY());
     }
-    else if(y >= management::canvasHeight) {
+    else if(y >= management::canvasHeight - size) {
         velocity->setY(-velocity->getY());
     }
 }
@@ -55,4 +60,13 @@ double boidHelper::getY() {
 
 void boidHelper::setY(double y) {
     object->setProperty("y", y);
+}
+
+void boidHelper::setSize(uint size) {
+    object->setProperty("height", size);
+    object->setProperty("width", size);
+}
+
+const double &boidHelper::getSize() {
+    return size;
 }

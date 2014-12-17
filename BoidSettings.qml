@@ -7,6 +7,7 @@ Rectangle {
     signal changeRunning(bool value)
     onChangeRunning: {
         count_settings.enabled = !value
+        size_settings.enabled = !value
     }
 
     Label {
@@ -42,6 +43,7 @@ Rectangle {
             id: slider_count
             x: 45
             width: 136
+            activeFocusOnPress: true
             stepSize: 1
             maximumValue: 25
             anchors.verticalCenter: parent.verticalCenter
@@ -53,8 +55,8 @@ Rectangle {
         }
     }
 
-    Item {
-        id: speed_settings
+Item {
+    id: speed_settings
         x: 8
         width: 212
         height: 22
@@ -80,6 +82,7 @@ Rectangle {
             id: slider_speed
             x: 45
             width: 136
+            activeFocusOnPress: true
             minimumValue: 0.1
             value: 1
             maximumValue: 2
@@ -90,23 +93,66 @@ Rectangle {
                 management.setSpeed(value)
             }
         }
+}
+
+Item {
+    id: size_settings
+    x: 8
+    y: 30
+    width: 212
+    height: 22
+    anchors.top: speed_settings.bottom
+    Label {
+        id: label_SIZE
+        text: "Speed:"
+        anchors.verticalCenter: parent.verticalCenter
     }
 
-    id: rectangle1
-    width: 228
-    height: 32
-    color: sysPalette.window
-    radius: 1
-    border.color: sysPalette.mid
+    Label {
+        id: label_currentsize
+        x: 187
+        text: "10"
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
-    states: [
-        State {
-            name: "VISIBLE"
+    Slider {
+        id: slider_size
+        x: 45
+        width: 136
+        activeFocusOnPress: true
+        tickmarksEnabled: true
+        updateValueWhileDragging: true
+        stepSize: 1
+        minimumValue: 5
+        anchors.verticalCenter: parent.verticalCenter
+        maximumValue: 15
+        value: 10
 
-            PropertyChanges {
-                target: rectangle1
-                height: 225
-            }
+        onValueChanged: {
+            controls1.size = value
+            label_currentsize.text = value
+        }
+    }
+    anchors.horizontalCenter: parent.horizontalCenter
+    opacity: 0
+    anchors.topMargin: -22
+}
+
+id: rectangle1
+width: 228
+height: 32
+color: sysPalette.window
+radius: 1
+border.color: sysPalette.mid
+
+states: [
+    State {
+        name: "VISIBLE"
+
+        PropertyChanges {
+            target: rectangle1
+            height: 225
+        }
 
             PropertyChanges {
                 target: label_title
@@ -148,7 +194,19 @@ Rectangle {
                 target: label_currentspeed
                 anchors.verticalCenterOffset: 0
             }
-        }
+
+            PropertyChanges {
+                target: size_settings
+                anchors.horizontalCenterOffset: 0
+                opacity: 1
+                anchors.topMargin: 6
+            }
+
+            PropertyChanges {
+                target: label_SIZE
+                text: "Size:"
+            }
+    }
     ]
 
     transitions: [

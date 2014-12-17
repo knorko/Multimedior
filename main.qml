@@ -7,6 +7,9 @@ Window {
     property int oldMaxHeight: 0
     property int oldMaxWidth: 0
 
+    property int boidHeight: 10
+    property int boidWidth: 10
+
     property bool running: false
     onRunningChanged: {
         settingsPanel1.changeRunning(running)
@@ -33,9 +36,9 @@ Window {
         }
     }
 
-    signal init(int count)
+    signal init(int count, int size)
     onInit: {
-        management.init(count)
+        management.init(count, size)
     }
 
     signal pause(bool pause)

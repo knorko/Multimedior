@@ -29,7 +29,7 @@ public:
 
     explicit management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot);
 
-    Q_INVOKABLE void init(uint count);
+    Q_INVOKABLE void init(uint count, uint size);
     Q_INVOKABLE void run();
     Q_INVOKABLE void clear();
     Q_INVOKABLE void setCanvasHeight(double height);
