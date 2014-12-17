@@ -21,7 +21,25 @@ void boidHelper::finalize() {
     // Set the position based on the velocity
     setX(getX() + velocity->getX() * management::speed);
     setY(getY() + velocity->getY() * management::speed);
+
+    // Stay within the boundaries
+    double x = getX();
+    if(x <= 0) {
+        velocity->setX(-velocity->getX());
+    }
+    else if(x >= management::canvasWidth) {
+        velocity->setX(-velocity->getX());
+    }
+
+    double y = getY();
+    if(y <= 0) {
+        velocity->setY(-velocity->getY());
+    }
+    else if(y >= management::canvasHeight) {
+        velocity->setY(-velocity->getY());
+    }
 }
+
 
 double boidHelper::getX() {
     return object->property("x").value<double>();
