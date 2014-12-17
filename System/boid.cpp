@@ -21,5 +21,5 @@ boid::~boid() {
 
 void boid::Update() {
     // Logic goes here
-    qDebug() << "Update";
+    // qDebug() << "Update";
 }

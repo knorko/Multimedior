@@ -3,6 +3,7 @@
 QQmlApplicationEngine *management::engine = nullptr;
 QObject *management::canvas = nullptr;
 vector<boid*> management::objList;
+kdtree *management::tree = nullptr;
 
 double management::canvasHeight = 472;
 double management::canvasWidth = 612;
@@ -22,11 +23,14 @@ void management::init(uint count) {
 }
 
 void management::run() {
+    prepareTree();
+
     foreach (boid *obj, objList) {
         obj->prepare();
         obj->Update();
         obj->finalize();
     }
+    kd_clear(tree);
 }
 
 void management::clear() {
@@ -54,4 +58,13 @@ void management::addBoid() {
 void management::removeBoid() {
     delete objList.back();
     objList.pop_back();
+}
+
+void management::prepareTree() {
+    tree = kd_create(2);
+
+    foreach (boid *obj, objList) {
+        double position[2] = { obj->getX(), obj->getY()};
+        kd_insert( tree, position, 0);
+    }
 }

@@ -7,6 +7,7 @@
 #include <QQmlApplicationEngine>
 
 #include "boid.h"
+#include "kdtree.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ private:
     static void addBoid();
     static void removeBoid();
 
+    void prepareTree();
+
     Q_OBJECT
 public:
     static QQmlApplicationEngine *engine;
@@ -26,6 +29,7 @@ public:
     static double canvasHeight;
     static double canvasWidth;
     static double speed;
+    static kdtree *tree;
 
     explicit management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot);
 
