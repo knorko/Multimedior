@@ -12,6 +12,8 @@ boid::boid() {
 
     setX(50 + ((double)rand()/(double)(RAND_MAX)) * (management::canvasWidth - 100));
     setY(50 + ((double)rand()/(double)(RAND_MAX)) * (management::canvasHeight - 100));
+    velocity->setX(5 + ((double)rand()/(double)(RAND_MAX)) * - 10);
+    velocity->setY(5 + ((double)rand()/(double)(RAND_MAX)) * - 10);
 }
 
 boid::~boid() {
