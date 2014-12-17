@@ -4,14 +4,30 @@ import QtQuick.Window 2.0
 Window {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
+    property int oldMaxHeight: 0
+    property int oldMaxWidth: 0
+
     property bool running: false
     onRunningChanged: {
         settingsPanel1.changeRunning(running)
         controls1.changeRunning(running)
 
-        if(running)
+        if(running) {
+            oldMaxHeight = maximumHeight
+            oldMaxWidth = maximumWidth
+            minimumHeight = height
+            minimumWidth = width
+            maximumHeight = height
+            maximumWidth = width
+
             updateTick.start()
+        }
         else {
+            minimumHeight = 480
+            minimumWidth = 640
+            maximumHeight = oldMaxHeight
+            maximumWidth = oldMaxWidth
+
             updateTick.stop()
             management.clear()
         }
