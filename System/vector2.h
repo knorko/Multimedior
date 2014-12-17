@@ -5,8 +5,7 @@
 
 class vector2 {
 private:
-    double x;
-    double y;
+    double position[2];
 
 public:
     vector2(double x, double y);
@@ -19,6 +18,7 @@ public:
     bool operator ==(const vector2 &rhs);
     bool operator !=(const vector2 &rhs);
 
+    const double* getPosition();
     double getX();
     double getY();
 

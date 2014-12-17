@@ -1,32 +1,33 @@
 #include "vector2.h"
 
-double x = 0;
-double y = 0;
+double position[2];
 
-vector2::vector2(double x, double y) : x(x), y(y) {
+vector2::vector2(double x, double y) {
+    position[0] = x;
+    position[1] = y;
 }
 
 vector2::~vector2() {
 }
 
 vector2 vector2::operator +(const vector2 &rhs) {
-    return vector2(this->x + rhs.x, this->y + rhs.y);
+    return vector2(this->position[0] + rhs.position[0], this->position[1] + rhs.position[1]);
 }
 
 vector2 vector2::operator -(const vector2 &rhs) {
-    return vector2(this->x - rhs.x, this->y - rhs.y);
+    return vector2(this->position[0] - rhs.position[0], this->position[1] - rhs.position[1]);
 }
 
 vector2 vector2::operator *(const double &scalar) {
-    return vector2(this->x * scalar, this->y * scalar);
+    return vector2(this->position[0] * scalar, this->position[1] * scalar);
 }
 
 vector2 vector2::operator /(const double &scalar) {
-    return vector2(this->x / scalar, this->y / scalar);
+    return vector2(this->position[0] / scalar, this->position[1] / scalar);
 }
 
 bool vector2::operator ==(const vector2 &rhs) {
-    return (this->x == rhs.x) && (this->y == rhs.y);
+    return (this->position[0] == rhs.position[0]) && (this->position[1] == rhs.position[1]);
 }
 
 bool vector2::operator !=(const vector2 &rhs) {
@@ -35,18 +36,22 @@ bool vector2::operator !=(const vector2 &rhs) {
 
 
 
+const double *vector2::getPosition() {
+    return position;
+}
+
 double vector2::getX() {
-    return x;
+    return position[0];
 }
 
 double vector2::getY() {
-    return y;
+    return position[1];
 }
 
 float vector2::getSqrMagnitude() {
-    return x*x + y*y;
+    return position[0]*position[0] + position[1]*position[1];
 }
 
 float vector2::getMagnitude() {
-    return sqrt((x*x + y*y));
+    return sqrt((position[0]*position[0] + position[1]*position[1]));
 }
