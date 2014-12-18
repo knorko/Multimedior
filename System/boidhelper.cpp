@@ -2,6 +2,7 @@
 #include "management.h"
 
 vector2 *velocity;
+//double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 boidHelper::boidHelper() {
     velocity = new vector2(0, 0);
@@ -42,23 +43,44 @@ void boidHelper::setY(double y) {
 
 
 int boidHelper::getNeighbours() {
-
     struct kdres *result;
     double position_neighbour[2];
-    double distance;
+    double sqrDistance;
 
-    double position[2] = { getX(), getY()};
-    result = kd_nearest_range(management::tree, position, radius);
+    double position[2] = { getX(), getY() };
+    result = kd_nearest_range(management::tree, position, management::canvasWidth);
 
-    qDebug() << "Found: " << kd_res_size(result);
+    for(int i=0; i<3; i++) {
+        for(int i2=0; i2<3; i2++)
+            nearest[i][i2] = 0;
+    }
 
     while(!kd_res_end(result)) {
         kd_res_item(result, position_neighbour);
 
-        distance = sqrt(dist_sq(position, position_neighbour, 2));
+        sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
-        if(distance > 0)
-            qDebug() << "Boid at" << position_neighbour[0] << "," << position_neighbour[1] << "is " << distance << "away";
+        if(sqrDistance > 0) {
+            double greatest = nearest[0][2];
+            int greatestIndex = 0;
+
+            for(int i = 0; i < 3; i++) {
+                if(nearest[i][2] == 0) {
+                    greatest = nearest[i][2];
+                    greatestIndex = i;
+                    break;
+                }
+                else if(greatest < nearest[i][2]) {
+                    greatest = nearest[i][2];
+                    greatestIndex = i;
+                }
+            }
+            if(nearest[greatestIndex][2] > sqrDistance || nearest[greatestIndex][2] == 0) {
+                nearest[greatestIndex][0] = position_neighbour[0];
+                nearest[greatestIndex][1] = position_neighbour[1];
+                nearest[greatestIndex][2] = sqrDistance;
+            }
+        }
 
         kd_res_next(result);
     }

@@ -16,6 +16,7 @@ private:
 
 protected:
     vector2 *velocity;
+    double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 public:
     QObject *object;

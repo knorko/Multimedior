@@ -22,4 +22,7 @@ boid::~boid() {
 void boid::Update() {
     // Logic goes here
     // qDebug() << "Update";
+    qDebug() << "#############";
+    for(int i=0; i<3; i++)
+        qDebug() << "NEAREST " << i << " " << nearest[i][2];
 }

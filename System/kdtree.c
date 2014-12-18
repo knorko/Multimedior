@@ -505,7 +505,7 @@ struct kdres *kd_nearest3f(struct kdtree *tree, float x, float y, float z)
 
 /* ---- nearest N search ---- */
 /*
-static kdres *kd_nearest_n(struct kdtree *kd, const double *pos, int num)
+struct kdres *kd_nearest_n(struct kdtree *kd, const double *pos, int num)
 {
 	int ret;
 	struct kdres *rset;
@@ -518,7 +518,7 @@ static kdres *kd_nearest_n(struct kdtree *kd, const double *pos, int num)
 		return 0;
 	}
 	rset->rlist->next = 0;
-	rset->tree = kd;
+    rset->tree = kd;
 
 	if((ret = find_nearest_n(kd->root, pos, range, num, rset->rlist, kd->dim)) == -1) {
 		kd_res_free(rset);
@@ -527,7 +527,7 @@ static kdres *kd_nearest_n(struct kdtree *kd, const double *pos, int num)
 	rset->size = ret;
 	kd_res_rewind(rset);
 	return rset;
-}*/
+} */
 
 struct kdres *kd_nearest_range(struct kdtree *kd, const double *pos, double range)
 {
