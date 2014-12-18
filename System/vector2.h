@@ -15,12 +15,15 @@ public:
     vector2 operator -(const vector2 &rhs);
     vector2 operator *(const double &scalar);
     vector2 operator /(const double &scalar);
+    vector2 operator =(const vector2 &rhs);
     bool operator ==(const vector2 &rhs);
     bool operator !=(const vector2 &rhs);
 
     const double* getPosition();
     double getX();
     double getY();
+    void setX(double x);
+    void setY(double y);
 
     float getSqrMagnitude();
     float getMagnitude();
