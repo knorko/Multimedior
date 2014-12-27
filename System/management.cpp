@@ -31,6 +31,7 @@ void management::run() {
         obj->finalize();
     }
     kd_clear(tree);
+    kd_free(tree);
 }
 
 void management::clear() {
