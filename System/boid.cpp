@@ -24,5 +24,5 @@ void boid::Update() {
     // qDebug() << "Update";
     qDebug() << "#############";
     for(int i=0; i<3; i++)
-        qDebug() << "NEAREST " << i << " " << nearest[i][2];
+        qDebug() << (neighbors[i] - position).getMagnitude();
 }
