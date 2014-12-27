@@ -8,6 +8,7 @@ private:
     double position[2];
 
 public:
+    vector2();
     vector2(double x, double y);
     ~vector2();
 

@@ -2,6 +2,9 @@
 
 double position[2];
 
+vector2::vector2() : vector2(0, 0) {
+}
+
 vector2::vector2(double x, double y) {
     position[0] = x;
     position[1] = y;
