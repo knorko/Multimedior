@@ -23,11 +23,20 @@ void boid::Update() {
     // Logic goes here
     vector2 targetposition;
     for(int i=0; i<3; i++){
-        targetposition = neighbors[i] - position;
-        velocity = velocity + targetposition/targetposition.getSqrMagnitude();
+        if((neighbors[i] - position).getMagnitude()>60){
+            targetposition = neighbors[i] - position;
+            velocity = velocity + targetposition/targetposition.getMagnitude();
+            qDebug() << "attract";
+        }
+        else{
+            targetposition = neighbors[i] - position;
+            velocity = velocity - targetposition/targetposition.getMagnitude();
+            qDebug() << "avoid";
+        }
+        qDebug() << (neighbors[i] - position).getMagnitude();
     }
     // qDebug() << "Update";
     qDebug() << "#############";
-    for(int i=0; i<3; i++)
-        qDebug() << (neighbors[i] - position).getMagnitude();
+//    for(int i=0; i<3; i++)
+//        qDebug() << (neighbors[i] - position).getMagnitude();
 }

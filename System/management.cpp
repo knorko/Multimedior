@@ -7,7 +7,7 @@ kdtree *management::tree = nullptr;
 
 double management::canvasHeight = 472;
 double management::canvasWidth = 612;
-double management::speed = 1;
+double management::speed = 0.01;
 
 management::management(QQmlApplicationEngine *mainEngine, QObject *canvasRoot) {
     engine = mainEngine;
