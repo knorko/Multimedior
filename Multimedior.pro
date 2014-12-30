@@ -4,10 +4,16 @@ QT += qml quick
 
 QMAKE_CXXFLAGS += -std=c++11
 
+
+# Defines:
+# BOID_DEBUG    - Enable verbose logging
+DEFINES +=
+
 SOURCES += main.cpp \
     System/boid.cpp \
     System/management.cpp \
     System/boidhelper.cpp \
+    System/kdtree.c \
     System/vector2.cpp
 
 RESOURCES += qml.qrc
@@ -22,6 +28,7 @@ HEADERS += \
     System/management.h \
     System/boid.h \
     System/boidhelper.h \
+    System/kdtree.h \
     System/vector2.h
 
 OTHER_FILES +=

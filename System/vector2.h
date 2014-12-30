@@ -3,11 +3,19 @@
 
 #include <cmath>
 
+/**
+ * @brief Contains a two-dimensional vector and required arithmetic
+ * operations.
+ */
 class vector2 {
 private:
-    double position[2];
+    /**
+     * @brief The individual components.
+     */
+    double components[2];
 
 public:
+    vector2();
     vector2(double x, double y);
     ~vector2();
 
@@ -15,13 +23,13 @@ public:
     vector2 operator -(const vector2 &rhs);
     vector2 operator *(const double &scalar);
     vector2 operator /(const double &scalar);
+    vector2 operator =(const vector2 &rhs);
     bool operator ==(const vector2 &rhs);
     bool operator !=(const vector2 &rhs);
 
     const double* getPosition();
     double getX();
     double getY();
-
     void setX(double x);
     void setY(double y);
 
