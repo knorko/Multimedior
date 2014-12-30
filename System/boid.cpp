@@ -21,6 +21,11 @@ boid::~boid() {
 
 void boid::Update() {
     // Logic goes here
+    vector2 targetposition;
+    for(int i=0; i<3; i++){
+        targetposition = neighbors[i] - position;
+        velocity = velocity + targetposition/targetposition.getSqrMagnitude();
+    }
     // qDebug() << "Update";
     qDebug() << "#############";
     for(int i=0; i<3; i++)
