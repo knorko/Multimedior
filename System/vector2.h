@@ -3,9 +3,16 @@
 
 #include <cmath>
 
+/**
+ * @brief Contains a two-dimensional vector and required arithmetic
+ * operations.
+ */
 class vector2 {
 private:
-    double position[2];
+    /**
+     * @brief The individual components.
+     */
+    double components[2];
 
 public:
     vector2();

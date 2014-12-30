@@ -1,11 +1,73 @@
 #include "boidhelper.h"
-#include "management.h"
 
+QQmlApplicationEngine *boidHelper::engine = nullptr;
+QObject *boidHelper::canvas = nullptr;
+double *boidHelper::canvasHeight;
+double *boidHelper::canvasWidth;
+kdtree **boidHelper::tree = nullptr;
+double *boidHelper::speed;
 
 boidHelper::boidHelper() {
 }
 
 boidHelper::~boidHelper() {
+}
+
+/**
+ * @brief Initialize the boidHelper class
+ *
+ * The boidHelper contains essential functions that are required to program the
+ * boids.
+ * This function gives it the necessary access to certain GUI parameters. It only
+ * has effect one time. Once the values have been set, future calls will have no effect.
+ *
+ * @param engine The main QQmlApplicationEngine the application uses.
+ * @param canvas The QObject that holds the canvas we want the boids to move on.
+ * @param canvasHeight The double that holds the canvas height.
+ * @param canvasWidth The double that holds the canvas width.
+ * @param tree Pointer towards the later used kd-tree.
+ * @param speed The double that holds the speed factor.
+ */
+void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed) {
+    if(!boidHelper::engine && !boidHelper::canvas) {
+        boidHelper::engine = engine;
+        boidHelper::canvas = canvas;
+        boidHelper::canvasHeight = canvasHeight;
+        boidHelper::canvasWidth = canvasWidth;
+        boidHelper::tree = tree;
+        boidHelper::speed = speed;
+    }
+    else {
+      qDebug() << "boidHelper already initialized!";
+    }
+}
+
+/**
+ * @return Main QQmlApplicationEngine.
+ */
+QQmlApplicationEngine *boidHelper::getEngine() const {
+    return boidHelper::engine;
+}
+
+/**
+ * @return Canvas QObject.
+ */
+QObject *boidHelper::getCanvas() const {
+    return boidHelper::canvas;
+}
+
+/**
+ * @return Height of the canvas.
+ */
+double boidHelper::getCanvasHeight() const {
+    return *boidHelper::canvasHeight;
+}
+
+/**
+ * @return Width of the canvas.
+ */
+double boidHelper::getCanvasWidth() const {
+    return *boidHelper::canvasWidth;
 }
 
 /**
@@ -28,8 +90,8 @@ void boidHelper::prepare() {
  */
 void boidHelper::finalize() {
     // Set the position based on the velocity
-    setX(getX() + velocity.getX() * management::speed);
-    setY(getY() + velocity.getY() * management::speed);
+    setX(getX() + velocity.getX() * *speed);
+    setY(getY() + velocity.getY() * *speed);
 }
 
 /**
@@ -70,7 +132,6 @@ void boidHelper::setY(double y) {
     object->setProperty("y", y);
 }
 
-
 /**
  * @brief Get the three closest neighbors for each boid
  *
@@ -89,7 +150,7 @@ void boidHelper::getNeighbors() {
     double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(management::tree, position, management::canvasWidth);
+    result = kd_nearest_range(*tree, position, *canvasWidth);
 
     while(!kd_res_end(result)) {
         kd_res_item(result, position_neighbour);

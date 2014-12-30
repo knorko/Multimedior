@@ -6,9 +6,10 @@
 #include <QQmlComponent>
 
 #include "boidhelper.h"
-#include "management.h"
 
-class management;
+/**
+ * @brief The boid class contains all boid logic.
+ */
 class boid : public boidHelper {
 
 public:
