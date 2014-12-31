@@ -24,6 +24,10 @@ public:
     vector2 operator *(const double &scalar);
     vector2 operator /(const double &scalar);
     vector2 operator =(const vector2 &rhs);
+    vector2& operator +=(const vector2 &rhs);
+    vector2& operator -=(const vector2 &rhs);
+    vector2& operator *=(const double &scalar);
+    vector2& operator /=(const double &scalar);
     bool operator ==(const vector2 &rhs);
     bool operator !=(const vector2 &rhs);
 
@@ -32,9 +36,10 @@ public:
     double getY();
     void setX(double x);
     void setY(double y);
+    vector2 normalize();
 
-    float getSqrMagnitude();
-    float getMagnitude();
+    double getSqrMagnitude();
+    double getMagnitude();
 };
 
 #endif // VECTOR2_H

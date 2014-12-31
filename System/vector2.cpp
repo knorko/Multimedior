@@ -63,6 +63,30 @@ vector2 vector2::operator =(const vector2 &rhs) {
     return *this;
 }
 
+vector2 &vector2::operator +=(const vector2 &rhs) {
+    this->components[0] += rhs.components[0];
+    this->components[1] += rhs.components[1];
+    return *this;
+}
+
+vector2 &vector2::operator -=(const vector2 &rhs) {
+    this->components[0] -= rhs.components[0];
+    this->components[1] -= rhs.components[1];
+    return *this;
+}
+
+vector2 &vector2::operator *=(const double &scalar) {
+    this->components[0] *= scalar;
+    this->components[1] *= scalar;
+    return *this;
+}
+
+vector2 &vector2::operator /=(const double &scalar) {
+    this->components[0] /= scalar;
+    this->components[1] /= scalar;
+    return *this;
+}
+
 /**
  * @brief Vector comparison.
  *
@@ -128,16 +152,20 @@ void vector2::setY(double y) {
     components[1] = y;
 }
 
+vector2 vector2::normalize() {
+    return (*this = *this / (this->getMagnitude()));
+}
+
 /**
  * @return Squared magnitude of the vector.
  */
-float vector2::getSqrMagnitude() {
+double vector2::getSqrMagnitude() {
     return components[0]*components[0] + components[1]*components[1];
 }
 
 /**
  * @return Magnitude of the vector.
  */
-float vector2::getMagnitude() {
+double vector2::getMagnitude() {
     return sqrt((components[0]*components[0] + components[1]*components[1]));
 }
