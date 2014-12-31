@@ -4,8 +4,7 @@ import QtQuick.Controls 1.2
 Rectangle {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
-    property int count: 0
-    onCountChanged: startButton.enabled = count != 0
+    property int count: 5
 
     property int size: 10
 
@@ -48,7 +47,7 @@ Rectangle {
             y: 16
             height: 23
             text: "Start"
-            enabled: false
+            enabled: true
             opacity: 1
             anchors.rightMargin: 16
             anchors.leftMargin: 16

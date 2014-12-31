@@ -5,8 +5,10 @@ kdtree *management::tree = nullptr;
 
 double management::canvasHeight = 472;
 double management::canvasWidth = 612;
-double management::speed = 1;
+double management::speedFactor = 1;
 uint management::size = 10;
+double management::velocity_avg = 1;
+double management::velocity_var = 0.1;
 
 /**
  * @brief Initialize the boidHelper class.
@@ -17,7 +19,7 @@ uint management::size = 10;
  * @param canvas QObject of the canvas.
  */
 management::management(QQmlApplicationEngine *engine, QObject *canvas) {
-    boidHelper::initialize(engine, canvas, &canvasHeight, &canvasWidth, &tree, &speed, &size);
+    boidHelper::initialize(engine, canvas, &canvasHeight, &canvasWidth, &tree, &speedFactor, &size, &velocity_avg, &velocity_var);
 }
 
 /**
@@ -26,6 +28,7 @@ management::management(QQmlApplicationEngine *engine, QObject *canvas) {
  * Delete or create boids until #objList holds the desired amount of references.
  *
  * @param count Desired amount of boids.
+ * @param size The desired size for the boids.
  */
 void management::init(uint count, uint size) {
     void (*operation)() = objList.size() < count ? &addBoid : &removeBoid;
@@ -97,13 +100,23 @@ void management::setCanvasWidth(double width) {
 /**
  * @brief Update speed factor.
  *
- * #speed is set by the QML code and contains the factor by which every
+ * #speedFactor is set by the QML code and contains the factor by which every
  * boid movement is multiplied.
  *
  * @param speed Current speed factor.
  */
 void management::setSpeed(double speed) {
-    this->speed = speed;
+    this->speedFactor = speed;
+}
+
+/**
+ * @brief Set the velocity and variance.
+ * @param average Average velocity.
+ * @param variance Variance.
+ */
+void management::setVelocity(double average, double variance) {
+    this->velocity_avg = average;
+    this->velocity_var = variance;
 }
 
 /**

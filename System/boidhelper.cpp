@@ -7,6 +7,8 @@ double *boidHelper::canvasHeight;
 double *boidHelper::canvasWidth;
 kdtree **boidHelper::tree = nullptr;
 double *boidHelper::speed;
+double *boidHelper::velocity_avg;
+double *boidHelper::velocity_var;
 
 boidHelper::boidHelper() {
 }
@@ -29,8 +31,11 @@ boidHelper::~boidHelper() {
  * @param canvasWidth The double that holds the canvas width.
  * @param tree Pointer towards the later used kd-tree.
  * @param speed The double that holds the speed factor.
+ * @param size The double that holds the size of the boids.
+ * @param velocity_avg The double that holds the average velocity of the boids.
+ * @param velocity_var The double that holds the velocity's variance.
  */
-void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size) {
+void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var) {
     if(!boidHelper::engine && !boidHelper::canvas) {
         boidHelper::engine = engine;
         boidHelper::canvas = canvas;
@@ -39,6 +44,8 @@ void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, doub
         boidHelper::tree = tree;
         boidHelper::speed = speed;
         boidHelper::size = size;
+        boidHelper::velocity_avg = velocity_avg;
+        boidHelper::velocity_var = velocity_var;
     }
     else {
       qDebug() << "boidHelper already initialized!";
@@ -92,6 +99,10 @@ void boidHelper::prepare() {
  * It sets the position depending on the velocity.
  */
 void boidHelper::finalize() {
+    // Clamp the speed
+    velocity.normalize();
+    velocity *= *velocity_avg + (*velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * *velocity_var));
+
     // Set the position based on the velocity
     setX(getX() + velocity.getX() * *speed);
     setY(getY() + velocity.getY() * *speed);
@@ -99,17 +110,21 @@ void boidHelper::finalize() {
     // Stay within the boundaries
     double x = getX();
     if(x <= 0) {
+        setX(0);
         velocity.setX(-velocity.getX());
     }
     else if(x >= getCanvasWidth() - *size) {
+        setX(getCanvasWidth() - *size);
         velocity.setX(-velocity.getX());
     }
 
     double y = getY();
     if(y <= 0) {
+        setY(0);
         velocity.setY(-velocity.getY());
     }
     else if(y >= getCanvasHeight() - *size) {
+        setY(getCanvasHeight() - *size);
         velocity.setY(-velocity.getY());
     }
 }
@@ -152,11 +167,18 @@ void boidHelper::setY(double y) {
     object->setProperty("y", y);
 }
 
+/**
+ * @brief Set the boid size.
+ * @param size Desired size
+ */
 void boidHelper::setSize(uint size) {
     object->setProperty("height", size);
     object->setProperty("width", size);
 }
 
+/**
+ * @return Boid size.
+ */
 uint &boidHelper::getSize() const{
     return *size;
 }

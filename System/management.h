@@ -44,7 +44,18 @@ private:
     /**
      * @brief Factor by which every boid movement is multiplied.
      */
-    static double speed;
+    static double speedFactor;
+    /**
+     * @brief Average movement velocity of the boids.
+     */
+    static double velocity_avg;
+    /**
+     * @brief Velocity variance.
+     */
+    static double velocity_var;
+    /**
+     * @brief Boid size.
+     */
     static uint size;
 
     static void addBoid();
@@ -62,7 +73,8 @@ public:
     Q_INVOKABLE void clear();
     Q_INVOKABLE void setCanvasHeight(double height);
     Q_INVOKABLE void setCanvasWidth(double width);
-    Q_INVOKABLE void setSpeed(double speed);
+    Q_INVOKABLE void setSpeed(double speedFactor);
+    Q_INVOKABLE void setVelocity(double average, double variance);
 };
 
 #endif // MANAGEMENT_H

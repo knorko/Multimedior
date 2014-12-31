@@ -6,8 +6,7 @@ Rectangle {
 
     signal changeRunning(bool value)
     onChangeRunning: {
-        count_settings.enabled = !value
-        size_settings.enabled = !value
+        miscBox.enabled = !value
     }
 
     Label {
@@ -17,13 +16,20 @@ Rectangle {
         text: "Boids"
     }
 
+GroupBox {
+    id: miscBox
+    x: 8
+    y: 30
+    width: 212
+    height: 84
+    title: qsTr("Misc.")
+    opacity: 0
+
     Item {
         id: count_settings
-        x: 8
-        y: 30
-        width: 212
         height: 22
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.right: parent.right
+        anchors.left: parent.left
         opacity: 0
 
         Label {
@@ -36,6 +42,7 @@ Rectangle {
             id: label_currentcount
             x: 187
             text: "0"
+            anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -43,9 +50,11 @@ Rectangle {
             id: slider_count
             x: 45
             width: 136
+            minimumValue: 5
+            value: 5
             activeFocusOnPress: true
             stepSize: 1
-            maximumValue: 25
+            maximumValue: 100
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
@@ -55,33 +64,89 @@ Rectangle {
         }
     }
 
-Item {
-    id: speed_settings
-        x: 8
-        width: 212
+    Item {
+        id: size_settings
+        y: -99
         height: 22
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: -22
+        anchors.topMargin: 6
+        anchors.right: parent.right
+        anchors.left: parent.left
         anchors.top: count_settings.bottom
-        opacity: 0
-
         Label {
-            id: label_SPEED
+            id: label_SIZE
             text: "Speed:"
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Label {
-            id: label_currentspeed
+            id: label_currentsize
             x: 187
-            text: "0.00"
+            text: "10"
+            anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Slider {
-            id: slider_speed
+            id: slider_size
             x: 45
             width: 136
+            activeFocusOnPress: true
+            tickmarksEnabled: true
+            updateValueWhileDragging: true
+            stepSize: 1
+            minimumValue: 5
+            anchors.verticalCenter: parent.verticalCenter
+            maximumValue: 15
+            value: 10
+
+            onValueChanged: {
+                controls1.size = value
+                label_currentsize.text = value
+            }
+        }
+        opacity: 0
+    }
+}
+
+GroupBox {
+    id: speedBox
+    x: 8
+    width: 212
+    height: 84
+    anchors.top: miscBox.bottom
+    anchors.topMargin: -84
+    title: qsTr("Velocity")
+    opacity: 0
+
+    Item {
+        id: speed_avg_settings
+        y: -57
+        height: 22
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        Label {
+            id: label_AVG
+            x: -8
+            y: -20
+            text: "Average:"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentspeedavg
+            x: 187
+            text: "0.00"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_speed_avg
+            x: 45
+            width: 117
+            updateValueWhileDragging: false
             activeFocusOnPress: true
             minimumValue: 0.1
             value: 1
@@ -89,53 +154,56 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                label_currentspeed.text = value.toFixed(2)
-                management.setSpeed(value)
+                label_currentspeedavg.text = value.toFixed(2)
+                management.setVelocity(value, slider_speed_var.value);
             }
         }
-}
 
-Item {
-    id: size_settings
-    x: 8
-    y: 30
-    width: 212
-    height: 22
-    anchors.top: speed_settings.bottom
-    Label {
-        id: label_SIZE
-        text: "Speed:"
-        anchors.verticalCenter: parent.verticalCenter
     }
 
-    Label {
-        id: label_currentsize
-        x: 187
-        text: "10"
-        anchors.verticalCenter: parent.verticalCenter
-    }
+    Item {
+        id: speed_var_settings
+        x: 0
+        y: 28
+        height: 22
+        anchors.top: speed_avg_settings.bottom
+        anchors.topMargin: -22
+        anchors.left: parent.left
+        opacity: 0
+        anchors.right: parent.right
+        Label {
+            id: label_VAR
+            x: -8
+            y: -20
+            text: "Variance:"
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-    Slider {
-        id: slider_size
-        x: 45
-        width: 136
-        activeFocusOnPress: true
-        tickmarksEnabled: true
-        updateValueWhileDragging: true
-        stepSize: 1
-        minimumValue: 5
-        anchors.verticalCenter: parent.verticalCenter
-        maximumValue: 15
-        value: 10
+        Label {
+            id: label_currentspeedvar
+            x: 187
+            text: "0.00"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-        onValueChanged: {
-            controls1.size = value
-            label_currentsize.text = value
+        Slider {
+            id: slider_speed_var
+            x: 45
+            width: 117
+            updateValueWhileDragging: false
+            value: 0.1
+            maximumValue: 0.5
+            activeFocusOnPress: true
+            minimumValue: 0
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentspeedvar.text = value.toFixed(2)
+                management.setVelocity(slider_speed_avg.value, value);
+            }
         }
     }
-    anchors.horizontalCenter: parent.horizontalCenter
-    opacity: 0
-    anchors.topMargin: -22
 }
 
 id: rectangle1
@@ -165,33 +233,41 @@ states: [
 
             PropertyChanges {
                 target: slider_count
+                width: 125
+                height: 22
                 anchors.verticalCenterOffset: 0
                 anchors.horizontalCenterOffset: 9
             }
 
             PropertyChanges {
                 target: count_settings
+                width: 180
+                height: 22
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                anchors.horizontalCenterOffset: 8
                 opacity: 1
             }
 
             PropertyChanges {
-                target: label_currentcount
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: speed_settings
-                anchors.topMargin: 6
+                target: speed_avg_settings
+                y: 0
+                anchors.horizontalCenterOffset: 8
+                anchors.topMargin: 127
                 opacity: 1
             }
 
             PropertyChanges {
-                target: slider_speed
+                target: slider_speed_avg
+                x: 53
+                width: 117
+                height: 22
                 anchors.verticalCenterOffset: 0
             }
 
             PropertyChanges {
-                target: label_currentspeed
+                target: label_currentspeedavg
+                x: 172
                 anchors.verticalCenterOffset: 0
             }
 
@@ -205,6 +281,69 @@ states: [
             PropertyChanges {
                 target: label_SIZE
                 text: "Size:"
+            }
+
+            PropertyChanges {
+                target: miscBox
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: slider_size
+                width: 125
+                height: 22
+            }
+
+            PropertyChanges {
+                target: label_currentsize
+                x: 182
+            }
+
+            PropertyChanges {
+                target: speedBox
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_AVG
+                x: 0
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: speed_var_settings
+                y: 28
+                anchors.topMargin: 6
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_VAR
+                x: 0
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: slider_speed_var
+                x: 53
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: label_currentspeedvar
+                x: 172
+                width: 24
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: label_currentcount
+                x: 185
+                anchors.verticalCenterOffset: 0
+                anchors.rightMargin: 0
             }
     }
     ]

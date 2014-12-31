@@ -31,14 +31,27 @@ private:
      */
     static double *canvasWidth;
     /**
-     * @brief The kdtree used for neighbor search and collision
+     * @brief The kdtree used for neighbor search and collision.
      */
     static kdtree **tree;
     /**
-     * @brief Simulation speed factor
+     * @brief Simulation speed factor.
      */
     static double *speed;
+    /**
+     * @brief The size of the boids.
+     */
     static uint *size;
+    /**
+     * @brief The average velocity of the boids.
+     */
+    static double *velocity_avg;
+    /**
+     * @brief The velocity's variance.
+     *
+     * The actual velocity varies between #velocity_avg - this and #velocity_avg + this.
+     */
+    static double *velocity_var;
 
 
     void getNeighbors();
@@ -78,7 +91,7 @@ public:
     boidHelper();
     ~boidHelper();
 
-    static void initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size);
+    static void initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var);
 
     QQmlApplicationEngine *getEngine() const;
     QObject *getCanvas() const;
