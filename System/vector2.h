@@ -14,6 +14,8 @@ private:
      */
     double components[2];
 
+    static float lerpFloat(float start, float end, float t);
+
 public:
     vector2();
     vector2(double x, double y);
@@ -37,6 +39,8 @@ public:
     void setX(double x);
     void setY(double y);
     vector2 normalize();
+    static vector2 lerp(vector2 start, vector2 end, float t);
+    static vector2 lerpRotation(vector2 position, double lenght, vector2 target, float t);
 
     double getSqrMagnitude();
     double getMagnitude();

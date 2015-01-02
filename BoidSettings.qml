@@ -41,7 +41,7 @@ GroupBox {
         Label {
             id: label_currentcount
             x: 187
-            text: "0"
+            text: "5"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -109,7 +109,7 @@ GroupBox {
 }
 
 GroupBox {
-    id: speedBox
+    id: velocityBox
     x: 8
     width: 212
     height: 84
@@ -206,6 +206,49 @@ GroupBox {
     }
 }
 
+GroupBox {
+    id: targetBox
+    x: 8
+    width: 212
+    height: 160
+    anchors.top: velocityBox.bottom
+    anchors.topMargin: -84
+    opacity: 0
+    title: qsTr("Target")
+
+    Item {
+        id: globalTarget_settings
+        height: 25
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        Label {
+            id: label_GLOBAL
+            y: 8
+            text: qsTr("Global")
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+        }
+
+        ComboBox {
+            id: comboBox1
+            currentIndex: 0
+            width: 152
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            model: ListModel {
+                id: globalTarget
+                ListElement { text: "Mouse (click)"; property bool value: false }
+                ListElement { text: "Mouse (continuous)"; property bool value: true }
+            }
+            onCurrentIndexChanged: renderCanvas1.continuous = globalTarget.get(currentIndex).value
+        }
+    }
+}
+
 id: rectangle1
 width: 228
 height: 32
@@ -219,7 +262,7 @@ states: [
 
         PropertyChanges {
             target: rectangle1
-            height: 225
+            height: 384
         }
 
             PropertyChanges {
@@ -300,7 +343,7 @@ states: [
             }
 
             PropertyChanges {
-                target: speedBox
+                target: velocityBox
                 anchors.topMargin: 6
                 opacity: 1
             }
@@ -345,6 +388,27 @@ states: [
                 anchors.verticalCenterOffset: 0
                 anchors.rightMargin: 0
             }
+
+            PropertyChanges {
+                target: targetBox
+                width: 212
+                height: 160
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: globalTarget_settings
+                width: 200
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_GLOBAL
+                anchors.verticalCenterOffset: 0
+                opacity: 1
+            }
+
     }
     ]
 

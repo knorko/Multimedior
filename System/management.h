@@ -57,6 +57,7 @@ private:
      * @brief Boid size.
      */
     static uint size;
+    static vector2 mousePosition;
 
     static void addBoid();
     static void removeBoid();
@@ -75,6 +76,7 @@ public:
     Q_INVOKABLE void setCanvasWidth(double width);
     Q_INVOKABLE void setSpeed(double speedFactor);
     Q_INVOKABLE void setVelocity(double average, double variance);
+    Q_INVOKABLE void setMousePosition(double x, double y);
 };
 
 #endif // MANAGEMENT_H

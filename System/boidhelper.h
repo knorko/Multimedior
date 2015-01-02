@@ -52,6 +52,7 @@ private:
      * The actual velocity varies between #velocity_avg - this and #velocity_avg + this.
      */
     static double *velocity_var;
+    static vector2 *mousePosition;
 
 
     void getNeighbors();
@@ -65,7 +66,7 @@ protected:
     /**
      * @brief The velocity of the boid.
      */
-    vector2 velocity;
+    vector2 velocity = vector2(1, 0);
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */
@@ -74,6 +75,8 @@ protected:
      * @brief Search radius of the boids
      */
     double radius = 240;
+
+    vector2& getMousePosition() const;
 
 public:
     /**
@@ -91,7 +94,7 @@ public:
     boidHelper();
     ~boidHelper();
 
-    static void initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var);
+    static void initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var, vector2 *mousePosition);
 
     QQmlApplicationEngine *getEngine() const;
     QObject *getCanvas() const;

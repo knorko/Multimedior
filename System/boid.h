@@ -11,6 +11,8 @@
  * @brief The boid class contains all boid logic.
  */
 class boid : public boidHelper {
+private:
+    vector2 lastVel = vector2();
 
 public:
     boid();

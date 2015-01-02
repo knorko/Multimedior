@@ -9,6 +9,7 @@ kdtree **boidHelper::tree = nullptr;
 double *boidHelper::speed;
 double *boidHelper::velocity_avg;
 double *boidHelper::velocity_var;
+vector2 *boidHelper::mousePosition;
 
 boidHelper::boidHelper() {
 }
@@ -35,7 +36,7 @@ boidHelper::~boidHelper() {
  * @param velocity_avg The double that holds the average velocity of the boids.
  * @param velocity_var The double that holds the velocity's variance.
  */
-void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var) {
+void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var, vector2 *mousePosition) {
     if(!boidHelper::engine && !boidHelper::canvas) {
         boidHelper::engine = engine;
         boidHelper::canvas = canvas;
@@ -46,6 +47,7 @@ void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, doub
         boidHelper::size = size;
         boidHelper::velocity_avg = velocity_avg;
         boidHelper::velocity_var = velocity_var;
+        boidHelper::mousePosition = mousePosition;
     }
     else {
       qDebug() << "boidHelper already initialized!";
@@ -254,4 +256,8 @@ double boidHelper::dist_sq( double *a1, double *a2, int dims ) {
         dist_sq += diff*diff;
     }
     return dist_sq;
+}
+
+vector2 &boidHelper::getMousePosition() const {
+    return *boidHelper::mousePosition;
 }

@@ -1,5 +1,9 @@
 #include "vector2.h"
 
+float vector2::lerpFloat(float start, float end, float t) {
+    return start + t * (end - start);
+}
+
 vector2::vector2() : vector2(0, 0) {
 }
 
@@ -154,6 +158,22 @@ void vector2::setY(double y) {
 
 vector2 vector2::normalize() {
     return (*this = *this / (this->getMagnitude()));
+}
+
+vector2 vector2::lerp(vector2 start, vector2 end, float t) {
+    return vector2(lerpFloat(start.components[0], end.components[0], t),
+            lerpFloat(start.components[1], end.components[1], t));
+}
+
+vector2 vector2::lerpRotation(vector2 position, double lenght, vector2 target, float t) {
+    double angle = atan2(target.components[1] - position.components[1], target.components[0] - position.components[0]);
+    angle = lerpFloat(angle, 0.0f, t);
+
+    double ca = cos(angle);
+    double sa = sin(angle);
+
+    vector2 result = vector2(position.components[0] * ca - position.components[1] * sa, (position.components[0] * sa + position.components[1] * ca));
+    return result.normalize() * lenght;
 }
 
 /**

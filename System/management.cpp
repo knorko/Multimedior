@@ -9,6 +9,7 @@ double management::speedFactor = 1;
 uint management::size = 10;
 double management::velocity_avg = 1;
 double management::velocity_var = 0.1;
+vector2 management::mousePosition = vector2();
 
 /**
  * @brief Initialize the boidHelper class.
@@ -19,7 +20,7 @@ double management::velocity_var = 0.1;
  * @param canvas QObject of the canvas.
  */
 management::management(QQmlApplicationEngine *engine, QObject *canvas) {
-    boidHelper::initialize(engine, canvas, &canvasHeight, &canvasWidth, &tree, &speedFactor, &size, &velocity_avg, &velocity_var);
+    boidHelper::initialize(engine, canvas, &canvasHeight, &canvasWidth, &tree, &speedFactor, &size, &velocity_avg, &velocity_var, &mousePosition);
 }
 
 /**
@@ -117,6 +118,11 @@ void management::setSpeed(double speed) {
 void management::setVelocity(double average, double variance) {
     this->velocity_avg = average;
     this->velocity_var = variance;
+}
+
+void management::setMousePosition(double x, double y) {
+    management::mousePosition.setX(x);
+    management::mousePosition.setY(y);
 }
 
 /**
