@@ -7,7 +7,7 @@ Item {
     width: 200
 
     property bool continuous: false
-    onChildrenChanged: mouseArea1.hoverEnabled = continuous
+    onContinuousChanged: mouseArea1.hoverEnabled = continuous
 
     Rectangle {
         id: canvas_background
