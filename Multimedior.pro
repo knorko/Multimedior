@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     System/management.cpp \
     System/boidhelper.cpp \
     System/kdtree.c \
-    System/vector2.cpp
+    System/vector2.cpp \
+    System/predator.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,6 +30,7 @@ HEADERS += \
     System/boid.h \
     System/boidhelper.h \
     System/kdtree.h \
-    System/vector2.h
+    System/vector2.h \
+    System/predator.h
 
 OTHER_FILES +=

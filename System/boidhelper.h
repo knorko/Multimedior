@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QQmlComponent>
 #include <QQmlApplicationEngine>
 
 #include "vector2.h"
@@ -67,6 +68,7 @@ protected:
      * @brief The velocity of the boid.
      */
     vector2 velocity = vector2(1, 0);
+    vector2 lastVel = vector2();
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */

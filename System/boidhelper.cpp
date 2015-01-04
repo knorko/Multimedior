@@ -102,8 +102,10 @@ void boidHelper::prepare() {
  */
 void boidHelper::finalize() {
     // Clamp the speed
-    velocity.normalize();
-    velocity *= *velocity_avg + (*velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * *velocity_var));
+    if(velocity != vector2(0, 0)) {
+        velocity.normalize();
+        velocity *= *velocity_avg + (*velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * *velocity_var));
+    }
 
     // Set the position based on the velocity
     setX(getX() + velocity.getX() * *speed);

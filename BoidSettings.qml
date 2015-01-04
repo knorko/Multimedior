@@ -74,7 +74,7 @@ GroupBox {
         anchors.top: count_settings.bottom
         Label {
             id: label_SIZE
-            text: "Speed:"
+            text: "Size:"
             anchors.verticalCenter: parent.verticalCenter
         }
 

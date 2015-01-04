@@ -1,6 +1,7 @@
 #include "management.h"
 
 vector<boid*> management::objList;
+vector<Predator*> management::predList;
 kdtree *management::tree = nullptr;
 
 double management::canvasHeight = 472;
@@ -37,9 +38,15 @@ void management::init(uint count, uint size) {
     while(objList.size() != count)
         operation();
 
+    predList.push_back(new Predator());
+
     // Set the desire size
     management::size = size;
     foreach (boid *obj, objList) {
+        obj->setSize(size);
+    }
+
+    foreach (Predator *obj, predList) {
         obj->setSize(size);
     }
 }
@@ -54,6 +61,12 @@ void management::init(uint count, uint size) {
  */
 void management::run() {
     prepareTree();
+
+    foreach (Predator *obj, predList) {
+        obj->prepare();
+        obj->Update();
+        obj->finalize();
+    }
 
     foreach (boid *obj, objList) {
         obj->prepare();
@@ -72,6 +85,10 @@ void management::run() {
 void management::clear() {
     while(!objList.empty())
         removeBoid();
+    while(!predList.empty()) {
+        delete predList.back();
+        predList.pop_back();
+    }
 }
 
 /**

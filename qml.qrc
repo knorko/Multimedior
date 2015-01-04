@@ -8,5 +8,6 @@
         <file>MiscSettings.qml</file>
         <file>PredatorSettings.qml</file>
         <file>Controls.qml</file>
+        <file>Predator.qml</file>
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@
 #include <QQmlApplicationEngine>
 
 #include "boid.h"
+#include "predator.h"
 #include "kdtree.h"
 
 using namespace std;
@@ -25,6 +26,7 @@ private:
      * boid::Update functions.
      */
     static vector<boid*> objList;
+    static vector<Predator*> predList;
     /**
      * @brief Two-dimensional kd-tree that holds the boids.
      *
