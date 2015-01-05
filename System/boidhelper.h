@@ -68,10 +68,6 @@ protected:
      */
     vector2 velocity = vector2(1, 0);
     /**
-     * @brief The three closest neighbors of the boid (sorted).
-     */
-    boidHelper* neighbors[3];
-    /**
      * @brief Search radius of the boids
      */
     double radius = 240;
@@ -113,5 +109,13 @@ public:
 
     uint& getSize() const;
 };
+
+typedef struct Neighbors_s{
+
+    vector2 position2;
+
+    vector2 velocity2;
+
+} Neighbors;
 
 #endif // BOIDHELPER_H

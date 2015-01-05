@@ -10,6 +10,7 @@ double *boidHelper::speed;
 double *boidHelper::velocity_avg;
 double *boidHelper::velocity_var;
 vector2 *boidHelper::mousePosition;
+Neighbors neighbours[3];
 
 boidHelper::boidHelper() {
 }
@@ -217,9 +218,9 @@ void boidHelper::getNeighbors() {
             for(int i = 0; i < 3; i++) {
                 if(nearest[i][2] == 0) {
                     greatest = nearest[i][2];
-                    nearest[i][3] = b->velocity.getX();
-                    nearest[i][4] = b->velocity.getY();
                     greatestIndex = i;
+                    nearest[i][4] = b->velocity.getY();
+                    nearest[i][3] = b->velocity.getX();
                     break;
                 }
                 else if(greatest < nearest[i][2]) {
@@ -243,10 +244,8 @@ void boidHelper::getNeighbors() {
 
     // Finally build the neighbor vectors and free the kd-tree
     for(int i=0; i<3; i++){
-        neighbors[i]->setX(nearest[i][0]);
-        neighbors[i]->setY(nearest[i][1]);
-        neighbors[i]->velocity.setX(nearest[i][3]);
-        neighbors[i]->velocity.setY(nearest[i][4]);
+        neighbours[i].position2 = vector2(nearest[i][0], nearest[i][1]);
+        neighbours[i].velocity2 = vector2(nearest[i][3], nearest[i][4]);
     }
 
     kd_res_free(result);
