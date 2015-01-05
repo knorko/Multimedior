@@ -8,6 +8,7 @@
 
 #include "vector2.h"
 #include "kdtree.h"
+#include "parameter.h"
 
 /**
  * @brief The boidHelper class provides important functionaly that allows
@@ -24,36 +25,11 @@ private:
      */
     static QObject *canvas;
     /**
-     * @brief Height of the canvas.
-     */
-    static double *canvasHeight;
-    /**
-     * @brief Width of the canvas.
-     */
-    static double *canvasWidth;
-    /**
      * @brief The kdtree used for neighbor search and collision.
      */
     static kdtree **tree;
-    /**
-     * @brief Simulation speed factor.
-     */
-    static double *speed;
-    /**
-     * @brief The size of the boids.
-     */
-    static uint *size;
-    /**
-     * @brief The average velocity of the boids.
-     */
-    static double *velocity_avg;
-    /**
-     * @brief The velocity's variance.
-     *
-     * The actual velocity varies between #velocity_avg - this and #velocity_avg + this.
-     */
-    static double *velocity_var;
-    static vector2 *mousePosition;
+
+    static Parameter *parameter;
 
 
     void getNeighbors();
@@ -96,12 +72,12 @@ public:
     boidHelper();
     ~boidHelper();
 
-    static void initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var, vector2 *mousePosition);
+    static void initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter);
 
     QQmlApplicationEngine *getEngine() const;
     QObject *getCanvas() const;
-    double getCanvasHeight() const;
-    double getCanvasWidth() const;
+    double &getCanvasHeight() const;
+    double &getCanvasWidth() const;
 
     void prepare();
     void finalize();
@@ -113,7 +89,7 @@ public:
 
     void setSize(uint size);
 
-    uint& getSize() const;
+    uint &getSize() const;
 };
 
 #endif // BOIDHELPER_H

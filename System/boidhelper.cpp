@@ -1,15 +1,9 @@
 #include "boidhelper.h"
 
-uint *boidHelper::size = nullptr;
 QQmlApplicationEngine *boidHelper::engine = nullptr;
 QObject *boidHelper::canvas = nullptr;
-double *boidHelper::canvasHeight;
-double *boidHelper::canvasWidth;
 kdtree **boidHelper::tree = nullptr;
-double *boidHelper::speed;
-double *boidHelper::velocity_avg;
-double *boidHelper::velocity_var;
-vector2 *boidHelper::mousePosition;
+Parameter *boidHelper::parameter = nullptr;
 
 boidHelper::boidHelper() {
 }
@@ -36,18 +30,13 @@ boidHelper::~boidHelper() {
  * @param velocity_avg The double that holds the average velocity of the boids.
  * @param velocity_var The double that holds the velocity's variance.
  */
-void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, double *canvasHeight, double *canvasWidth, kdtree **tree, double *speed, uint *size, double *velocity_avg, double *velocity_var, vector2 *mousePosition) {
+void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter) {
     if(!boidHelper::engine && !boidHelper::canvas) {
+
         boidHelper::engine = engine;
         boidHelper::canvas = canvas;
-        boidHelper::canvasHeight = canvasHeight;
-        boidHelper::canvasWidth = canvasWidth;
+        boidHelper::parameter = parameter;
         boidHelper::tree = tree;
-        boidHelper::speed = speed;
-        boidHelper::size = size;
-        boidHelper::velocity_avg = velocity_avg;
-        boidHelper::velocity_var = velocity_var;
-        boidHelper::mousePosition = mousePosition;
     }
     else {
       qDebug() << "boidHelper already initialized!";
@@ -71,15 +60,15 @@ QObject *boidHelper::getCanvas() const {
 /**
  * @return Height of the canvas.
  */
-double boidHelper::getCanvasHeight() const {
-    return *boidHelper::canvasHeight;
+double &boidHelper::getCanvasHeight() const {
+    return parameter->canvasHeight;
 }
 
 /**
  * @return Width of the canvas.
  */
-double boidHelper::getCanvasWidth() const {
-    return *boidHelper::canvasWidth;
+double &boidHelper::getCanvasWidth() const {
+    return parameter->canvasWidth;
 }
 
 /**
@@ -104,12 +93,12 @@ void boidHelper::finalize() {
     // Clamp the speed
     if(velocity != vector2(0, 0)) {
         velocity.normalize();
-        velocity *= *velocity_avg + (*velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * *velocity_var));
+        velocity *= parameter->velocity_avg + (parameter->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameter->velocity_var));
     }
 
     // Set the position based on the velocity
-    setX(getX() + velocity.getX() * *speed);
-    setY(getY() + velocity.getY() * *speed);
+    setX(getX() + velocity.getX() * parameter->speedFactor);
+    setY(getY() + velocity.getY() * parameter->speedFactor);
 
     // Stay within the boundaries
     double x = getX();
@@ -117,8 +106,8 @@ void boidHelper::finalize() {
         setX(0);
         velocity.setX(-velocity.getX());
     }
-    else if(x >= getCanvasWidth() - *size) {
-        setX(getCanvasWidth() - *size);
+    else if(x >= getCanvasWidth() - parameter->size) {
+        setX(getCanvasWidth() - parameter->size);
         velocity.setX(-velocity.getX());
     }
 
@@ -127,8 +116,8 @@ void boidHelper::finalize() {
         setY(0);
         velocity.setY(-velocity.getY());
     }
-    else if(y >= getCanvasHeight() - *size) {
-        setY(getCanvasHeight() - *size);
+    else if(y >= getCanvasHeight() - parameter->size) {
+        setY(getCanvasHeight() - parameter->size);
         velocity.setY(-velocity.getY());
     }
 }
@@ -184,7 +173,7 @@ void boidHelper::setSize(uint size) {
  * @return Boid size.
  */
 uint &boidHelper::getSize() const{
-    return *size;
+    return parameter->size;
 }
 
 /**
@@ -205,7 +194,7 @@ void boidHelper::getNeighbors() {
     double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, *canvasWidth);
+    result = kd_nearest_range(*tree, position, parameter->canvasWidth);
 
     while(!kd_res_end(result)) {
         kd_res_item(result, position_neighbour);
@@ -261,5 +250,5 @@ double boidHelper::dist_sq( double *a1, double *a2, int dims ) {
 }
 
 vector2 &boidHelper::getMousePosition() const {
-    return *boidHelper::mousePosition;
+    return parameter->mousePosition;
 }

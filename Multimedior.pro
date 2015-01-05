@@ -31,6 +31,7 @@ HEADERS += \
     System/boidhelper.h \
     System/kdtree.h \
     System/vector2.h \
-    System/predator.h
+    System/predator.h \
+    System/parameter.h
 
 OTHER_FILES +=

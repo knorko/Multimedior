@@ -9,6 +9,7 @@
 #include "boid.h"
 #include "predator.h"
 #include "kdtree.h"
+#include "parameter.h"
 
 using namespace std;
 
@@ -35,31 +36,6 @@ private:
      * efficient manner
      */
     static kdtree *tree;
-    /**
-     * @brief Holds the height of the canvas object.
-     */
-    static double canvasHeight;
-    /**
-     * @brief Holds the width of the canvas object.
-     */
-    static double canvasWidth;
-    /**
-     * @brief Factor by which every boid movement is multiplied.
-     */
-    static double speedFactor;
-    /**
-     * @brief Average movement velocity of the boids.
-     */
-    static double velocity_avg;
-    /**
-     * @brief Velocity variance.
-     */
-    static double velocity_var;
-    /**
-     * @brief Boid size.
-     */
-    static uint size;
-    static vector2 mousePosition;
 
     static void addBoid();
     static void removeBoid();

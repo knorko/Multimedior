@@ -1,16 +1,13 @@
 #include "management.h"
 
+
+
 vector<boid*> management::objList;
 vector<Predator*> management::predList;
 kdtree *management::tree = nullptr;
 
-double management::canvasHeight = 472;
-double management::canvasWidth = 612;
-double management::speedFactor = 1;
-uint management::size = 10;
-double management::velocity_avg = 1;
-double management::velocity_var = 0.1;
-vector2 management::mousePosition = vector2();
+Parameter parameters;
+
 
 /**
  * @brief Initialize the boidHelper class.
@@ -21,7 +18,7 @@ vector2 management::mousePosition = vector2();
  * @param canvas QObject of the canvas.
  */
 management::management(QQmlApplicationEngine *engine, QObject *canvas) {
-    boidHelper::initialize(engine, canvas, &canvasHeight, &canvasWidth, &tree, &speedFactor, &size, &velocity_avg, &velocity_var, &mousePosition);
+    boidHelper::initialize(engine, canvas, &tree, &parameters);
 }
 
 /**
@@ -41,7 +38,7 @@ void management::init(uint count, uint size) {
     predList.push_back(new Predator());
 
     // Set the desire size
-    management::size = size;
+    parameters.size = size;
     foreach (boid *obj, objList) {
         obj->setSize(size);
     }
@@ -100,7 +97,7 @@ void management::clear() {
  * @param height Current canvas height.
  */
 void management::setCanvasHeight(double height) {
-    canvasHeight = height;
+    parameters.canvasHeight = height;
 }
 
 /**
@@ -112,7 +109,7 @@ void management::setCanvasHeight(double height) {
  * @param width Current canvas width.
  */
 void management::setCanvasWidth(double width) {
-    canvasWidth = width;
+    parameters.canvasWidth = width;
 }
 
 /**
@@ -124,7 +121,7 @@ void management::setCanvasWidth(double width) {
  * @param speed Current speed factor.
  */
 void management::setSpeed(double speed) {
-    this->speedFactor = speed;
+    parameters.speedFactor = speed;
 }
 
 /**
@@ -133,13 +130,13 @@ void management::setSpeed(double speed) {
  * @param variance Variance.
  */
 void management::setVelocity(double average, double variance) {
-    this->velocity_avg = average;
-    this->velocity_var = variance;
+    parameters.velocity_var = variance;
+    parameters.velocity_avg = average;
 }
 
 void management::setMousePosition(double x, double y) {
-    management::mousePosition.setX(x);
-    management::mousePosition.setY(y);
+parameters.mousePosition.setX(x);
+parameters.mousePosition.setY(y);
 }
 
 /**
