@@ -65,23 +65,23 @@ boid::~boid() {
 //}
 //TODO: PARAMETRISE NUMBER OF BOIDS
 void boid::Update(){
-    vector2 v1;
-    vector2 v2;
-    vector2 v3;
-    vector2 v4;
-    vector2 center;
-    for(int i=0; i<3; i++){
-    //Rule1: Flocking
-        v4.setX(neighbors[i]->getX());
-        v4.setY(neighbors[i]->getY());
-        center = center + v4;
-    //Rule2:
-        if((position - v4).getSqrMagnitude()<100){
-            center = center - (position - v4);
-        }
-    //Rule3:
+//    vector2 v1;
+//    vector2 v2;
+//    vector2 v3;
+//    vector2 v4;
+//    vector2 center;
+//    for(int i=0; i<3; i++){
+//    //Rule1: Flocking
+//        v4.setX(neighbors[i]->getX());
+//        v4.setY(neighbors[i]->getY());
+//        center = center + v4;
+//    //Rule2:
+//        if((position - v4).getSqrMagnitude()<100){
+//            center = center - (position - v4);
+//        }
+//    //Rule3:
 
-    }
-    center = center/3;
-    v1 = (center - position)/50;
+//    }
+//    center = center/3;
+//    v1 = (center - position)/50;
 }
