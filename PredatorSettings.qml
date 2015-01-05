@@ -18,6 +18,7 @@ Rectangle {
         y: 30
         width: 212
         height: 57
+        visible: false
         title: qsTr("Misc.")
         opacity: 0
 
@@ -87,6 +88,7 @@ Rectangle {
 
             PropertyChanges {
                 target: miscBox
+                visible: true
                 opacity: 1
             }
         }

@@ -18,6 +18,7 @@ Rectangle {
         y: 30
         width: 212
         height: 22
+        visible: false
         anchors.horizontalCenter: parent.horizontalCenter
         opacity: 0
 
@@ -55,6 +56,7 @@ Rectangle {
         id: size_settings
         y: -99
         height: 22
+        visible: false
         anchors.topMargin: 6
         anchors.right: parent.right
         anchors.left: parent.left
@@ -121,6 +123,7 @@ Rectangle {
 
                 PropertyChanges {
                     target: speed_settings
+                    visible: true
                     anchors.topMargin: 6
                     opacity: 1
                 }
@@ -139,6 +142,7 @@ Rectangle {
                     target: size_settings
                     y: 58
                     height: 22
+                    visible: true
                     anchors.rightMargin: 8
                     anchors.leftMargin: 8
                     opacity: 1

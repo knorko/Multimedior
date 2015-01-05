@@ -22,6 +22,7 @@ GroupBox {
     y: 30
     width: 212
     height: 57
+    visible: false
     title: qsTr("Misc.")
     opacity: 0
 
@@ -70,6 +71,7 @@ GroupBox {
     x: 8
     width: 212
     height: 84
+    visible: false
     anchors.top: miscBox.bottom
     anchors.topMargin: -84
     title: qsTr("Velocity")
@@ -168,6 +170,7 @@ GroupBox {
     x: 8
     width: 212
     height: 160
+    visible: false
     anchors.top: velocityBox.bottom
     anchors.topMargin: -84
     opacity: 0
@@ -273,11 +276,13 @@ states: [
 
             PropertyChanges {
                 target: miscBox
+                visible: true
                 opacity: 1
             }
 
             PropertyChanges {
                 target: velocityBox
+                visible: true
                 anchors.topMargin: 6
                 opacity: 1
             }
@@ -327,6 +332,7 @@ states: [
                 target: targetBox
                 width: 212
                 height: 160
+                visible: true
                 anchors.topMargin: 6
                 opacity: 1
             }
