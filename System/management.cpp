@@ -159,6 +159,6 @@ void Management::prepareTree() {
 
     foreach (Boid *obj, objList) {
         double position[2] = { obj->getX(), obj->getY()};
-        kd_insert( tree, position, 0);
+        kd_insert( tree, position, obj);
     }
 }

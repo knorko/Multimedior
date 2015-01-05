@@ -1,5 +1,6 @@
 #include "boidhelper.h"
 
+
 QQmlApplicationEngine *BoidHelper::engine = nullptr;
 QObject *BoidHelper::canvas = nullptr;
 kdtree **BoidHelper::tree = nullptr;
@@ -13,9 +14,9 @@ BoidHelper::~BoidHelper() {
 
 
 /**
- * @brief Initialize the boidHelper class
+ * @brief Initialize the BoidHelper class
  *
- * The boidHelper contains essential functions that are required to program the
+ * The BoidHelper contains essential functions that are required to program the
  * boids.
  * This function gives it the necessary access to certain GUI parameters. It only
  * has effect one time. Once the values have been set, future calls will have no effect.
@@ -190,14 +191,14 @@ void BoidHelper::getNeighbors() {
     double position_neighbour[2];
     double sqrDistance;
 
-    // Content: (x, y, squared distance)
-    double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    // Content: (x, y, squared distance, velocity.X, velocity.Y)
+    double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
     double position[2] = { getX(), getY() };
     result = kd_nearest_range(*tree, position, parameter->canvasWidth);
 
     while(!kd_res_end(result)) {
-        kd_res_item(result, position_neighbour);
+       BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
@@ -209,10 +210,14 @@ void BoidHelper::getNeighbors() {
                 if(nearest[i][2] == 0) {
                     greatest = nearest[i][2];
                     greatestIndex = i;
+                    nearest[i][4] = b->velocity.getY();
+                    nearest[i][3] = b->velocity.getX();
                     break;
                 }
                 else if(greatest < nearest[i][2]) {
                     greatest = nearest[i][2];
+                    nearest[i][3] = b->velocity.getX();
+                    nearest[i][4] = b->velocity.getY();
                     greatestIndex = i;
                 }
             }
@@ -220,6 +225,8 @@ void BoidHelper::getNeighbors() {
                 nearest[greatestIndex][0] = position_neighbour[0];
                 nearest[greatestIndex][1] = position_neighbour[1];
                 nearest[greatestIndex][2] = sqrDistance;
+                nearest[greatestIndex][3] = b->velocity.getX();
+                nearest[greatestIndex][4] = b->velocity.getY();
             }
         }
 
@@ -227,9 +234,10 @@ void BoidHelper::getNeighbors() {
     }
 
     // Finally build the neighbor vectors and free the kd-tree
-    for(int i=0; i<3; i++)
-        neighbors[i] = Vector2(nearest[i][0], nearest[i][1]);
-
+    for(int i=0; i<3; i++){
+        neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
+        neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
+    }
     kd_res_free(result);
 }
 
