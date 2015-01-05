@@ -70,7 +70,7 @@ protected:
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */
-    vector2 neighbors[3];
+    boidHelper* neighbors[3];
     /**
      * @brief Search radius of the boids
      */

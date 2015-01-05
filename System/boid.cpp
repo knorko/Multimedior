@@ -68,13 +68,16 @@ void boid::Update(){
     vector2 v1;
     vector2 v2;
     vector2 v3;
+    vector2 v4;
     vector2 center;
     for(int i=0; i<3; i++){
     //Rule1: Flocking
-        center = center + neighbors[i];
+        v4.setX(neighbors[i]->getX());
+        v4.setY(neighbors[i]->getY());
+        center = center + v4;
     //Rule2:
-        if((position - neighbors[i]).getSqrMagnitude()<100){
-            center = center - (position - neighbors[i]);
+        if((position - v4).getSqrMagnitude()<100){
+            center = center - (position - v4);
         }
     //Rule3:
 
