@@ -349,6 +349,11 @@ states: [
                 opacity: 1
             }
 
+            PropertyChanges {
+                target: comboBox1
+                activeFocusOnPress: true
+            }
+
     }
     ]
 

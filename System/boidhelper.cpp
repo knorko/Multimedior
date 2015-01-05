@@ -25,7 +25,7 @@ BoidHelper::~BoidHelper() {
  * @param tree Pointer towards the later used kd-tree.
  * @param parameter Pointer towards the parameter struct.
  */
-void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter) {
+void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, kdtree **tree, Parameter *parameter) {
     if(!BoidHelper::engine && !BoidHelper::canvas) {
 
         BoidHelper::engine = engine;

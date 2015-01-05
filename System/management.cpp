@@ -71,10 +71,8 @@ void Management::run() {
 void Management::clear() {
     while(!boidList.empty())
         removeBoid();
-    while(!predList.empty()) {
-        delete predList.back();
-        predList.pop_back();
-    }
+    while(!predList.empty())
+        removePredator();
 }
 
 /**

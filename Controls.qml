@@ -111,7 +111,7 @@ Rectangle {
 
             PropertyChanges {
                 target: startButton
-                enabled: true
+                enabled: false
                 opacity: 0
             }
 
