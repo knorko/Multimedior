@@ -61,7 +61,7 @@ public:
     Q_INVOKABLE void setCanvasHeight(double height);
     Q_INVOKABLE void setCanvasWidth(double width);
     Q_INVOKABLE void setSpeed(double speedFactor);
-    Q_INVOKABLE void setVelocity(double average, double variance);
+    Q_INVOKABLE void setVelocity(double average);
     Q_INVOKABLE void setMousePosition(double x, double y);
     Q_INVOKABLE void setSize(uint size);
 };

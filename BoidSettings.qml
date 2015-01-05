@@ -114,54 +114,10 @@ GroupBox {
 
             onValueChanged: {
                 label_currentspeedavg.text = value.toFixed(2)
-                management.setVelocity(value, slider_speed_var.value);
+                management.setVelocity(value);
             }
         }
 
-    }
-
-    Item {
-        id: speed_var_settings
-        x: 0
-        y: 28
-        height: 22
-        anchors.top: speed_avg_settings.bottom
-        anchors.topMargin: -22
-        anchors.left: parent.left
-        opacity: 0
-        anchors.right: parent.right
-        Label {
-            id: label_VAR
-            x: -8
-            y: -20
-            text: "Variance:"
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: label_currentspeedvar
-            x: 187
-            text: "0.00"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Slider {
-            id: slider_speed_var
-            x: 45
-            width: 117
-            updateValueWhileDragging: false
-            value: 0.1
-            maximumValue: 0.5
-            activeFocusOnPress: true
-            minimumValue: 0
-            anchors.verticalCenter: parent.verticalCenter
-
-            onValueChanged: {
-                label_currentspeedvar.text = value.toFixed(2)
-                management.setVelocity(slider_speed_avg.value, value);
-            }
-        }
     }
 }
 
@@ -265,6 +221,9 @@ states: [
                 x: 53
                 width: 117
                 height: 22
+                minimumValue: 1
+                maximumValue: 2
+                value: 1
                 anchors.verticalCenterOffset: 0
             }
 
@@ -282,6 +241,9 @@ states: [
 
             PropertyChanges {
                 target: velocityBox
+                x: 8
+                width: 212
+                height: 37
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
@@ -290,34 +252,7 @@ states: [
             PropertyChanges {
                 target: label_AVG
                 x: 0
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: speed_var_settings
-                y: 28
-                anchors.topMargin: 6
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: label_VAR
-                x: 0
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: slider_speed_var
-                x: 53
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: label_currentspeedvar
-                x: 172
-                width: 24
+                text: "Maximum:"
                 anchors.verticalCenterOffset: 0
             }
 

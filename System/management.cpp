@@ -112,13 +112,11 @@ void Management::setSpeed(double speed) {
 }
 
 /**
- * @brief Set the velocity and variance.
+ * @brief Set the velocity.
  * @param average Average velocity.
- * @param variance Variance.
  */
-void Management::setVelocity(double average, double variance) {
-    parameters.velocity_var = variance;
-    parameters.velocity_avg = average;
+void Management::setVelocity(double average) {
+    parameters.velocity_max = average;
 }
 
 /**

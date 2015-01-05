@@ -89,7 +89,7 @@ void BoidHelper::finalize() {
     // Clamp the speed
     if(velocity != Vector2(0, 0)) {
         velocity.normalize();
-        velocity *= parameters->velocity_avg + (parameters->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameters->velocity_var));
+        velocity *= parameters->velocity_max + (((double)rand()/(double)(RAND_MAX)));
     }
 
     // Set the position based on the velocity
