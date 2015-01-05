@@ -40,7 +40,7 @@ public:
     void setY(double y);
     Vector2 normalize();
     static Vector2 lerp(Vector2 start, Vector2 end, float t);
-    static Vector2 lerpRotation(Vector2 position, double lenght, Vector2 target, float t);
+    static Vector2 lerpRotation(Vector2 start, Vector2 target, float t);
 
     double getSqrMagnitude();
     double getMagnitude();

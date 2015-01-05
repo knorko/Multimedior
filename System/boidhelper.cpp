@@ -22,13 +22,8 @@ BoidHelper::~BoidHelper() {
  *
  * @param engine The main QQmlApplicationEngine the application uses.
  * @param canvas The QObject that holds the canvas we want the boids to move on.
- * @param canvasHeight The double that holds the canvas height.
- * @param canvasWidth The double that holds the canvas width.
  * @param tree Pointer towards the later used kd-tree.
- * @param speed The double that holds the speed factor.
- * @param size The double that holds the size of the boids.
- * @param velocity_avg The double that holds the average velocity of the boids.
- * @param velocity_var The double that holds the velocity's variance.
+ * @param parameter Pointer towards the parameter struct.
  */
 void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter) {
     if(!BoidHelper::engine && !BoidHelper::canvas) {
@@ -250,6 +245,9 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
     return dist_sq;
 }
 
+/**
+ * @return Current mouse position
+ */
 Vector2 &BoidHelper::getMousePosition() const {
     return parameters->mousePosition;
 }

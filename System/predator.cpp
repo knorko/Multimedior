@@ -21,6 +21,9 @@ Predator::~Predator() {
     delete object;
 }
 
+/**
+ * @brief Predator logic
+ */
 void Predator::update() {
     Vector2 mp = getMousePosition();
     if(mp != Vector2(0,0) && (mp - position).getSqrMagnitude() > 10.0f) {

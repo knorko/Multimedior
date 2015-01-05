@@ -24,9 +24,15 @@ private:
      * @brief vector of boid pointers.
      *
      * This is used to iterate over all the boids and call their respective
-     * boid::Update functions.
+     * Boid::update functions.
      */
-    static vector<Boid*> objList;
+    static vector<Boid*> boidList;
+    /**
+     * @brief vector of predator pointers.
+     *
+     * This is used to iterate over all the predators and call their respective
+     * Predator::update functions.
+     */
     static vector<Predator*> predList;
     /**
      * @brief Two-dimensional kd-tree that holds the boids.

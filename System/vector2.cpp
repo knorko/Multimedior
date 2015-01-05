@@ -1,8 +1,5 @@
 #include "vector2.h"
 
-float Vector2::lerpFloat(float start, float end, float t) {
-    return start + t * (end - start);
-}
 
 Vector2::Vector2() : Vector2(0, 0) {
 }
@@ -18,6 +15,17 @@ Vector2::Vector2(double x, double y) {
 }
 
 Vector2::~Vector2() {
+}
+
+/**
+ * @brief Helper function to interpolate two floats
+ * @param start Starting float
+ * @param end Target float
+ * @param t Step size
+ * @return start interpolated by one step
+ */
+float Vector2::lerpFloat(float start, float end, float t) {
+    return start + t * (end - start);
 }
 
 /**
@@ -155,25 +163,47 @@ void Vector2::setX(double x) {
 void Vector2::setY(double y) {
     components[1] = y;
 }
-
+/**
+ * @brief Turns vector into unit vector
+ * @return Normalized vector
+ */
 Vector2 Vector2::normalize() {
     return (*this = *this / (this->getMagnitude()));
 }
-
+/**
+ * @brief Linear interpolation between two vectors
+ *
+ * Slowly interpolates between two vectors,
+ * by interpolating the individual components
+ *
+ * @param start Starting vector
+ * @param end Target vector
+ * @param t Step size between 0 and 1
+ * @return Vector after interpolation step
+ */
 Vector2 Vector2::lerp(Vector2 start, Vector2 end, float t) {
     return Vector2(lerpFloat(start.components[0], end.components[0], t),
             lerpFloat(start.components[1], end.components[1], t));
 }
-
-Vector2 Vector2::lerpRotation(Vector2 position, double lenght, Vector2 target, float t) {
+/**
+ * @brief Rotates a vector towards another
+ *
+ * Like #lerp, but preserves magnitude by rotating it so it faces the target.
+ *
+ * @param start Starting vector
+ * @param target Target vector
+ * @param t Step size
+ * @return Vector rotated towards the end, by one step
+ */
+Vector2 Vector2::lerpRotation(Vector2 start, Vector2 target, float t) {
     double angle = atan2(target.components[1] - position.components[1], target.components[0] - position.components[0]);
     angle = lerpFloat(angle, 0.0f, t);
 
     double ca = cos(angle);
     double sa = sin(angle);
 
-    Vector2 result = Vector2(position.components[0] * ca - position.components[1] * sa, (position.components[0] * sa + position.components[1] * ca));
-    return result.normalize() * lenght;
+    Vector2 result = Vector2(start.components[0] * ca - start.components[1] * sa, (start.components[0] * sa + start.components[1] * ca));
+    return result.normalize() * start.getMagnitude();
 }
 
 /**

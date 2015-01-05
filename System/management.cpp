@@ -1,6 +1,6 @@
 #include "management.h"
 
-vector<Boid*> Management::objList;
+vector<Boid*> Management::boidList;
 vector<Predator*> Management::predList;
 kdtree *Management::tree = nullptr;
 
@@ -20,18 +20,18 @@ Management::Management(QQmlApplicationEngine *engine, QObject *canvas) {
 }
 
 /**
- * @brief Set amount of desired boids.
+ * @brief Set amount of desired boids and predators.
  *
- * Delete or create boids until #objList holds the desired amount of references.
+ * Delete or create boids and predators until #boidList and #predList hold the desired amount of references.
  *
- * @param count Desired amount of boids.
- * @param size The desired size for the boids.
+ * @param boidCount Desired amount of boids.
+ * @param predatorCount Desired amount of predators.
  */
 void Management::init(uint boidCount, uint predatorCount) {
-    void (*boidOp)() = objList.size() < boidCount ? &addBoid : &removeBoid;
+    void (*boidOp)() = boidList.size() < boidCount ? &addBoid : &removeBoid;
     void (*predOp)() = predList.size() < predatorCount ? &addPredator : &removePredator;
 
-    while(objList.size() != boidCount)
+    while(boidList.size() != boidCount)
         boidOp();
     while(predList.size() != predatorCount)
         predOp();
@@ -54,7 +54,7 @@ void Management::run() {
         obj->finalize();
     }
 
-    foreach (Boid *obj, objList) {
+    foreach (Boid *obj, boidList) {
         obj->prepare();
         obj->update();
         obj->finalize();
@@ -66,10 +66,10 @@ void Management::run() {
 /**
  * @brief Delete all boids.
  *
- * Each boid is deleted until #objList is empty.
+ * Each boid is deleted until #boidList is empty.
  */
 void Management::clear() {
-    while(!objList.empty())
+    while(!boidList.empty())
         removeBoid();
     while(!predList.empty()) {
         delete predList.back();
@@ -78,7 +78,7 @@ void Management::clear() {
 }
 
 /**
- * @brief Update #canvasHeight.
+ * @brief Update Parameter::canvasHeight.
  *
  * The actual height of the canvas is stored in a variable instead of being
  * retrieved from the UI every time.
@@ -90,7 +90,7 @@ void Management::setCanvasHeight(double height) {
 }
 
 /**
- * @brief Update #canvasWidth.
+ * @brief Update Parameter::canvasWidth.
  *
  * The actual width of the canvas is stored in a variable instead of being
  * retrieved from the UI every time.
@@ -104,7 +104,7 @@ void Management::setCanvasWidth(double width) {
 /**
  * @brief Update speed factor.
  *
- * #speedFactor is set by the QML code and contains the factor by which every
+ * Parameter::speedFactor is set by the QML code and contains the factor by which every
  * boid movement is multiplied.
  *
  * @param speed Current speed factor.
@@ -123,34 +123,49 @@ void Management::setVelocity(double average, double variance) {
     parameters.velocity_avg = average;
 }
 
+/**
+ * @brief Updates Parameters::mousePosition
+ * @param x x-Position
+ * @param y y-Position
+ */
 void Management::setMousePosition(double x, double y) {
     parameters.mousePosition.setX(x);
     parameters.mousePosition.setY(y);
 }
 
+/**
+ * @brief Sets the size of the boids and predators
+ * @param size Desired size
+ */
 void Management::setSize(uint size) {
     parameters.size = size;
 }
 
 /**
- * @brief Add a new boid to #objList.
+ * @brief Add a new boid to #boidList.
  */
 void Management::addBoid() {
-    objList.push_back(new Boid());
+    boidList.push_back(new Boid());
 }
 
 /**
- * @brief Remove a boid from #objList.
+ * @brief Remove a boid from #boidList.
  */
 void Management::removeBoid() {
-    delete objList.back();
-    objList.pop_back();
+    delete boidList.back();
+    boidList.pop_back();
 }
 
+/**
+ * @brief Add a new predator to #predList.
+ */
 void Management::addPredator() {
     predList.push_back(new Predator());
 }
 
+/**
+ * @brief Remove a predator from #predList.
+ */
 void Management::removePredator() {
     delete predList.back();
     predList.pop_back();
@@ -159,7 +174,7 @@ void Management::removePredator() {
 void Management::prepareTree() {
     tree = kd_create(2);
 
-    foreach (Boid *obj, objList) {
+    foreach (Boid *obj, boidList) {
         double position[2] = { obj->getX(), obj->getY()};
         kd_insert( tree, position, 0);
     }

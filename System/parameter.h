@@ -2,6 +2,10 @@
 #define DEFINE_H
 #include "vector2.h"
 
+
+/**
+ * @brief Parameter_S includes all parameter variables.
+ */
 typedef struct Parameter_S{
     /**
      * @brief Holds the height of the canvas object.

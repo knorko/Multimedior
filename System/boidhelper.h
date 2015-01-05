@@ -28,7 +28,9 @@ private:
      * @brief The kdtree used for neighbor search and collision.
      */
     static kdtree **tree;
-
+    /**
+     * @brief Holds pointers to certain parameters
+     */
     static Parameter *parameters;
 
 
@@ -44,6 +46,9 @@ protected:
      * @brief The velocity of the boid.
      */
     Vector2 velocity = Vector2(1, 0);
+    /**
+     * @brief Stores the last known velocity
+     */
     Vector2 lastVel = Vector2();
     /**
      * @brief The three closest neighbors of the boid (sorted).
