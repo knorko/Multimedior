@@ -196,7 +196,7 @@ Vector2 Vector2::lerp(Vector2 start, Vector2 end, float t) {
  * @return Vector rotated towards the end, by one step
  */
 Vector2 Vector2::lerpRotation(Vector2 start, Vector2 target, float t) {
-    double angle = atan2(target.components[1] - position.components[1], target.components[0] - position.components[0]);
+    double angle = atan2(target.components[1] - start.components[1], target.components[0] - start.components[0]);
     angle = lerpFloat(angle, 0.0f, t);
 
     double ca = cos(angle);
