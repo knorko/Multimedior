@@ -65,23 +65,39 @@ boid::~boid() {
 //}
 //TODO: PARAMETRISE NUMBER OF BOIDS
 void boid::Update(){
-//    vector2 v1;
-//    vector2 v2;
-//    vector2 v3;
-//    vector2 v4;
-//    vector2 center;
-//    for(int i=0; i<3; i++){
-//    //Rule1: Flocking
-//        v4.setX(neighbors[i]->getX());
-//        v4.setY(neighbors[i]->getY());
-//        center = center + v4;
-//    //Rule2:
-//        if((position - v4).getSqrMagnitude()<100){
-//            center = center - (position - v4);
-//        }
-//    //Rule3:
+    vector2 v1;
+    vector2 v2;
+    vector2 v3;
+    vector2 v4(getCanvasWidth()/2 , getCanvasHeight()/2);
+    vector2 center= v4;
 
-//    }
-//    center = center/3;
-//    v1 = (center - position)/50;
+    //Rule1: move to local center of mass ( center becomes average of surrounding boids)
+    for(int i = 0; i < 3; i++){
+        center = center + neighbours[i].position2;
+//        //Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
+//        if ((neighbours[i].position2 - position).getSqrMagnitude()<100){
+//            center = center - (neighbours[i].position2 - position);
+//        }
+            qDebug() << "center: "<< center.getX()<<" "<<center.getY()<<" Neighbour: "<<neighbours[i].position2.getX() <<" "<<neighbours[i].position2.getY();
+    }
+    center = center / 3;
+    v1 = center - position;
+
+    //Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
+    center = center - center;
+    for(int i = 0; i < 3; i++){
+        if ((neighbours[i].position2 - position).getSqrMagnitude()<1000){
+            center = center - (neighbours[i].position2 - position);
+        }
+    }
+    v2 = center;
+    //Rule3: Match velocity to surrounding Boids
+    for(int i = 0; i < 3; i++){
+        v3 = v3 + neighbours[i].velocity2;
+    }
+    v3 = v3/3;
+    v3 = (v3 - position)/4;
+    velocity = velocity + v1 + v2 + v3;
+
+
 }

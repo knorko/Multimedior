@@ -10,7 +10,7 @@ double *boidHelper::speed;
 double *boidHelper::velocity_avg;
 double *boidHelper::velocity_var;
 vector2 *boidHelper::mousePosition;
-Neighbors neighbours[3];
+
 
 boidHelper::boidHelper() {
 }

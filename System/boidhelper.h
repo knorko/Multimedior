@@ -8,6 +8,14 @@
 #include "vector2.h"
 #include "kdtree.h"
 
+typedef struct Neighbors_s{
+
+    vector2 position2;
+
+    vector2 velocity2;
+
+} Neighbors;
+
 /**
  * @brief The boidHelper class provides important functionaly that allows
  * the boids to be programmed.
@@ -67,6 +75,7 @@ protected:
      * @brief The velocity of the boid.
      */
     vector2 velocity = vector2(1, 0);
+    Neighbors neighbours[3];
     /**
      * @brief Search radius of the boids
      */
@@ -109,13 +118,5 @@ public:
 
     uint& getSize() const;
 };
-
-typedef struct Neighbors_s{
-
-    vector2 position2;
-
-    vector2 velocity2;
-
-} Neighbors;
 
 #endif // BOIDHELPER_H
