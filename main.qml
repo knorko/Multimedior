@@ -36,9 +36,9 @@ Window {
         }
     }
 
-    signal init(int boidCount, int predatorCount, int size)
+    signal init(int boidCount, int predatorCount)
     onInit: {
-        management.init(boidCount, predatorCount, size)
+        management.init(boidCount, predatorCount)
     }
 
     signal pause(bool pause)

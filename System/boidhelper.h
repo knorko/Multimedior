@@ -29,7 +29,7 @@ private:
      */
     static kdtree **tree;
 
-    static Parameter *parameter;
+    static Parameter *parameters;
 
 
     void getNeighbors();
@@ -72,7 +72,7 @@ public:
     BoidHelper();
     ~BoidHelper();
 
-    static void initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter);
+    static void initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameters);
 
     QQmlApplicationEngine *getEngine() const;
     QObject *getCanvas() const;

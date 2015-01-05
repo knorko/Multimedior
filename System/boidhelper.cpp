@@ -3,7 +3,7 @@
 QQmlApplicationEngine *BoidHelper::engine = nullptr;
 QObject *BoidHelper::canvas = nullptr;
 kdtree **BoidHelper::tree = nullptr;
-Parameter *BoidHelper::parameter = nullptr;
+Parameter *BoidHelper::parameters = nullptr;
 
 BoidHelper::BoidHelper() {
 }
@@ -35,7 +35,7 @@ void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtre
 
         BoidHelper::engine = engine;
         BoidHelper::canvas = canvas;
-        BoidHelper::parameter = parameter;
+        BoidHelper::parameters = parameter;
         BoidHelper::tree = tree;
     }
     else {
@@ -61,14 +61,14 @@ QObject *BoidHelper::getCanvas() const {
  * @return Height of the canvas.
  */
 double &BoidHelper::getCanvasHeight() const {
-    return parameter->canvasHeight;
+    return parameters->canvasHeight;
 }
 
 /**
  * @return Width of the canvas.
  */
 double &BoidHelper::getCanvasWidth() const {
-    return parameter->canvasWidth;
+    return parameters->canvasWidth;
 }
 
 /**
@@ -79,6 +79,7 @@ double &BoidHelper::getCanvasWidth() const {
  */
 void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
+    setSize(parameters->size);
 
     getNeighbors();
 }
@@ -93,12 +94,12 @@ void BoidHelper::finalize() {
     // Clamp the speed
     if(velocity != Vector2(0, 0)) {
         velocity.normalize();
-        velocity *= parameter->velocity_avg + (parameter->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameter->velocity_var));
+        velocity *= parameters->velocity_avg + (parameters->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameters->velocity_var));
     }
 
     // Set the position based on the velocity
-    setX(getX() + velocity.getX() * parameter->speedFactor);
-    setY(getY() + velocity.getY() * parameter->speedFactor);
+    setX(getX() + velocity.getX() * parameters->speedFactor);
+    setY(getY() + velocity.getY() * parameters->speedFactor);
 
     // Stay within the boundaries
     double x = getX();
@@ -106,8 +107,8 @@ void BoidHelper::finalize() {
         setX(0);
         velocity.setX(-velocity.getX());
     }
-    else if(x >= getCanvasWidth() - parameter->size) {
-        setX(getCanvasWidth() - parameter->size);
+    else if(x >= getCanvasWidth() - parameters->size) {
+        setX(getCanvasWidth() - parameters->size);
         velocity.setX(-velocity.getX());
     }
 
@@ -116,8 +117,8 @@ void BoidHelper::finalize() {
         setY(0);
         velocity.setY(-velocity.getY());
     }
-    else if(y >= getCanvasHeight() - parameter->size) {
-        setY(getCanvasHeight() - parameter->size);
+    else if(y >= getCanvasHeight() - parameters->size) {
+        setY(getCanvasHeight() - parameters->size);
         velocity.setY(-velocity.getY());
     }
 }
@@ -173,7 +174,7 @@ void BoidHelper::setSize(uint size) {
  * @return Boid size.
  */
 uint &BoidHelper::getSize() const{
-    return parameter->size;
+    return parameters->size;
 }
 
 /**
@@ -194,7 +195,7 @@ void BoidHelper::getNeighbors() {
     double nearest[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameter->canvasWidth);
+    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
 
     while(!kd_res_end(result)) {
         kd_res_item(result, position_neighbour);
@@ -250,5 +251,5 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
 }
 
 Vector2 &BoidHelper::getMousePosition() const {
-    return parameter->mousePosition;
+    return parameters->mousePosition;
 }

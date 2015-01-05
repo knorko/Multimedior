@@ -89,7 +89,7 @@ Rectangle {
             value: 10
 
             onValueChanged: {
-                controls1.size = value
+                management.setSize(value)
                 label_currentsize.text = value
             }
         }

@@ -27,7 +27,7 @@ Management::Management(QQmlApplicationEngine *engine, QObject *canvas) {
  * @param count Desired amount of boids.
  * @param size The desired size for the boids.
  */
-void Management::init(uint boidCount, uint predatorCount, uint size) {
+void Management::init(uint boidCount, uint predatorCount) {
     void (*boidOp)() = objList.size() < boidCount ? &addBoid : &removeBoid;
     void (*predOp)() = predList.size() < predatorCount ? &addPredator : &removePredator;
 
@@ -35,16 +35,6 @@ void Management::init(uint boidCount, uint predatorCount, uint size) {
         boidOp();
     while(predList.size() != predatorCount)
         predOp();
-
-    // Set the desire size
-    parameters.size = size;
-
-    foreach (Boid *obj, objList) {
-        obj->setSize(size);
-    }
-    foreach (Predator *obj, predList) {
-        obj->setSize(size);
-    }
 }
 
 /**
@@ -136,6 +126,10 @@ void Management::setVelocity(double average, double variance) {
 void Management::setMousePosition(double x, double y) {
     parameters.mousePosition.setX(x);
     parameters.mousePosition.setY(y);
+}
+
+void Management::setSize(uint size) {
+    parameters.size = size;
 }
 
 /**

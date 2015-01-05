@@ -7,8 +7,6 @@ Rectangle {
     property int boidCount: 5
     property int predatorCount: 0
 
-    property int size: 10
-
     signal changeRunning(bool value)
     onChangeRunning: {
         if(value) {
@@ -56,7 +54,7 @@ Rectangle {
             anchors.left: parent.left
 
             onClicked: {
-                init(boidCount, predatorCount, size)
+                init(boidCount, predatorCount)
                 running = true
             }
         }
