@@ -4,6 +4,11 @@ import QtQuick.Controls 1.2
 Rectangle {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
+    signal changeRunning(bool value)
+    onChangeRunning: {
+        miscBox.enabled = !value
+    }
+
     Label {
         id: label_title
         x: 89

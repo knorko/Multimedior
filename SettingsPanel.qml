@@ -9,6 +9,7 @@ Item {
             state = "HIDDEN"
 
         boidSettings1.changeRunning(value)
+        predatorSettings1.changeRunning(value)
     }
 
     id: settings_root
