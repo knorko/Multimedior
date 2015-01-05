@@ -33,33 +33,52 @@ boid::~boid() {
 /**
  * @brief Boid logic
  */
-void boid::Update() {
-    vector2 targetposition;
-    vector2 result;
-    for(int i=0; i<3; i++){
-        if((neighbors[i] - position).getSqrMagnitude()>3600){
-            targetposition = neighbors[i] - position;
-            result = result + targetposition/targetposition.getMagnitude();
-#ifdef BOID_DEBUG
-            qDebug() << "attract";
-#endif
-        }
-        else{
-            targetposition = neighbors[i] - position;
-            result = result - targetposition/targetposition.getMagnitude();
-#ifdef BOID_DEBUG
-            qDebug() << "avoid";
-#endif
-        }
-    }
-    velocity = result;
-    vector2 mp = getMousePosition();
-    if(!(mp == vector2(0, 0))) {
-        if((position - mp).getSqrMagnitude() > 10)
-        velocity = vector2::lerp(lastVel, result * 50 + (mp - position), 0.016f);
-    }
-    else
-        velocity = vector2::lerp(lastVel, result, 0.016f * 10);
+//void boid::Update() {
+//    vector2 targetposition;
+//    vector2 result;
+//    for(int i=0; i<3; i++){
+//        if((neighbors[i] - position).getSqrMagnitude()>3600){
+//            targetposition = neighbors[i] - position;
+//            result = result + targetposition/targetposition.getMagnitude();
+//#ifdef BOID_DEBUG
+//            qDebug() << "attract";
+//#endif
+//        }
+//        else{
+//            targetposition = neighbors[i] - position;
+//            result = result - targetposition/targetposition.getMagnitude();
+//#ifdef BOID_DEBUG
+//            qDebug() << "avoid";
+//#endif
+//        }
+//    }
+//    velocity = result;
+//    vector2 mp = getMousePosition();
+//    if(!(mp == vector2(0, 0))) {
+//        if((position - mp).getSqrMagnitude() > 10)
+//        velocity = vector2::lerp(lastVel, result * 50 + (mp - position), 0.016f);
+//    }
+//    else
+//        velocity = vector2::lerp(lastVel, result, 0.016f * 10);
 
-    lastVel = velocity;
+//    lastVel = velocity;
+//}
+//TODO: PARAMETRISE NUMBER OF BOIDS
+void boid::Update(){
+    vector2 v1;
+    vector2 v2;
+    vector2 v3;
+    vector2 center;
+    for(int i=0; i<3; i++){
+    //Rule1: Flocking
+        center = center + neighbors[i];
+    //Rule2:
+        if((position - neighbors[i]).getSqrMagnitude()<100){
+            center = center - (position - neighbors[i]);
+        }
+    //Rule3:
+
+    }
+    center = center/3;
+    v1 = (center - position)/50;
 }
