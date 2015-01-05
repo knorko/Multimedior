@@ -39,6 +39,8 @@ private:
 
     static void addBoid();
     static void removeBoid();
+    static void addPredator();
+    static void removePredator();
 
     void prepareTree();
 
@@ -47,7 +49,7 @@ public:
 
     explicit Management(QQmlApplicationEngine *engine, QObject *canvas);
 
-    Q_INVOKABLE void init(uint count, uint size);
+    Q_INVOKABLE void init(uint boidCount, uint predatorCount, uint size);
     Q_INVOKABLE void run();
     Q_INVOKABLE void clear();
     Q_INVOKABLE void setCanvasHeight(double height);

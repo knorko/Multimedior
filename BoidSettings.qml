@@ -21,7 +21,7 @@ GroupBox {
     x: 8
     y: 30
     width: 212
-    height: 84
+    height: 57
     title: qsTr("Misc.")
     opacity: 0
 
@@ -58,53 +58,10 @@ GroupBox {
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                controls1.count = value
+                controls1.boidCount = value
                 label_currentcount.text = value
             }
         }
-    }
-
-    Item {
-        id: size_settings
-        y: -99
-        height: 22
-        anchors.topMargin: 6
-        anchors.right: parent.right
-        anchors.left: parent.left
-        anchors.top: count_settings.bottom
-        Label {
-            id: label_SIZE
-            text: "Size:"
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: label_currentsize
-            x: 187
-            text: "10"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Slider {
-            id: slider_size
-            x: 45
-            width: 136
-            activeFocusOnPress: true
-            tickmarksEnabled: true
-            updateValueWhileDragging: true
-            stepSize: 1
-            minimumValue: 5
-            anchors.verticalCenter: parent.verticalCenter
-            maximumValue: 15
-            value: 10
-
-            onValueChanged: {
-                controls1.size = value
-                label_currentsize.text = value
-            }
-        }
-        opacity: 0
     }
 }
 
@@ -315,31 +272,8 @@ states: [
             }
 
             PropertyChanges {
-                target: size_settings
-                anchors.horizontalCenterOffset: 0
-                opacity: 1
-                anchors.topMargin: 6
-            }
-
-            PropertyChanges {
-                target: label_SIZE
-                text: "Size:"
-            }
-
-            PropertyChanges {
                 target: miscBox
                 opacity: 1
-            }
-
-            PropertyChanges {
-                target: slider_size
-                width: 125
-                height: 22
-            }
-
-            PropertyChanges {
-                target: label_currentsize
-                x: 182
             }
 
             PropertyChanges {

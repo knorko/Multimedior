@@ -17,89 +17,141 @@ Rectangle {
         x: 8
         y: 30
         width: 212
-            height: 22
-            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0
+        height: 22
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: 0
 
-            Label {
-                id: label_SPEED
-                text: "Speed:"
-                anchors.verticalCenter: parent.verticalCenter
+        Label {
+            id: label_SPEED
+            text: "Speed:"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentspeed
+            x: 187
+            text: "0.00"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_speed
+            x: 45
+            width: 136
+            activeFocusOnPress: true
+            minimumValue: 0.1
+            value: 1
+            maximumValue: 2
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentspeed.text = value.toFixed(2)
+                management.setSpeed(value)
             }
-
-            Label {
-                id: label_currentspeed
-                x: 187
-                text: "0.00"
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Slider {
-                id: slider_speed
-                x: 45
-                width: 136
-                activeFocusOnPress: true
-                minimumValue: 0.1
-                value: 1
-                maximumValue: 2
-                anchors.verticalCenter: parent.verticalCenter
-
-                onValueChanged: {
-                    label_currentspeed.text = value.toFixed(2)
-                    management.setSpeed(value)
-                }
-            }
+        }
     }
 
-    id: rectangle1
-    width: 228
-    height: 32
-    color: sysPalette.window
-    radius: 1
-    border.color: sysPalette.mid
+    Item {
+        id: size_settings
+        y: -99
+        height: 22
+        anchors.topMargin: 6
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.top: count_settings.bottom
+        Label {
+            id: label_SIZE
+            text: "Size:"
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-    states: [
-        State {
-            name: "VISIBLE"
+        Label {
+            id: label_currentsize
+            x: 187
+            text: "10"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-            PropertyChanges {
-                target: rectangle1
-                height: 225
-            }
+        Slider {
+            id: slider_size
+            x: 45
+            width: 136
+            activeFocusOnPress: true
+            tickmarksEnabled: true
+            updateValueWhileDragging: true
+            stepSize: 1
+            minimumValue: 5
+            anchors.verticalCenter: parent.verticalCenter
+            maximumValue: 15
+            value: 10
 
-            PropertyChanges {
-                target: label_title
-                x: 8
-                y: 8
-                text: "Miscellaneous:"
-                anchors.verticalCenterOffset: -97
-                anchors.horizontalCenterOffset: -67
-            }
-
-            PropertyChanges {
-                target: speed_settings
-                anchors.topMargin: 6
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: slider_speed
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: label_currentspeed
-                anchors.verticalCenterOffset: 0
+            onValueChanged: {
+                controls1.size = value
+                label_currentsize.text = value
             }
         }
-    ]
+        opacity: 0
+    }
 
-    transitions: [
-        Transition {
-            NumberAnimation {
-                easing.type: Easing.OutExpo
-                properties: {"x, y, topMargin, opacity, height"}
+        id: rectangle1
+        width: 228
+        height: 32
+        color: sysPalette.window
+        radius: 1
+        border.color: sysPalette.mid
+
+        states: [
+            State {
+                name: "VISIBLE"
+
+                PropertyChanges {
+                    target: rectangle1
+                    height: 225
+                }
+
+                PropertyChanges {
+                    target: label_title
+                    x: 8
+                    y: 8
+                    text: "Miscellaneous:"
+                    anchors.verticalCenterOffset: -97
+                    anchors.horizontalCenterOffset: -67
+                }
+
+                PropertyChanges {
+                    target: speed_settings
+                    anchors.topMargin: 6
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: slider_speed
+                    anchors.verticalCenterOffset: 0
+                }
+
+                PropertyChanges {
+                    target: label_currentspeed
+                    anchors.verticalCenterOffset: 0
+                }
+
+                PropertyChanges {
+                    target: size_settings
+                    y: 58
+                    height: 22
+                    anchors.rightMargin: 8
+                    anchors.leftMargin: 8
+                    opacity: 1
+                }
             }
-        }
-    ]
-}
+        ]
+
+        transitions: [
+            Transition {
+                NumberAnimation {
+                    easing.type: Easing.OutExpo
+                    properties: {"x, y, topMargin, opacity, height"}
+                }
+            }
+        ]
+    }

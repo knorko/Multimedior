@@ -4,7 +4,8 @@ import QtQuick.Controls 1.2
 Rectangle {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
-    property int count: 5
+    property int boidCount: 5
+    property int predatorCount: 0
 
     property int size: 10
 
@@ -55,7 +56,7 @@ Rectangle {
             anchors.left: parent.left
 
             onClicked: {
-                init(count, size)
+                init(boidCount, predatorCount, size)
                 running = true
             }
         }
