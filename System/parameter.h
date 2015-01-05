@@ -31,7 +31,7 @@ typedef struct Parameter_S{
     /**
      * @brief Mouse Position.
      */
-    vector2 mousePosition = vector2();
+    Vector2 mousePosition = Vector2();
 
 
 } Parameter;

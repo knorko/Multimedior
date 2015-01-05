@@ -2,9 +2,9 @@
 
 
 
-vector<boid*> management::objList;
-vector<Predator*> management::predList;
-kdtree *management::tree = nullptr;
+vector<Boid*> Management::objList;
+vector<Predator*> Management::predList;
+kdtree *Management::tree = nullptr;
 
 Parameter parameters;
 
@@ -17,8 +17,8 @@ Parameter parameters;
  * @param engine Main QQmlApplicationEngine of the application.
  * @param canvas QObject of the canvas.
  */
-management::management(QQmlApplicationEngine *engine, QObject *canvas) {
-    boidHelper::initialize(engine, canvas, &tree, &parameters);
+Management::Management(QQmlApplicationEngine *engine, QObject *canvas) {
+    BoidHelper::initialize(engine, canvas, &tree, &parameters);
 }
 
 /**
@@ -29,7 +29,7 @@ management::management(QQmlApplicationEngine *engine, QObject *canvas) {
  * @param count Desired amount of boids.
  * @param size The desired size for the boids.
  */
-void management::init(uint count, uint size) {
+void Management::init(uint count, uint size) {
     void (*operation)() = objList.size() < count ? &addBoid : &removeBoid;
 
     while(objList.size() != count)
@@ -39,7 +39,7 @@ void management::init(uint count, uint size) {
 
     // Set the desire size
     parameters.size = size;
-    foreach (boid *obj, objList) {
+    foreach (Boid *obj, objList) {
         obj->setSize(size);
     }
 
@@ -56,18 +56,18 @@ void management::init(uint count, uint size) {
  *
  * Afterwards we clear and free the kd-tree.
  */
-void management::run() {
+void Management::run() {
     prepareTree();
 
     foreach (Predator *obj, predList) {
         obj->prepare();
-        obj->Update();
+        obj->update();
         obj->finalize();
     }
 
-    foreach (boid *obj, objList) {
+    foreach (Boid *obj, objList) {
         obj->prepare();
-        obj->Update();
+        obj->update();
         obj->finalize();
     }
     kd_clear(tree);
@@ -79,7 +79,7 @@ void management::run() {
  *
  * Each boid is deleted until #objList is empty.
  */
-void management::clear() {
+void Management::clear() {
     while(!objList.empty())
         removeBoid();
     while(!predList.empty()) {
@@ -96,7 +96,7 @@ void management::clear() {
  *
  * @param height Current canvas height.
  */
-void management::setCanvasHeight(double height) {
+void Management::setCanvasHeight(double height) {
     parameters.canvasHeight = height;
 }
 
@@ -108,7 +108,7 @@ void management::setCanvasHeight(double height) {
  *
  * @param width Current canvas width.
  */
-void management::setCanvasWidth(double width) {
+void Management::setCanvasWidth(double width) {
     parameters.canvasWidth = width;
 }
 
@@ -120,7 +120,7 @@ void management::setCanvasWidth(double width) {
  *
  * @param speed Current speed factor.
  */
-void management::setSpeed(double speed) {
+void Management::setSpeed(double speed) {
     parameters.speedFactor = speed;
 }
 
@@ -129,12 +129,12 @@ void management::setSpeed(double speed) {
  * @param average Average velocity.
  * @param variance Variance.
  */
-void management::setVelocity(double average, double variance) {
+void Management::setVelocity(double average, double variance) {
     parameters.velocity_var = variance;
     parameters.velocity_avg = average;
 }
 
-void management::setMousePosition(double x, double y) {
+void Management::setMousePosition(double x, double y) {
 parameters.mousePosition.setX(x);
 parameters.mousePosition.setY(y);
 }
@@ -142,22 +142,22 @@ parameters.mousePosition.setY(y);
 /**
  * @brief Add a new boid to #objList.
  */
-void management::addBoid() {
-    objList.push_back(new boid());
+void Management::addBoid() {
+    objList.push_back(new Boid());
 }
 
 /**
  * @brief Remove a boid from #objList.
  */
-void management::removeBoid() {
+void Management::removeBoid() {
     delete objList.back();
     objList.pop_back();
 }
 
-void management::prepareTree() {
+void Management::prepareTree() {
     tree = kd_create(2);
 
-    foreach (boid *obj, objList) {
+    foreach (Boid *obj, objList) {
         double position[2] = { obj->getX(), obj->getY()};
         kd_insert( tree, position, 0);
     }

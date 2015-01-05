@@ -7,7 +7,7 @@
  * @brief Contains a two-dimensional vector and required arithmetic
  * operations.
  */
-class vector2 {
+class Vector2 {
 private:
     /**
      * @brief The individual components.
@@ -17,30 +17,30 @@ private:
     static float lerpFloat(float start, float end, float t);
 
 public:
-    vector2();
-    vector2(double x, double y);
-    ~vector2();
+    Vector2();
+    Vector2(double x, double y);
+    ~Vector2();
 
-    vector2 operator +(const vector2 &rhs);
-    vector2 operator -(const vector2 &rhs);
-    vector2 operator *(const double &scalar);
-    vector2 operator /(const double &scalar);
-    vector2 operator =(const vector2 &rhs);
-    vector2& operator +=(const vector2 &rhs);
-    vector2& operator -=(const vector2 &rhs);
-    vector2& operator *=(const double &scalar);
-    vector2& operator /=(const double &scalar);
-    bool operator ==(const vector2 &rhs);
-    bool operator !=(const vector2 &rhs);
+    Vector2 operator +(const Vector2 &rhs);
+    Vector2 operator -(const Vector2 &rhs);
+    Vector2 operator *(const double &scalar);
+    Vector2 operator /(const double &scalar);
+    Vector2 operator =(const Vector2 &rhs);
+    Vector2& operator +=(const Vector2 &rhs);
+    Vector2& operator -=(const Vector2 &rhs);
+    Vector2& operator *=(const double &scalar);
+    Vector2& operator /=(const double &scalar);
+    bool operator ==(const Vector2 &rhs);
+    bool operator !=(const Vector2 &rhs);
 
     const double* getPosition();
     double getX();
     double getY();
     void setX(double x);
     void setY(double y);
-    vector2 normalize();
-    static vector2 lerp(vector2 start, vector2 end, float t);
-    static vector2 lerpRotation(vector2 position, double lenght, vector2 target, float t);
+    Vector2 normalize();
+    static Vector2 lerp(Vector2 start, Vector2 end, float t);
+    static Vector2 lerpRotation(Vector2 position, double lenght, Vector2 target, float t);
 
     double getSqrMagnitude();
     double getMagnitude();

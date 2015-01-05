@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     // Create management object and register it as context property
     QObject *canvas = engine.rootObjects().first()->findChild<QObject*>("canvas");
-    management *man = new management(&engine, canvas);
+    Management *man = new Management(&engine, canvas);
     engine.rootContext()->setContextProperty("management", man);
 
     return app.exec();

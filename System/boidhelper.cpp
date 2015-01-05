@@ -1,14 +1,14 @@
 #include "boidhelper.h"
 
-QQmlApplicationEngine *boidHelper::engine = nullptr;
-QObject *boidHelper::canvas = nullptr;
-kdtree **boidHelper::tree = nullptr;
-Parameter *boidHelper::parameter = nullptr;
+QQmlApplicationEngine *BoidHelper::engine = nullptr;
+QObject *BoidHelper::canvas = nullptr;
+kdtree **BoidHelper::tree = nullptr;
+Parameter *BoidHelper::parameter = nullptr;
 
-boidHelper::boidHelper() {
+BoidHelper::BoidHelper() {
 }
 
-boidHelper::~boidHelper() {
+BoidHelper::~BoidHelper() {
 }
 
 
@@ -30,13 +30,13 @@ boidHelper::~boidHelper() {
  * @param velocity_avg The double that holds the average velocity of the boids.
  * @param velocity_var The double that holds the velocity's variance.
  */
-void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter) {
-    if(!boidHelper::engine && !boidHelper::canvas) {
+void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter) {
+    if(!BoidHelper::engine && !BoidHelper::canvas) {
 
-        boidHelper::engine = engine;
-        boidHelper::canvas = canvas;
-        boidHelper::parameter = parameter;
-        boidHelper::tree = tree;
+        BoidHelper::engine = engine;
+        BoidHelper::canvas = canvas;
+        BoidHelper::parameter = parameter;
+        BoidHelper::tree = tree;
     }
     else {
       qDebug() << "boidHelper already initialized!";
@@ -46,28 +46,28 @@ void boidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtre
 /**
  * @return Main QQmlApplicationEngine.
  */
-QQmlApplicationEngine *boidHelper::getEngine() const {
-    return boidHelper::engine;
+QQmlApplicationEngine *BoidHelper::getEngine() const {
+    return BoidHelper::engine;
 }
 
 /**
  * @return Canvas QObject.
  */
-QObject *boidHelper::getCanvas() const {
-    return boidHelper::canvas;
+QObject *BoidHelper::getCanvas() const {
+    return BoidHelper::canvas;
 }
 
 /**
  * @return Height of the canvas.
  */
-double &boidHelper::getCanvasHeight() const {
+double &BoidHelper::getCanvasHeight() const {
     return parameter->canvasHeight;
 }
 
 /**
  * @return Width of the canvas.
  */
-double &boidHelper::getCanvasWidth() const {
+double &BoidHelper::getCanvasWidth() const {
     return parameter->canvasWidth;
 }
 
@@ -77,8 +77,8 @@ double &boidHelper::getCanvasWidth() const {
  * This function is called before each boid has its boid::Update() function called.
  * It refreshes the position vector and calls the getNeighbors() function.
  */
-void boidHelper::prepare() {
-    position = vector2(getX(), getY());
+void BoidHelper::prepare() {
+    position = Vector2(getX(), getY());
 
     getNeighbors();
 }
@@ -89,9 +89,9 @@ void boidHelper::prepare() {
  * This function is called after each boid had its boid::update() function called.
  * It sets the position depending on the velocity.
  */
-void boidHelper::finalize() {
+void BoidHelper::finalize() {
     // Clamp the speed
-    if(velocity != vector2(0, 0)) {
+    if(velocity != Vector2(0, 0)) {
         velocity.normalize();
         velocity *= parameter->velocity_avg + (parameter->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameter->velocity_var));
     }
@@ -129,7 +129,7 @@ void boidHelper::finalize() {
  *
  * @return Position on the x axis
  */
-double boidHelper::getX() {
+double BoidHelper::getX() {
     return object->property("x").value<double>();
 }
 
@@ -140,7 +140,7 @@ double boidHelper::getX() {
  *
  * @return Position on the y axis
  */
-double boidHelper::getY() {
+double BoidHelper::getY() {
     return object->property("y").value<double>();
 }
 
@@ -148,7 +148,7 @@ double boidHelper::getY() {
  * @brief Sets the position on the x axis.
  * @param x Desired x position
  */
-void boidHelper::setX(double x) {
+void BoidHelper::setX(double x) {
     object->setProperty("x", x);
 }
 
@@ -156,7 +156,7 @@ void boidHelper::setX(double x) {
  * @brief Sets the position on the y axis.
  * @param y Desired y position
  */
-void boidHelper::setY(double y) {
+void BoidHelper::setY(double y) {
     object->setProperty("y", y);
 }
 
@@ -164,7 +164,7 @@ void boidHelper::setY(double y) {
  * @brief Set the boid size.
  * @param size Desired size
  */
-void boidHelper::setSize(uint size) {
+void BoidHelper::setSize(uint size) {
     object->setProperty("height", size);
     object->setProperty("width", size);
 }
@@ -172,7 +172,7 @@ void boidHelper::setSize(uint size) {
 /**
  * @return Boid size.
  */
-uint &boidHelper::getSize() const{
+uint &BoidHelper::getSize() const{
     return parameter->size;
 }
 
@@ -185,7 +185,7 @@ uint &boidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
-void boidHelper::getNeighbors() {
+void BoidHelper::getNeighbors() {
     struct kdres *result;
     double position_neighbour[2];
     double sqrDistance;
@@ -228,7 +228,7 @@ void boidHelper::getNeighbors() {
 
     // Finally build the neighbor vectors and free the kd-tree
     for(int i=0; i<3; i++)
-        neighbors[i] = vector2(nearest[i][0], nearest[i][1]);
+        neighbors[i] = Vector2(nearest[i][0], nearest[i][1]);
 
     kd_res_free(result);
 }
@@ -240,7 +240,7 @@ void boidHelper::getNeighbors() {
  * @param dims Dimensions of the vectors
  * @return Squared distance
  */
-double boidHelper::dist_sq( double *a1, double *a2, int dims ) {
+double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
     double dist_sq = 0, diff;
     while( --dims >= 0 ) {
         diff = (a1[dims] - a2[dims]);
@@ -249,6 +249,6 @@ double boidHelper::dist_sq( double *a1, double *a2, int dims ) {
     return dist_sq;
 }
 
-vector2 &boidHelper::getMousePosition() const {
+Vector2 &BoidHelper::getMousePosition() const {
     return parameter->mousePosition;
 }

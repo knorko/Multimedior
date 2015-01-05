@@ -6,12 +6,12 @@
 /**
  * @brief The boid class contains all boid logic.
  */
-class boid : public boidHelper {
+class Boid : public BoidHelper {
 public:
-    boid();
-    ~boid();
+    Boid();
+    ~Boid();
 
-    void Update();
+    void update();
 };
 
 #endif // BOID_H

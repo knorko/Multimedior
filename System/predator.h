@@ -3,12 +3,12 @@
 
 #include "boidhelper.h"
 
-class Predator : public boidHelper {
+class Predator : public BoidHelper {
 public:
     Predator();
     ~Predator();
 
-    void Update();
+    void update();
 };
 
 #endif // PREDATOR_H

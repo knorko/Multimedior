@@ -13,7 +13,7 @@ Predator::Predator() {
     setY(50 + ((double)rand()/(double)(RAND_MAX)) * (getCanvasHeight() - 100));
     setX(50 + ((double)rand()/(double)(RAND_MAX)) * (getCanvasWidth() - 100));
 
-    lastVel = vector2();
+    lastVel = Vector2();
 }
 
 Predator::~Predator() {
@@ -21,12 +21,12 @@ Predator::~Predator() {
     delete object;
 }
 
-void Predator::Update() {
-    vector2 mp = getMousePosition();
-    if(mp != vector2(0,0) && (mp - position).getSqrMagnitude() > 10.0f) {
-        velocity = vector2::lerp(lastVel, mp - position, 0.016f);
+void Predator::update() {
+    Vector2 mp = getMousePosition();
+    if(mp != Vector2(0,0) && (mp - position).getSqrMagnitude() > 10.0f) {
+        velocity = Vector2::lerp(lastVel, mp - position, 0.016f);
     }
     else
-        velocity = vector2();
+        velocity = Vector2();
 }
 

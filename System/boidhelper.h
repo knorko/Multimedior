@@ -14,7 +14,7 @@
  * @brief The boidHelper class provides important functionaly that allows
  * the boids to be programmed.
  */
-class boidHelper {
+class BoidHelper {
 private:
     /**
      * @brief Main QQmlApplicationEngine of the program.
@@ -39,22 +39,22 @@ protected:
     /**
      * @brief The position of the boid.
      */
-    vector2 position;
+    Vector2 position;
     /**
      * @brief The velocity of the boid.
      */
-    vector2 velocity = vector2(1, 0);
-    vector2 lastVel = vector2();
+    Vector2 velocity = Vector2(1, 0);
+    Vector2 lastVel = Vector2();
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */
-    vector2 neighbors[3];
+    Vector2 neighbors[3];
     /**
      * @brief Search radius of the boids
      */
     double radius = 240;
 
-    vector2& getMousePosition() const;
+    Vector2& getMousePosition() const;
 
 public:
     /**
@@ -69,8 +69,8 @@ public:
      */
     QQmlComponent *component;
 
-    boidHelper();
-    ~boidHelper();
+    BoidHelper();
+    ~BoidHelper();
 
     static void initialize(QQmlApplicationEngine *engine, QObject *canvas,kdtree **tree, Parameter *parameter);
 

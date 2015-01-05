@@ -17,7 +17,7 @@ using namespace std;
  * @brief The management class brigdes the gap between the UI
  * and the main logic.
  */
-class management : public QObject {
+class Management : public QObject {
 
 private:
     /**
@@ -26,7 +26,7 @@ private:
      * This is used to iterate over all the boids and call their respective
      * boid::Update functions.
      */
-    static vector<boid*> objList;
+    static vector<Boid*> objList;
     static vector<Predator*> predList;
     /**
      * @brief Two-dimensional kd-tree that holds the boids.
@@ -45,7 +45,7 @@ private:
     Q_OBJECT
 public:
 
-    explicit management(QQmlApplicationEngine *engine, QObject *canvas);
+    explicit Management(QQmlApplicationEngine *engine, QObject *canvas);
 
     Q_INVOKABLE void init(uint count, uint size);
     Q_INVOKABLE void run();
