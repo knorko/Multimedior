@@ -10,6 +10,14 @@
 #include "kdtree.h"
 #include "parameter.h"
 
+typedef struct Neighbors_s{
+
+    Vector2 position2;
+
+    Vector2 velocity2;
+
+} Neighbors;
+
 /**
  * @brief The boidHelper class provides important functionaly that allows
  * the boids to be programmed.
@@ -53,7 +61,7 @@ protected:
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */
-    Vector2 neighbors[3];
+    Neighbors neighbours[3];
     /**
      * @brief Search radius of the boids
      */
