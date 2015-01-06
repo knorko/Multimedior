@@ -87,16 +87,16 @@ void Boid::update(){
     //Replace position with mouse position and look through the force-parameter with the mouse
     double power = 0.0;
     double power2 = 0.0;
-    if(position.getX() < 80)
-        power = 100 - position.getX();
-    else if(position.getX() >= getCanvasWidth() - 80)
-        power = 100 + position.getX() - getCanvasWidth() ;
-    else if(position.getY() < 80)
-        power2 = 100 - position.getY();
-    else if(position.getY() >= getCanvasHeight() - 80)
-        power2 = 100 + position.getY() - getCanvasHeight();
+    if(position.getX() < 150)
+        power = 150 - position.getX();
+    else if(position.getX() >= getCanvasWidth() - 150)
+        power = 150 + position.getX() - getCanvasWidth() ;
+    else if(position.getY() < 150)
+        power2 = 150 - position.getY();
+    else if(position.getY() >= getCanvasHeight() - 150)
+        power2 = 150 + position.getY() - getCanvasHeight();
 
-    double force = 10*exp((power+ power2) *0.05);
+    double force = 5.0 * ((power + power2));
 
     //qDebug << force;
 
