@@ -96,6 +96,12 @@ Rectangle {
         opacity: 0
     }
 
+    ColorPicker {
+        id: colorPicker1
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: 0
+    }
+
         id: rectangle1
         width: 228
         height: 32
@@ -109,7 +115,7 @@ Rectangle {
 
                 PropertyChanges {
                     target: rectangle1
-                    height: 225
+                    height: 335
                 }
 
                 PropertyChanges {
@@ -145,6 +151,13 @@ Rectangle {
                     visible: true
                     anchors.rightMargin: 8
                     anchors.leftMargin: 8
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: colorPicker1
+                    x: 18
+                    y: 100
                     opacity: 1
                 }
             }

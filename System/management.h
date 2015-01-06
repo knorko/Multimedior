@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QColor>
 #include <QString>
 #include <QQmlApplicationEngine>
 
@@ -65,7 +66,7 @@ public:
     Q_INVOKABLE void setVelocity(double average);
     Q_INVOKABLE void setMousePosition(double x, double y);
     Q_INVOKABLE void setSize(uint size);
-    Q_INVOKABLE void setState(QString state);
+    Q_INVOKABLE void setColor(QColor color);
 };
 
 #endif // MANAGEMENT_H

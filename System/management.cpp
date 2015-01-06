@@ -137,8 +137,10 @@ void Management::setSize(uint size) {
     parameters.size = size;
 }
 
-void Management::setState(QString state) {
-    parameters.boidState = state;
+
+
+void Management::setColor(QColor color){
+    parameters.mainColor = color;
 }
 
 /**

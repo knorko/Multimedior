@@ -1,6 +1,7 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 #include "vector2.h"
+#include "QColor"
 
 
 /**
@@ -32,8 +33,7 @@ typedef struct Parameter_S{
      */
     Vector2 mousePosition = Vector2();
 
-    QString boidState = "";
-
+    QColor mainColor;
 
 } Parameter;
 
