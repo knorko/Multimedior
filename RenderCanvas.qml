@@ -19,17 +19,11 @@ Item {
         anchors.fill: parent
         border.width: 0
 
-        property bool rdy: false
-
-        Component.onCompleted: rdy = true
-
         onHeightChanged: {
-            if(rdy)
-                management.setCanvasHeight(height)
+            management.setCanvasHeight(height)
         }
         onWidthChanged: {
-            if(rdy)
-                management.setCanvasWidth(width)
+            management.setCanvasWidth(width)
         }
     }
 
@@ -37,10 +31,15 @@ Item {
         id: mouseArea1
         hoverEnabled: true
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked: {
-            if(!continuous)
-                management.setMousePosition(mouseX, mouseY)
+            if(!continuous){
+                if(mouse.button == Qt.LeftButton)
+                    management.setMousePosition(mouseX, mouseY)
+                else
+                    management.setMousePosition(0, 0)
+            }
         }
 
         onPositionChanged: {

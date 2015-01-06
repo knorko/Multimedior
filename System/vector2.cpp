@@ -168,7 +168,8 @@ void Vector2::setY(double y) {
  * @return Normalized vector
  */
 Vector2 Vector2::normalize() {
-    return (*this = *this / (this->getMagnitude()));
+    double magnitude = this->getMagnitude();
+    return magnitude != 0.0 ? (*this = *this / (this->getMagnitude())) : *this;
 }
 /**
  * @brief Linear interpolation between two vectors

@@ -53,7 +53,8 @@ private:
     Q_OBJECT
 public:
 
-    explicit Management(QQmlApplicationEngine *engine, QObject *canvas);
+    explicit Management();
+    void initialize(QQmlApplicationEngine *engine, QObject *canvas);
 
     Q_INVOKABLE void init(uint boidCount, uint predatorCount);
     Q_INVOKABLE void run();
@@ -61,13 +62,13 @@ public:
     Q_INVOKABLE void setCanvasHeight(double height);
     Q_INVOKABLE void setCanvasWidth(double width);
     Q_INVOKABLE void setSpeed(double speedFactor);
-    Q_INVOKABLE void setVelocity(double average, double variance);
+    Q_INVOKABLE void setVelocity(double average);
     Q_INVOKABLE void setMousePosition(double x, double y);
     Q_INVOKABLE void setSize(uint size);
-    Q_INVOKABLE void setFlockingFactor(double f);
-    Q_INVOKABLE void setAvoidanceFactor(double a);
-    Q_INVOKABLE void setVelocityFactor(double v);
-    Q_INVOKABLE void setMouseFactor(double m);
+    Q_INVOKABLE void setFlockingFactor(double flock);
+    Q_INVOKABLE void setAvoidanceFactor(double avoid);
+    Q_INVOKABLE void setVelocityMatchFactor(double match);
+    Q_INVOKABLE void setTargetFactor(double target);
 };
 
 #endif // MANAGEMENT_H

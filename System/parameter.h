@@ -27,11 +27,6 @@ typedef struct Parameter_S{
      * @brief Average movement velocity of the boids.
      */
     double velocity_avg = 1;
-
-    /**
-     * @brief Velocity variance.
-     */
-    double velocity_var = 0.1;
     /**
      * @brief Mouse Position.
      */
@@ -47,7 +42,10 @@ typedef struct Parameter_S{
 
     double velocity = 50;
 
-    double mouse = 25;
+    double factor_flocking = 100.0;
+    double factor_avoidance = 20.0;
+    double factor_match = 50.0;
+    double factor_target = 25.0;
 
 } Parameter;
 

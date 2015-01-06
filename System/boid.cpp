@@ -33,48 +33,46 @@ Boid::~Boid() {
 /**
  * @brief Boid logic
  */
-
-//TODO: PARAMETRISE NUMBER OF BOIDS
 void Boid::update(){
-    Vector2 v1;
-    Vector2 v2;
-    Vector2 v3;
-    Vector2 v4;
-    Vector2 center = position;
+    Vector2 v1 = Vector2();
+    Vector2 v2 = Vector2();
+    Vector2 v3 = Vector2();
+    Vector2 v4 = Vector2();
+    Vector2 center = Vector2();
 
-    //Rule1: move to local center of mass ( center becomes average of surrounding boids)
-    Vector2 lc = Vector2();
+    // Rule1: move to local center of mass ( center becomes average of surrounding boids)
     for(int i = 0; i < 3; i++){
-        lc = lc + neighbours[i].position2;
+        center = center + neighbours[i].position2;
     }
-    lc = lc / 3;
+    center /= 3;
 
-    v1 = lc - position;
+    v1 = center - position;
 
-    //Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
+    // Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
     for(int i = 0; i < 3; i++){
-        if ((neighbours[i].position2 - position).getSqrMagnitude() < getSize()+(getSize() * getSize())){
+        if ((neighbours[i].position2 - position).getSqrMagnitude() < (getSize() + 10.0) * (getSize() + 10.0)){
             center = center - (neighbours[i].position2 - position);
         }
     }
     v2 = center;
-//    lastVel = v2;
-    //Rule3: Match velocity to surrounding Boids
+    // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
         v3 = v3 + neighbours[i].velocity2;
     }
     v3 = v3/3;
-    //v3 = (v3 - position)/4;
+
+    // Rule 4: Follow mouse position
     Vector2 mp = getMousePosition();
-        if(!(mp == Vector2(0, 0)))
-            if((mp - position).getSqrMagnitude() > 7500)
+    if(!(mp == Vector2(0, 0))) {
+        if((mp - position).getSqrMagnitude() > 7500)
             v4 = mp - position;
+    }
 
-        //Parameterise each Vector && On/Off
-    Vector2 vfinal = velocity + (v1*(1/parameters->flocking)) + (v2*(1/parameters->avoidance)) + (v3*(1/parameters->velocity)) + (v4*(1/parameters->mouse));
-
-    velocity = Vector2::lerp(lastVel, vfinal, 0.016f);
+    velocity = Vector2::lerp(lastVel,
+                             velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor(),
+                             0.016f);
 
     lastVel = velocity;
 }

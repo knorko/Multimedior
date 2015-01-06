@@ -68,6 +68,10 @@ protected:
     double radius = 240;
 
     Vector2& getMousePosition() const;
+    double getFlockingFactor() const;
+    double getAvoidanceFactor() const;
+    double getVelocityMatchFactor() const;
+    double getTargetFactor() const;
 
 public:
     /**
