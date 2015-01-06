@@ -55,7 +55,7 @@ GroupBox {
             value: 5
             activeFocusOnPress: true
             stepSize: 1
-            maximumValue: 100
+            maximumValue: 150
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
@@ -187,7 +187,7 @@ GroupBox {
         Label {
             id: label_currentflock
             x: 187
-            text: "100"
+            text: "50"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -196,10 +196,10 @@ GroupBox {
             id: slider_beh_flock
             x: 45
             width: 117
-            value: 100
+            value: 50
             maximumValue: 100
             activeFocusOnPress: true
-            minimumValue: 1
+            minimumValue: 0
             updateValueWhileDragging: true
             anchors.verticalCenter: parent.verticalCenter
 
@@ -232,7 +232,7 @@ GroupBox {
         Label {
             id: label_currentavoid
             x: 187
-            text: "20"
+            text: "100"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -241,8 +241,8 @@ GroupBox {
             id: slider_beh_avoid
             x: 45
             width: 117
-            minimumValue: 1
-            value: 20
+            minimumValue: 0
+            value: 100
             maximumValue: 100
             activeFocusOnPress: true
             updateValueWhileDragging: true
@@ -277,7 +277,7 @@ GroupBox {
         Label {
             id: label_currentmatch
             x: 187
-            text: "50"
+            text: "100"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -286,10 +286,10 @@ GroupBox {
             id: slider_beh_match
             x: 45
             width: 117
-            value: 50
+            value: 100
             maximumValue: 100
             activeFocusOnPress: true
-            minimumValue: 1
+            minimumValue: 0
             updateValueWhileDragging: true
             anchors.verticalCenter: parent.verticalCenter
 
@@ -333,7 +333,7 @@ GroupBox {
             width: 117
             value: 25
             maximumValue: 100
-            minimumValue: 1
+            minimumValue: 0
             activeFocusOnPress: true
             updateValueWhileDragging: true
             anchors.verticalCenter: parent.verticalCenter

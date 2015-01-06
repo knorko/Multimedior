@@ -88,7 +88,7 @@ void BoidHelper::prepare() {
  */
 void BoidHelper::finalize() {
     // Clamp the speed
-    if(velocity != Vector2(0, 0) && velocity.getSqrMagnitude() > parameters->velocity_avg * parameters->velocity_avg) {
+    if(velocity.getSqrMagnitude() > parameters->velocity_avg * parameters->velocity_avg) {
         velocity.normalize();
         velocity *= parameters->velocity_avg;
     }
@@ -99,22 +99,22 @@ void BoidHelper::finalize() {
 
     // Stay within the boundaries
     double x = getX();
-    if(x <= 0) {
-        setX(0);
+    if(x <= -20) {
+        setX(-20);
         velocity.setX(-velocity.getX());
     }
-    else if(x >= getCanvasWidth() - parameters->size) {
-        setX(getCanvasWidth() - parameters->size);
+    else if(x >= getCanvasWidth() - parameters->size + 20) {
+        setX(getCanvasWidth() - parameters->size + 20);
         velocity.setX(-velocity.getX());
     }
 
     double y = getY();
-    if(y <= 0) {
-        setY(0);
+    if(y <= -20) {
+        setY(-20);
         velocity.setY(-velocity.getY());
     }
-    else if(y >= getCanvasHeight() - parameters->size) {
-        setY(getCanvasHeight() - parameters->size);
+    else if(y >= getCanvasHeight() - parameters->size + 20) {
+        setY(getCanvasHeight() - parameters->size + 20);
         velocity.setY(-velocity.getY());
     }
 }

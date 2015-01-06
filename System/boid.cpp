@@ -38,16 +38,15 @@ void Boid::update(){
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
     Vector2 v4 = Vector2();
-    Vector2 center = position;
+    Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
-    Vector2 lc = Vector2();
     for(int i = 0; i < 3; i++){
-        lc = lc + neighbours[i].position2;
+        center = center + neighbours[i].position2;
     }
-    lc = lc / 3;
+    center /= 3;
 
-    v1 = lc - position;
+    v1 = center - position;
 
     // Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
@@ -66,12 +65,14 @@ void Boid::update(){
 
     // Rule 4: Follow mouse position
     Vector2 mp = getMousePosition();
-        if(!(mp == Vector2(0, 0)))
-            if((mp - position).getSqrMagnitude() > 7500)
+    if(!(mp == Vector2(0, 0))) {
+        if((mp - position).getSqrMagnitude() > 7500)
             v4 = mp - position;
+    }
 
     velocity = Vector2::lerp(lastVel,
-                             velocity + v1*(1/getFlockingFactor()) + v2*(1/getAvoidanceFactor()) + v3*(1/getVelocityMatchFactor()) + v4*(1/getTargetFactor()),
+                             velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor(),
                              0.016f);
 
     lastVel = velocity;
