@@ -33,7 +33,7 @@ private:
      */
     static Parameter *parameters;
 
-
+    void setState();
     void getNeighbors();
     double dist_sq(double *a1, double *a2, int dims);
 

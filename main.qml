@@ -73,6 +73,14 @@ Window {
         anchors.bottomMargin: 2
         anchors.top: parent.top
         anchors.topMargin: 2
+
+        EasterEgg {
+            id: easterEgg1
+            x: 37
+            y: 150
+            width: 187
+            height: 129
+        }
     }
 
     Rectangle {

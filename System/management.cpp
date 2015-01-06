@@ -137,6 +137,10 @@ void Management::setSize(uint size) {
     parameters.size = size;
 }
 
+void Management::setState(QString state) {
+    parameters.boidState = state;
+}
+
 /**
  * @brief Add a new boid to #boidList.
  */

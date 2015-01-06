@@ -32,6 +32,8 @@ typedef struct Parameter_S{
      */
     Vector2 mousePosition = Vector2();
 
+    QString boidState = "";
+
 
 } Parameter;
 

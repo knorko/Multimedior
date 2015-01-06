@@ -75,6 +75,7 @@ double &BoidHelper::getCanvasWidth() const {
 void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
     setSize(parameters->size);
+    setState();
 
     getNeighbors();
 }
@@ -181,6 +182,10 @@ uint &BoidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
+void BoidHelper::setState() {
+    object->setProperty("state", parameters->boidState);
+}
+
 void BoidHelper::getNeighbors() {
     struct kdres *result;
     double position_neighbour[2];
