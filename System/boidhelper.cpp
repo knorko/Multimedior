@@ -35,7 +35,7 @@ void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, kdtr
         BoidHelper::tree = tree;
     }
     else {
-      qDebug() << "boidHelper already initialized!";
+        qDebug() << "boidHelper already initialized!";
     }
 }
 
@@ -194,7 +194,7 @@ void BoidHelper::getNeighbors() {
     result = kd_nearest_range(*tree, position, parameters->canvasWidth);
 
     while(!kd_res_end(result)) {
-       BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 

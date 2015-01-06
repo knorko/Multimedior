@@ -70,9 +70,23 @@ void Boid::update(){
             v4 = mp - position;
     }
 
+    // Rule 5: Stray away from the boundaries
+    Vector2 v5 = Vector2();
+
+    if(position.getX() < 80)
+        v5.setX(1);
+    else if(position.getX() >= getCanvasWidth() - 80)
+         v5.setX(-1);
+
+    if(position.getY() <  80)
+        v5.setY(1);
+    else if(position.getY() >= getCanvasHeight() - 80){
+        v5.setY(-1);
+    }
+
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
-                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor(),
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * 100,
                              0.016f);
 
     lastVel = velocity;
