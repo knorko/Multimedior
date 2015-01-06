@@ -77,7 +77,7 @@ void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
     setSize(parameters->size);
 
-    getNeighbors();
+    getNeighbours();
 }
 
 /**
@@ -238,7 +238,29 @@ void BoidHelper::getNeighbors() {
     }
     kd_res_free(result);
 }
+void BoidHelper::getNeighbours() {
+    struct kdres *result;
+    double position_neighbour[2];
 
+    // Content: (position.x, position.y, squared distance, velocity.X, velocity.Y)
+    double** nearest = new double*[parameters->countNeighbours];
+    for(int i = 0; i < parameters->countNeighbours; ++i)
+        nearest[i] = new double[5];
+
+    double position[2] = { getX(), getY() };
+    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+
+    int i = 0;
+    while(!kd_res_end(result)) {
+        BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        neighbours[i].position2 = Vector2(b->getX(),b->getY());
+        neighbours[i].velocity2 = Vector2(b->velocity.getX(),b->velocity.getY());
+        kd_res_next(result);
+        i++;
+    }
+    i = 0;
+    kd_res_free(result);
+}
 /**
  * @brief Calculate squared distance between two boids
  * @param a1 First vector

@@ -38,6 +38,7 @@ private:
     static kdtree **tree;
 
     void getNeighbors();
+    void getNeighbours();
     double dist_sq(double *a1, double *a2, int dims);
 
 protected:
