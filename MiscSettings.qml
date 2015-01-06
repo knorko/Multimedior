@@ -96,6 +96,140 @@ Rectangle {
         opacity: 0
     }
 
+    Item {
+        id: flock_settings
+        x: 8
+        y: 81
+        width: 200
+        height: 200
+        opacity: 0
+
+        Slider {
+            id: slider_flocking
+            opacity: 0
+
+            onValueChanged: {
+                label_currentflocking.text = value
+            }
+        }
+
+        Label {
+            id: label_FLOCKING
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentflocking
+            text: qsTr("Label")
+            opacity: 0
+        }
+    }
+
+    Item {
+        id: avoidance_settings
+        x: 8
+        y: 130
+        width: 200
+        height: 200
+        opacity: 0
+
+        Label {
+            id: label_AVOIDANCE
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentavoidance
+            x: 182
+            y: 5
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Slider {
+            id: slider_avoidance
+            x: 38
+            y: 0
+            opacity: 0
+
+            onValueChanged: {
+                label_currentavoidance.text = value
+            }
+        }
+    }
+
+    Item {
+        id: velocity_settings
+        x: 8
+        y: 155
+        width: 200
+        height: 200
+        opacity: 0
+
+        Label {
+            id: label_VELOCITY
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentvelocity
+            x: 182
+            y: 3
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Slider {
+            id: slider_velocity
+            x: 38
+            y: 0
+            opacity: 0
+
+            onValueChanged: {
+                label_currentvelocity.text = value
+            }
+        }
+    }
+
+    Item {
+        id: mouse_importance
+        x: 8
+        y: 170
+        width: 200
+        height: 200
+        opacity: 0
+
+        Label {
+            id: label_MOUSE
+            x: 1
+            y: 3
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentmouse
+            x: 182
+            y: 3
+            text: qsTr("Label")
+            opacity: 0
+        }
+
+        Slider {
+            id: slider_mouse
+            x: 37
+            y: 0
+            opacity: 0
+
+            onValueChanged: {
+                label_currentmouse.text = value
+            }
+        }
+    }
+
         id: rectangle1
         width: 228
         height: 32
@@ -144,8 +278,148 @@ Rectangle {
                     height: 22
                     visible: true
                     anchors.rightMargin: 8
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 9
                     opacity: 1
+                }
+
+                PropertyChanges {
+                    target: flock_settings
+                    x: 8
+                    y: 86
+                    width: 212
+                    height: 22
+                    visible: true
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: slider_flocking
+                    x: 45
+                    y: 0
+                    width: 136
+                    height: 22
+                    value: 100
+                    maximumValue: 1000
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_currentflocking
+                    x: 187
+                    y: 3
+                    width: 25
+                    height: 17
+                    text: qsTr("100")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_FLOCKING
+                    x: 0
+                    y: 3
+                    text: qsTr("Flock")
+                    opacity: 1
+                    activeFocusOnTab: false
+                }
+
+                PropertyChanges {
+                    target: avoidance_settings
+                    x: 8
+                    y: 114
+                    width: 212
+                    height: 22
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: velocity_settings
+                    x: 8
+                    y: 142
+                    width: 212
+                    height: 22
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_AVOIDANCE
+                    text: qsTr("Avoid")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_VELOCITY
+                    text: qsTr("Velocity")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_currentavoidance
+                    x: 198
+                    y: 0
+                    text: qsTr("20")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_currentvelocity
+                    x: 198
+                    y: 0
+                    text: qsTr("50")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: mouse_importance
+                    width: 212
+                    height: 22
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_MOUSE
+                    text: qsTr("Goal")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_currentmouse
+                    x: 187
+                    y: 3
+                    text: qsTr("2500")
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: slider_avoidance
+                    x: 45
+                    width: 136
+                    height: 22
+                    value: 20
+                    maximumValue: 1000
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: slider_velocity
+                    x: 45
+                    width: 136
+                    value: 50
+                    maximumValue: 1000
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: slider_mouse
+                    x: 45
+                    width: 136
+                    value: 2500
+                    maximumValue: 10000
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: label_currentsize
+                    textFormat: Text.PlainText
                 }
             }
         ]

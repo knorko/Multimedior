@@ -139,6 +139,22 @@ void Management::setSize(uint size) {
     parameters.size = size;
 }
 
+void Management::setFlockingFactor(double f) {
+    parameters.flocking = f;
+}
+
+void Management::setAvoidanceFactor(double a) {
+    parameters.avoidance = a;
+}
+
+void Management::setVelocityFactor(double v) {
+    parameters.velocity = v;
+}
+
+void Management::setMouseFactor(double m) {
+    parameters.mouse =m;
+}
+
 /**
  * @brief Add a new boid to #boidList.
  */
