@@ -88,13 +88,13 @@ void Boid::update(){
     double power = 0.0;
     double power2 = 0.0;
     if(position.getX() < 80)
-        power = 100 - position.getX();
+        power = 80 - position.getX();
     else if(position.getX() >= getCanvasWidth() - 80)
-        power = 100 + position.getX() - getCanvasWidth() ;
+        power = 80 + position.getX() - getCanvasWidth() ;
     else if(position.getY() < 80)
-        power2 = 100 - position.getY();
+        power2 = 80 - position.getY();
     else if(position.getY() >= getCanvasHeight() - 80)
-        power2 = 100 + position.getY() - getCanvasHeight();
+        power2 = 80 + position.getY() - getCanvasHeight();
 
     double force = 10*exp((power+ power2) *0.05);
 
