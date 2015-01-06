@@ -182,80 +182,75 @@ uint &BoidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
-void BoidHelper::getNeighborsAlt() {
-    struct kdres *result;
-    double position_neighbour[2];
-    double sqrDistance;
+//void BoidHelper::getNeighborsAlt() {
+//    struct kdres *result;
+//    double position_neighbour[2];
+//    double sqrDistance;
 
-    // Content: (x, y, squared distance, velocity.X, velocity.Y)
-    double** nearest = new double*[parameters->countNeighbours];
-    for(int i = 0; i < parameters->countNeighbours; ++i)
-        nearest[i] = new double[5];
+//    // Content: (x, y, squared distance, velocity.X, velocity.Y)
+//    double** nearest = new double*[parameters->countNeighbours];
+//    for(int i = 0; i < parameters->countNeighbours; ++i)
+//        nearest[i] = new double[5];
 
-    double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+//    double position[2] = { getX(), getY() };
+//    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
 
-    while(!kd_res_end(result)) {
-       BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+//    while(!kd_res_end(result)) {
+//       BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
 
-        sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
+//        sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
-        if(sqrDistance > 0) {
-            double greatest = nearest[0][2];
-            int greatestIndex = 0;
+//        if(sqrDistance > 0) {
+//            double greatest = nearest[0][2];
+//            int greatestIndex = 0;
 
-            for(int i = 0; i < parameters->countNeighbours; i++) {
-                if(nearest[i][2] == 0) {
-                    greatest = nearest[i][2];
-                    greatestIndex = i;
-                    nearest[i][4] = b->velocity.getY();
-                    nearest[i][3] = b->velocity.getX();
-                    break;
-                }
-                else if(greatest < nearest[i][2]) {
-                    greatest = nearest[i][2];
-                    nearest[i][3] = b->velocity.getX();
-                    nearest[i][4] = b->velocity.getY();
-                    greatestIndex = i;
-                }
-            }
-            if(nearest[greatestIndex][2] > sqrDistance || nearest[greatestIndex][2] == 0) {
-                nearest[greatestIndex][0] = position_neighbour[0];
-                nearest[greatestIndex][1] = position_neighbour[1];
-                nearest[greatestIndex][2] = sqrDistance;
-                nearest[greatestIndex][3] = b->velocity.getX();
-                nearest[greatestIndex][4] = b->velocity.getY();
-            }
-        }
+//            for(int i = 0; i < parameters->countNeighbours; i++) {
+//                if(nearest[i][2] == 0) {
+//                    greatest = nearest[i][2];
+//                    greatestIndex = i;
+//                    nearest[i][4] = b->velocity.getY();
+//                    nearest[i][3] = b->velocity.getX();
+//                    break;
+//                }
+//                else if(greatest < nearest[i][2]) {
+//                    greatest = nearest[i][2];
+//                    nearest[i][3] = b->velocity.getX();
+//                    nearest[i][4] = b->velocity.getY();
+//                    greatestIndex = i;
+//                }
+//            }
+//            if(nearest[greatestIndex][2] > sqrDistance || nearest[greatestIndex][2] == 0) {
+//                nearest[greatestIndex][0] = position_neighbour[0];
+//                nearest[greatestIndex][1] = position_neighbour[1];
+//                nearest[greatestIndex][2] = sqrDistance;
+//                nearest[greatestIndex][3] = b->velocity.getX();
+//                nearest[greatestIndex][4] = b->velocity.getY();
+//            }
+//        }
 
-        kd_res_next(result);
-    }
+//        kd_res_next(result);
+//    }
 
-    // Finally build the neighbor vectors and free the kd-tree
-    for(int i=0; i<parameters->countNeighbours; i++){
-        neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
-        neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
-    }
-    for(int i = 0; i < parameters->countNeighbours; ++i){
-            delete [] nearest[i];
-    }
-    delete [] nearest;
-    kd_res_free(result);
-}
+//    // Finally build the neighbor vectors and free the kd-tree
+//    for(int i=0; i<parameters->countNeighbours; i++){
+//        neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
+//        neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
+//    }
+//    for(int i = 0; i < parameters->countNeighbours; ++i){
+//            delete [] nearest[i];
+//    }
+//    delete [] nearest;
+//    kd_res_free(result);
+//}
 void BoidHelper::getNeighbours() {
     struct kdres *result;
     double position_neighbour[2];
 
-    // Content: (position.x, position.y, squared distance, velocity.X, velocity.Y)
-    double** nearest = new double*[parameters->countNeighbours];
-    for(int i = 0; i < parameters->countNeighbours; ++i)
-        nearest[i] = new double[5];
-
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameters->countNeighbours);
+    result = kd_nearest_range(*tree, position, parameters->awarenessRadius);
 
     int i = 0;
-    while(!kd_res_end(result)) {
+    while(!kd_res_end(result)&&i<100) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
         neighbours[i].position2 = Vector2(b->getX(),b->getY());
         neighbours[i].velocity2 = Vector2(b->velocity.getX(),b->velocity.getY());
@@ -263,10 +258,6 @@ void BoidHelper::getNeighbours() {
         i++;
     }
     kd_res_free(result);
-    for(int i = 0; i < parameters->countNeighbours; ++i){
-            delete [] nearest[i];
-    }
-    delete [] nearest;
 }
 /**
  * @brief Calculate squared distance between two boids

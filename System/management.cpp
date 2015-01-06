@@ -161,6 +161,9 @@ void Management::setVelocityMatchFactor(double match) {
 void Management::setTargetFactor(double target) {
     parameters.factor_target = target;
 }
+void Management::setAwarenessRadius(double radius){
+    parameters.awarenessRadius = radius;
+}
 
 /**
  * @brief Add a new boid to #boidList.

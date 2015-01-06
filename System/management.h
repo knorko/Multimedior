@@ -69,6 +69,7 @@ public:
     Q_INVOKABLE void setAvoidanceFactor(double avoid);
     Q_INVOKABLE void setVelocityMatchFactor(double match);
     Q_INVOKABLE void setTargetFactor(double target);
+    Q_INVOKABLE void setAwarenessRadius(double radius);
 };
 
 #endif // MANAGEMENT_H

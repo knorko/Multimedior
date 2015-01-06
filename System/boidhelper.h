@@ -39,6 +39,7 @@ private:
 
     void getNeighbors();
     void getNeighbours();
+    void getNeighborsAlt();
     double dist_sq(double *a1, double *a2, int dims);
 
 protected:
