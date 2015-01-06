@@ -96,10 +96,22 @@ Rectangle {
         opacity: 0
     }
 
-    ColorPicker {
-        id: colorPicker1
-        anchors.horizontalCenter: parent.horizontalCenter
+    GroupBox {
+        id: color_settings
+        x: 8
+        width: 212
+        height: 142
+        anchors.top: size_settings.bottom
         opacity: 0
+        title: qsTr("Boid color")
+
+        ColorPicker {
+            id: colorPicker1
+            y: 7
+            anchors.right: parent.right
+            anchors.left: parent.left
+            opacity: 0
+        }
     }
 
         id: rectangle1
@@ -156,8 +168,19 @@ Rectangle {
 
                 PropertyChanges {
                     target: colorPicker1
-                    x: 18
-                    y: 100
+                    x: 0
+                    y: 0
+                    width: 200
+                    anchors.horizontalCenterOffset: 2
+                    opacity: 1
+                }
+
+                PropertyChanges {
+                    target: color_settings
+                    y: 86
+                    width: 212
+                    height: 142
+                    anchors.topMargin: 6
                     opacity: 1
                 }
             }

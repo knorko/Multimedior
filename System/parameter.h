@@ -33,7 +33,7 @@ typedef struct Parameter_S{
      */
     Vector2 mousePosition = Vector2();
 
-    QColor mainColor;
+    QColor mainColor = QColor(128, 255, 64);
 
 } Parameter;
 
