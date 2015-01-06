@@ -188,7 +188,9 @@ void BoidHelper::getNeighbors() {
     double sqrDistance;
 
     // Content: (x, y, squared distance, velocity.X, velocity.Y)
-    double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    double** nearest = new double*[parameters->countNeighbours];
+    for(int i = 0; i < parameters->countNeighbours; ++i)
+        nearest[i] = new double[5];
 
     double position[2] = { getX(), getY() };
     result = kd_nearest_range(*tree, position, parameters->canvasWidth);
@@ -202,7 +204,7 @@ void BoidHelper::getNeighbors() {
             double greatest = nearest[0][2];
             int greatestIndex = 0;
 
-            for(int i = 0; i < 3; i++) {
+            for(int i = 0; i < parameters->countNeighbours; i++) {
                 if(nearest[i][2] == 0) {
                     greatest = nearest[i][2];
                     greatestIndex = i;
@@ -230,7 +232,7 @@ void BoidHelper::getNeighbors() {
     }
 
     // Finally build the neighbor vectors and free the kd-tree
-    for(int i=0; i<3; i++){
+    for(int i=0; i<parameters->countNeighbours; i++){
         neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
         neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
     }

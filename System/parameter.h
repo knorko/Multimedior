@@ -36,6 +36,10 @@ typedef struct Parameter_S{
      * @brief Mouse Position.
      */
     Vector2 mousePosition = Vector2();
+    /**
+     * @brief Neighbours Count
+     */
+    int countNeighbours = 3;
 
 
 } Parameter;

@@ -61,7 +61,7 @@ protected:
     /**
      * @brief The three closest neighbors of the boid (sorted).
      */
-    Neighbors neighbours[3];
+    Neighbors neighbours[100];
     /**
      * @brief Search radius of the boids
      */
