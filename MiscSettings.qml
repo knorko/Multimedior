@@ -109,6 +109,7 @@ Rectangle {
             opacity: 0
 
             onValueChanged: {
+                management.setFlockingFactor(value)
                 label_currentflocking.text = value
             }
         }
@@ -155,6 +156,7 @@ Rectangle {
             opacity: 0
 
             onValueChanged: {
+                management.setAvoidanceFactor(value)
                 label_currentavoidance.text = value
             }
         }
@@ -189,6 +191,7 @@ Rectangle {
             opacity: 0
 
             onValueChanged: {
+                management.setVelocityFactor(value)
                 label_currentvelocity.text = value
             }
         }
@@ -225,6 +228,7 @@ Rectangle {
             opacity: 0
 
             onValueChanged: {
+                management.setMouseFactor(value)
                 label_currentmouse.text = value
             }
         }
@@ -298,8 +302,9 @@ Rectangle {
                     y: 0
                     width: 136
                     height: 22
+                    minimumValue: 1
                     value: 100
-                    maximumValue: 1000
+                    maximumValue: 100
                     opacity: 1
                 }
 
@@ -385,7 +390,7 @@ Rectangle {
                     target: label_currentmouse
                     x: 187
                     y: 3
-                    text: qsTr("2500")
+                    text: qsTr("25")
                     opacity: 1
                 }
 
@@ -394,8 +399,9 @@ Rectangle {
                     x: 45
                     width: 136
                     height: 22
+                    minimumValue: 1
                     value: 20
-                    maximumValue: 1000
+                    maximumValue: 100
                     opacity: 1
                 }
 
@@ -403,8 +409,9 @@ Rectangle {
                     target: slider_velocity
                     x: 45
                     width: 136
+                    minimumValue: 1
                     value: 50
-                    maximumValue: 1000
+                    maximumValue: 100
                     opacity: 1
                 }
 
@@ -412,8 +419,9 @@ Rectangle {
                     target: slider_mouse
                     x: 45
                     width: 136
-                    value: 2500
-                    maximumValue: 10000
+                    minimumValue: 1
+                    value: 25
+                    maximumValue: 100
                     opacity: 1
                 }
 

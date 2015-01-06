@@ -72,5 +72,9 @@ void Boid::update(){
             v4 = mp - position;
 
         //Parameterise each Vector && On/Off
-    velocity = velocity + (v1/parameters->flocking) + (v2/parameters->avoidance) + (v3/parameters->velocity) + (v4/parameters->mouse);
+    Vector2 vfinal = velocity + (v1*(1/parameters->flocking)) + (v2*(1/parameters->avoidance)) + (v3*(1/parameters->velocity)) + (v4*(1/parameters->mouse));
+
+    velocity = Vector2::lerp(lastVel, vfinal, 0.016f);
+
+    lastVel = velocity;
 }

@@ -43,7 +43,7 @@ typedef struct Parameter_S{
 
     double velocity = 50;
 
-    double mouse = 2500;
+    double mouse = 25;
 
 } Parameter;
 
