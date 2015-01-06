@@ -34,7 +34,9 @@ typedef struct Parameter_S{
     /**
      * @brief Neighbours Count
      */
-    int awarenessRadius = 10;
+    double awarenessRadius = 10;
+
+    int countNeighbours = 10;
 
     double flocking = 100;
 

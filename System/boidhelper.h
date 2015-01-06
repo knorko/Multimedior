@@ -38,9 +38,10 @@ private:
     static kdtree **tree;
 
     void getNeighbors();
-    void getNeighbours();
+    void getNeighboursByRange();
     void getNeighborsAlt();
     double dist_sq(double *a1, double *a2, int dims);
+    void setRadius();
 
 protected:
     /**

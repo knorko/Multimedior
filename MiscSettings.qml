@@ -99,7 +99,11 @@ Rectangle {
         id: sliderHorizontal1
         x: 14
         y: 86
+        activeFocusOnPress: true
+        tickmarksEnabled: true
+        updateValueWhileDragging: true
         opacity: 0
+        anchors.verticalCenter: parent.verticalCenter
         onValueChanged: {
             management.setAwarenessRadius(value)
             label1.text = value.toFixed(2)
