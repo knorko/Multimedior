@@ -103,12 +103,12 @@ GroupBox {
         }
 
         Slider {
-            id: slider_speed_avg
+            id: slider_speed_max
             x: 45
             width: 117
             updateValueWhileDragging: true
             activeFocusOnPress: true
-            minimumValue: 0.1
+            minimumValue: 0.5
             value: 1.5
             maximumValue: 2
             anchors.verticalCenter: parent.verticalCenter
@@ -400,7 +400,7 @@ states: [
             }
 
             PropertyChanges {
-                target: slider_speed_avg
+                target: slider_speed_max
                 x: 53
                 anchors.verticalCenterOffset: 0
             }
