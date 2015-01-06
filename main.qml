@@ -26,8 +26,8 @@ Window {
             updateTick.start()
         }
         else {
-            minimumHeight = 768
-            minimumWidth = 1024
+            minimumHeight = 600
+            minimumWidth = 800
             maximumHeight = oldMaxHeight
             maximumWidth = oldMaxWidth
 
@@ -59,10 +59,10 @@ Window {
     id: root
     objectName: "rootWindow"
     visible: true
-    height: 768
-    width: 1024
-    minimumHeight: 768
-    minimumWidth: 1024
+    height: 600
+    width: 800
+    minimumHeight: 600
+    minimumWidth: 800
     color: sysPalette.window
 
     SettingsPanel {

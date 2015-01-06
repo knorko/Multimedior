@@ -10,11 +10,11 @@ typedef struct Parameter_S{
     /**
      * @brief Holds the height of the canvas object.
      */
-    double canvasHeight = 760;
+    double canvasHeight = 592;
     /**
      * @brief Holds the width of the canvas object.
      */
-    double canvasWidth = 996;
+    double canvasWidth = 772;
     /**
     * @brief Factor by which every boid movement is multiplied.
     */
