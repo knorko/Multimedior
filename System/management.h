@@ -64,6 +64,10 @@ public:
     Q_INVOKABLE void setVelocity(double average, double variance);
     Q_INVOKABLE void setMousePosition(double x, double y);
     Q_INVOKABLE void setSize(uint size);
+    Q_INVOKABLE void setFlockingFactor(double f);
+    Q_INVOKABLE void setAvoidanceFactor(double a);
+    Q_INVOKABLE void setVelocityFactor(double v);
+    Q_INVOKABLE void setMouseFactor(double m);
 };
 
 #endif // MANAGEMENT_H

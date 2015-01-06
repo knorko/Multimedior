@@ -54,12 +54,12 @@ void Boid::update(){
     //Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
     for(int i = 0; i < 3; i++){
-        if ((neighbours[i].position2 - position).getSqrMagnitude()<getSize() * getSize()){
+        if ((neighbours[i].position2 - position).getSqrMagnitude() < getSize()+(getSize() * getSize())){
             center = center - (neighbours[i].position2 - position);
         }
     }
     v2 = center;
-    lastVel = v2;
+//    lastVel = v2;
     //Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
         v3 = v3 + neighbours[i].velocity2;
@@ -71,5 +71,10 @@ void Boid::update(){
             if((mp - position).getSqrMagnitude() > 7500)
             v4 = mp - position;
 
-    velocity = velocity + v1/100 + v2*50 + v3/50 + v4/2500;
+        //Parameterise each Vector && On/Off
+    Vector2 vfinal = velocity + (v1*(1/parameters->flocking)) + (v2*(1/parameters->avoidance)) + (v3*(1/parameters->velocity)) + (v4*(1/parameters->mouse));
+
+    velocity = Vector2::lerp(lastVel, vfinal, 0.016f);
+
+    lastVel = velocity;
 }

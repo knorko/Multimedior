@@ -36,16 +36,15 @@ private:
      * @brief The kdtree used for neighbor search and collision.
      */
     static kdtree **tree;
-    /**
-     * @brief Holds pointers to certain parameters
-     */
-    static Parameter *parameters;
-
 
     void getNeighbors();
     double dist_sq(double *a1, double *a2, int dims);
 
 protected:
+    /**
+     * @brief Holds pointers to certain parameters
+     */
+    static Parameter *parameters;
     /**
      * @brief The position of the boid.
      */

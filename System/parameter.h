@@ -41,6 +41,13 @@ typedef struct Parameter_S{
      */
     int countNeighbours = 3;
 
+    double flocking = 100;
+
+    double avoidance = 20;
+
+    double velocity = 50;
+
+    double mouse = 25;
 
 } Parameter;
 
