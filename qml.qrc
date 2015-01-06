@@ -9,5 +9,6 @@
         <file>PredatorSettings.qml</file>
         <file>Controls.qml</file>
         <file>Predator.qml</file>
+        <file>EasterEgg.qml</file>
     </qresource>
 </RCC>

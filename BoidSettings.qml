@@ -61,6 +61,7 @@ GroupBox {
             onValueChanged: {
                 controls1.boidCount = value
                 label_currentcount.text = value
+
             }
         }
     }
@@ -235,6 +236,8 @@ states: [
 
             PropertyChanges {
                 target: miscBox
+                x: 8
+                y: 30
                 visible: true
                 opacity: 1
             }
@@ -265,10 +268,11 @@ states: [
 
             PropertyChanges {
                 target: targetBox
+                x: -248
                 width: 212
                 height: 160
                 visible: true
-                anchors.topMargin: 6
+                anchors.topMargin: 54
                 opacity: 1
             }
 
