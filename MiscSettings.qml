@@ -54,13 +54,12 @@ Rectangle {
 
     Item {
         id: size_settings
-        y: -99
         height: 22
         visible: false
-        anchors.topMargin: 6
+        anchors.topMargin: -22
         anchors.right: parent.right
         anchors.left: parent.left
-        anchors.top: count_settings.bottom
+        anchors.top: speed_settings.bottom
         Label {
             id: label_SIZE
             text: "Size:"
@@ -142,6 +141,7 @@ Rectangle {
                     target: size_settings
                     y: 58
                     height: 22
+                    anchors.topMargin: 6
                     visible: true
                     anchors.rightMargin: 8
                     anchors.leftMargin: 8

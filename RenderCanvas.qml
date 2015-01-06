@@ -19,17 +19,11 @@ Item {
         anchors.fill: parent
         border.width: 0
 
-        property bool rdy: false
-
-        Component.onCompleted: rdy = true
-
         onHeightChanged: {
-            if(rdy)
-                management.setCanvasHeight(height)
+            management.setCanvasHeight(height)
         }
         onWidthChanged: {
-            if(rdy)
-                management.setCanvasWidth(width)
+            management.setCanvasWidth(width)
         }
     }
 

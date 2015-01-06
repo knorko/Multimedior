@@ -88,9 +88,9 @@ void BoidHelper::prepare() {
  */
 void BoidHelper::finalize() {
     // Clamp the speed
-    if(velocity != Vector2(0, 0)) {
+    if(velocity != Vector2(0, 0) && velocity.getSqrMagnitude() > parameters->velocity_avg * parameters->velocity_avg) {
         velocity.normalize();
-        velocity *= parameters->velocity_avg + (parameters->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameters->velocity_var));
+        velocity *= parameters->velocity_avg;
     }
 
     // Set the position based on the velocity
@@ -258,4 +258,20 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
  */
 Vector2 &BoidHelper::getMousePosition() const {
     return parameters->mousePosition;
+}
+
+double BoidHelper::getFlockingFactor() const {
+    return parameters->factor_flocking;
+}
+
+double BoidHelper::getAvoidanceFactor() const {
+    return parameters->factor_avoidance;
+}
+
+double BoidHelper::getVelocityMatchFactor() const {
+    return parameters->factor_match;
+}
+
+double BoidHelper::getTargetFactor() const {
+    return parameters->factor_target;
 }

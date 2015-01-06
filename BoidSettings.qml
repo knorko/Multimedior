@@ -59,7 +59,9 @@ GroupBox {
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                controls1.boidCount = value
+                if(controls1)
+                    controls1.boidCount = value
+
                 label_currentcount.text = value
             }
         }
@@ -70,7 +72,6 @@ GroupBox {
     id: velocityBox
     x: 8
     width: 212
-    height: 84
     visible: false
     anchors.top: miscBox.bottom
     anchors.topMargin: -84
@@ -114,100 +115,238 @@ GroupBox {
 
             onValueChanged: {
                 label_currentspeedavg.text = value.toFixed(2)
-                management.setVelocity(value, slider_speed_var.value);
+                management.setVelocity(value);
             }
         }
 
-    }
-
-    Item {
-        id: speed_var_settings
-        x: 0
-        y: 28
-        height: 22
-        anchors.top: speed_avg_settings.bottom
-        anchors.topMargin: -22
-        anchors.left: parent.left
-        opacity: 0
-        anchors.right: parent.right
-        Label {
-            id: label_VAR
-            x: -8
-            y: -20
-            text: "Variance:"
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: label_currentspeedvar
-            x: 187
-            text: "0.00"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Slider {
-            id: slider_speed_var
-            x: 45
-            width: 117
-            updateValueWhileDragging: false
-            value: 0.1
-            maximumValue: 0.5
-            activeFocusOnPress: true
-            minimumValue: 0
-            anchors.verticalCenter: parent.verticalCenter
-
-            onValueChanged: {
-                label_currentspeedvar.text = value.toFixed(2)
-                management.setVelocity(slider_speed_avg.value, value);
-            }
-        }
     }
 }
 
 GroupBox {
-    id: targetBox
+    id: mouseFollowBox
     x: 8
     width: 212
-    height: 160
     visible: false
     anchors.top: velocityBox.bottom
     anchors.topMargin: -84
     opacity: 0
-    title: qsTr("Target")
+    title: qsTr("Mouse following")
 
     Item {
-        id: globalTarget_settings
+        id: continuous_settings
         height: 25
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
 
-        Label {
-            id: label_GLOBAL
-            y: 8
-            text: qsTr("Global")
+        CheckBox {
+            id: checkBox1
+            text: qsTr("Continuous")
+            activeFocusOnPress: true
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             opacity: 0
-        }
 
-        ComboBox {
-            id: comboBox1
-            currentIndex: 0
-            width: 152
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-
-            model: ListModel {
-                id: globalTarget
-                ListElement { text: "Mouse (click)"; property bool value: false }
-                ListElement { text: "Mouse (continuous)"; property bool value: true }
+            onCheckedChanged: {
+                renderCanvas1.continuous = checked
             }
-            onCurrentIndexChanged: renderCanvas1.continuous = globalTarget.get(currentIndex).value
         }
     }
 }
+
+GroupBox {
+    id: behaviorBox
+    x: 8
+    width: 212
+    height: 139
+    title: "Behavior"
+    anchors.top: mouseFollowBox.bottom
+    anchors.topMargin: -56
+    opacity: 0
+
+
+    Item {
+        id: beh_flockBox
+        x: 8
+        y: 219
+        height: 22
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        Label {
+            id: label_FLOCK
+            y: -20
+            text: "Flock:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentflock
+            x: 187
+            text: "100"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_flock
+            x: 45
+            width: 117
+            value: 100
+            maximumValue: 100
+            activeFocusOnPress: true
+            minimumValue: 1
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentflock.text = value.toFixed(0)
+                management.setFlockingFactor(value);
+            }
+        }
+    }
+
+    Item {
+        id: beh_avoidBox
+        x: 8
+        y: 219
+        height: 22
+        anchors.topMargin: -22
+        anchors.top: beh_flockBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+
+        Label {
+            id: label_AVOID
+            y: -20
+            text: "Avoid:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentavoid
+            x: 187
+            text: "20"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_avoid
+            x: 45
+            width: 117
+            minimumValue: 1
+            value: 20
+            maximumValue: 100
+            activeFocusOnPress: true
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentavoid.text = value.toFixed(0)
+                management.setAvoidanceFactor(value)
+            }
+        }
+    }
+
+    Item {
+        id: beh_matchBox
+        x: 17
+        y: 213
+        height: 22
+        anchors.top: beh_avoidBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+        anchors.topMargin: -22
+
+        Label {
+            id: label_MATCH
+            y: -20
+            text: "Match:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentmatch
+            x: 187
+            text: "50"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_match
+            x: 45
+            width: 117
+            value: 50
+            maximumValue: 100
+            activeFocusOnPress: true
+            minimumValue: 1
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentmatch.text = value.toFixed(0)
+                management.setVelocityMatchFactor(value)
+            }
+        }
+    }
+
+    Item {
+        id: beh_targetBox
+        x: 17
+        y: 222
+        height: 22
+        anchors.top: beh_matchBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+        anchors.topMargin: -22
+
+        Label {
+            id: label_beh_TARGET
+            y: -20
+            text: "Target:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currenttarget
+            x: 187
+            text: "25"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_target
+            x: 45
+            width: 117
+            value: 25
+            maximumValue: 100
+            minimumValue: 1
+            activeFocusOnPress: true
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currenttarget.text = value.toFixed(0)
+                management.setTargetFactor(value)
+            }
+        }
+    }
+
+}
+
 
 id: rectangle1
 width: 228
@@ -222,7 +361,7 @@ states: [
 
         PropertyChanges {
             target: rectangle1
-            height: 384
+            height: 367
         }
 
             PropertyChanges {
@@ -282,6 +421,8 @@ states: [
 
             PropertyChanges {
                 target: velocityBox
+                width: 212
+                height: 57
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
@@ -294,34 +435,6 @@ states: [
             }
 
             PropertyChanges {
-                target: speed_var_settings
-                y: 28
-                anchors.topMargin: 6
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: label_VAR
-                x: 0
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: slider_speed_var
-                x: 53
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: label_currentspeedvar
-                x: 172
-                width: 24
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
                 target: label_currentcount
                 x: 185
                 anchors.verticalCenterOffset: 0
@@ -329,29 +442,59 @@ states: [
             }
 
             PropertyChanges {
-                target: targetBox
+                target: mouseFollowBox
                 width: 212
-                height: 160
+                height: 57
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
             }
 
             PropertyChanges {
-                target: globalTarget_settings
+                target: continuous_settings
                 width: 200
                 opacity: 1
             }
 
             PropertyChanges {
-                target: label_GLOBAL
-                anchors.verticalCenterOffset: 0
+                target: behaviorBox
+                anchors.topMargin: 6
                 opacity: 1
             }
 
             PropertyChanges {
-                target: comboBox1
-                activeFocusOnPress: true
+                target: beh_avoidBox
+                opacity: 1
+                anchors.topMargin: 6
+            }
+
+            PropertyChanges {
+                target: beh_matchBox
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: beh_targetBox
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: beh_flockBox
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: slider_beh_flock
+                updateValueWhileDragging: true
+            }
+
+            PropertyChanges {
+                target: checkBox1
+                opacity: 1
             }
 
     }

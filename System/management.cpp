@@ -4,8 +4,12 @@ vector<Boid*> Management::boidList;
 vector<Predator*> Management::predList;
 kdtree *Management::tree = nullptr;
 
+bool initialized = false;
 Parameter parameters;
 
+
+Management::Management() {
+}
 
 /**
  * @brief Initialize the boidHelper class.
@@ -15,8 +19,11 @@ Parameter parameters;
  * @param engine Main QQmlApplicationEngine of the application.
  * @param canvas QObject of the canvas.
  */
-Management::Management(QQmlApplicationEngine *engine, QObject *canvas) {
-    BoidHelper::initialize(engine, canvas, &tree, &parameters);
+void Management::initialize(QQmlApplicationEngine *engine, QObject *canvas) {
+    if(!initialized) {
+        initialized = true;
+        BoidHelper::initialize(engine, canvas, &tree, &parameters);
+    }
 }
 
 /**
@@ -116,8 +123,7 @@ void Management::setSpeed(double speed) {
  * @param average Average velocity.
  * @param variance Variance.
  */
-void Management::setVelocity(double average, double variance) {
-    parameters.velocity_var = variance;
+void Management::setVelocity(double average) {
     parameters.velocity_avg = average;
 }
 
@@ -137,6 +143,22 @@ void Management::setMousePosition(double x, double y) {
  */
 void Management::setSize(uint size) {
     parameters.size = size;
+}
+
+void Management::setFlockingFactor(double flock) {
+    parameters.factor_flocking = flock;
+}
+
+void Management::setAvoidanceFactor(double avoid) {
+    parameters.factor_avoidance = avoid;
+}
+
+void Management::setVelocityMatchFactor(double match) {
+    parameters.factor_match = match;
+}
+
+void Management::setTargetFactor(double target) {
+    parameters.factor_target = target;
 }
 
 /**
@@ -177,3 +199,5 @@ void Management::prepareTree() {
         kd_insert( tree, position, obj);
     }
 }
+
+
