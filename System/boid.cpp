@@ -76,7 +76,7 @@ void Boid::update(){
     if(position.getX() < 80)
         v5.setX(1);
     else if(position.getX() >= getCanvasWidth() - 80)
-         v5.setX(-1);
+        v5.setX(-1);
 
     if(position.getY() <  80)
         v5.setY(1);
@@ -84,9 +84,25 @@ void Boid::update(){
         v5.setY(-1);
     }
 
+    //Replace position with mouse position and look through the force-parameter with the mouse
+    double power = 0.0;
+    double power2 = 0.0;
+    if(position.getX() < 80)
+        power = 100 - position.getX();
+    else if(position.getX() >= getCanvasWidth() - 80)
+        power = 100 + position.getX() - getCanvasWidth() ;
+    else if(position.getY() < 80)
+        power2 = 100 - position.getY();
+    else if(position.getY() >= getCanvasHeight() - 80)
+        power2 = 100 + position.getY() - getCanvasHeight();
+
+    double force = 10*exp((power+ power2) *0.05);
+
+    //qDebug << force;
+
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
-                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * 100,
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force,
                              0.016f);
 
     lastVel = velocity;
