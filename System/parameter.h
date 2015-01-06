@@ -39,7 +39,7 @@ typedef struct Parameter_S{
     /**
      * @brief Neighbours Count
      */
-    int countNeighbours = 60;
+    int countNeighbours = 3;
 
     double flocking = 100;
 
