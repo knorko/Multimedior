@@ -10,11 +10,11 @@ typedef struct Parameter_S{
     /**
      * @brief Holds the height of the canvas object.
      */
-    double canvasHeight = 472;
+    double canvasHeight = 760;
     /**
      * @brief Holds the width of the canvas object.
      */
-    double canvasWidth = 612;
+    double canvasWidth = 996;
     /**
     * @brief Factor by which every boid movement is multiplied.
     */
@@ -22,20 +22,20 @@ typedef struct Parameter_S{
     /**
      * @brief Boid size.
      */
-    uint size = 10;
+    uint size = 7;
     /**
-     * @brief Average movement velocity of the boids.
+     * @brief Maximal movement velocity of the boids.
      */
-    double velocity_avg = 1;
+    double velocity_max = 1.5;
     /**
      * @brief Mouse Position.
      */
     Vector2 mousePosition = Vector2();
 
-    double factor_flocking = 100.0;
-    double factor_avoidance = 20.0;
-    double factor_match = 50.0;
-    double factor_target = 25.0;
+    double factor_flocking = 30.0;
+    double factor_avoidance = 80.0;
+    double factor_match = 80.0;
+    double factor_target = 50.0;
 
 } Parameter;
 

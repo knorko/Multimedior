@@ -85,19 +85,19 @@ void Boid::update(){
     }
 
     //Replace position with mouse position and look through the force-parameter with the mouse
-    double power = 0.0;
-    double power2 = 0.0;
+    double powerx = 0.0;
+    double powery = 0.0;
 
-    if(position.getX() < 150)
-        power = 150 - position.getX();
-    else if(position.getX() >= getCanvasWidth() - 150)
-        power = 150 + position.getX() - getCanvasWidth() ;
-    else if(position.getY() < 150)
-        power2 = 150 - position.getY();
-    else if(position.getY() >= getCanvasHeight() - 150)
-        power2 = 150 + position.getY() - getCanvasHeight();
+    if(position.getX() < BORDER_THRESHOLD)
+        powerx = BORDER_THRESHOLD - position.getX();
+    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
+        powerx = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
+    else if(position.getY() < BORDER_THRESHOLD)
+        powery = BORDER_THRESHOLD - position.getY();
+    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
+        powery = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
 
-    double force = 5.0 * ((power + power2));
+    double force = 3.0 * (powerx + powery);
 
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +

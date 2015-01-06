@@ -69,7 +69,7 @@ Rectangle {
         Label {
             id: label_currentsize
             x: 187
-            text: "10"
+            text: "7"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -84,8 +84,8 @@ Rectangle {
             stepSize: 1
             minimumValue: 5
             anchors.verticalCenter: parent.verticalCenter
-            maximumValue: 15
-            value: 10
+            maximumValue: 10
+            value: 7
 
             onValueChanged: {
                 management.setSize(value)

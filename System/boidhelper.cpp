@@ -88,9 +88,9 @@ void BoidHelper::prepare() {
  */
 void BoidHelper::finalize() {
     // Clamp the speed
-    if(velocity.getSqrMagnitude() > parameters->velocity_avg * parameters->velocity_avg) {
+    if(velocity.getSqrMagnitude() > parameters->velocity_max * parameters->velocity_max) {
         velocity.normalize();
-        velocity *= parameters->velocity_avg;
+        velocity *= parameters->velocity_max;
     }
 
     // Set the position based on the velocity

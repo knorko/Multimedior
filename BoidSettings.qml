@@ -42,7 +42,7 @@ GroupBox {
         Label {
             id: label_currentcount
             x: 187
-            text: "5"
+            text: "15"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -51,8 +51,8 @@ GroupBox {
             id: slider_count
             x: 45
             width: 136
-            minimumValue: 5
-            value: 5
+            minimumValue: 15
+            value: 15
             activeFocusOnPress: true
             stepSize: 1
             maximumValue: 150
@@ -79,7 +79,7 @@ GroupBox {
     opacity: 0
 
     Item {
-        id: speed_avg_settings
+        id: speed_max_settings
         y: -57
         height: 22
         anchors.right: parent.right
@@ -87,17 +87,17 @@ GroupBox {
         opacity: 0
 
         Label {
-            id: label_AVG
+            id: label_MAXSPEED
             x: -8
             y: -20
-            text: "Average:"
+            text: "Limit:"
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Label {
-            id: label_currentspeedavg
+            id: label_currentspeedmax
             x: 187
-            text: "0.00"
+            text: "1.5"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -106,15 +106,15 @@ GroupBox {
             id: slider_speed_avg
             x: 45
             width: 117
-            updateValueWhileDragging: false
+            updateValueWhileDragging: true
             activeFocusOnPress: true
             minimumValue: 0.1
-            value: 1
+            value: 1.5
             maximumValue: 2
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                label_currentspeedavg.text = value.toFixed(2)
+                label_currentspeedmax.text = value.toFixed(2)
                 management.setVelocity(value);
             }
         }
@@ -187,7 +187,7 @@ GroupBox {
         Label {
             id: label_currentflock
             x: 187
-            text: "50"
+            text: "30"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -196,7 +196,7 @@ GroupBox {
             id: slider_beh_flock
             x: 45
             width: 117
-            value: 50
+            value: 30
             maximumValue: 100
             activeFocusOnPress: true
             minimumValue: 0
@@ -232,7 +232,7 @@ GroupBox {
         Label {
             id: label_currentavoid
             x: 187
-            text: "100"
+            text: "80"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -242,7 +242,7 @@ GroupBox {
             x: 45
             width: 117
             minimumValue: 0
-            value: 100
+            value: 80
             maximumValue: 100
             activeFocusOnPress: true
             updateValueWhileDragging: true
@@ -277,7 +277,7 @@ GroupBox {
         Label {
             id: label_currentmatch
             x: 187
-            text: "100"
+            text: "80"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -286,7 +286,7 @@ GroupBox {
             id: slider_beh_match
             x: 45
             width: 117
-            value: 100
+            value: 80
             maximumValue: 100
             activeFocusOnPress: true
             minimumValue: 0
@@ -322,7 +322,7 @@ GroupBox {
         Label {
             id: label_currenttarget
             x: 187
-            text: "25"
+            text: "50"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -331,7 +331,7 @@ GroupBox {
             id: slider_beh_target
             x: 45
             width: 117
-            value: 25
+            value: 50
             maximumValue: 100
             minimumValue: 0
             activeFocusOnPress: true
@@ -392,7 +392,7 @@ states: [
             }
 
             PropertyChanges {
-                target: speed_avg_settings
+                target: speed_max_settings
                 y: 0
                 anchors.horizontalCenterOffset: 8
                 anchors.topMargin: 127
@@ -402,13 +402,11 @@ states: [
             PropertyChanges {
                 target: slider_speed_avg
                 x: 53
-                width: 117
-                height: 22
                 anchors.verticalCenterOffset: 0
             }
 
             PropertyChanges {
-                target: label_currentspeedavg
+                target: label_currentspeedmax
                 x: 172
                 anchors.verticalCenterOffset: 0
             }
@@ -429,7 +427,7 @@ states: [
             }
 
             PropertyChanges {
-                target: label_AVG
+                target: label_MAXSPEED
                 x: 0
                 anchors.verticalCenterOffset: 0
             }

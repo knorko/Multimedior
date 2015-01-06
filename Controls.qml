@@ -4,7 +4,7 @@ import QtQuick.Controls 1.2
 Rectangle {
     SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
-    property int boidCount: 5
+    property int boidCount: 15
     property int predatorCount: 0
 
     signal changeRunning(bool value)
