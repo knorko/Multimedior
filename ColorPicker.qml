@@ -31,7 +31,7 @@ Rectangle{
         x: 47
         y: 60
         width: 100
-        value: 1
+        value: 0
         stepSize: 0
         maximumValue: 1
 
