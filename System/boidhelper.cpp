@@ -174,7 +174,7 @@ uint &BoidHelper::getSize() const{
 }
 
 /**
- * @brief Get the three closest neighbors for each boid
+ * @brief DEPRECATED !!! Get the three closest neighbors for each boid
  *
  * This function builds a two-dimensional kd-tree from the current position of each
  * boid.
@@ -182,7 +182,7 @@ uint &BoidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
-void BoidHelper::getNeighbors() {
+void BoidHelper::getNeighborsAlt() {
     struct kdres *result;
     double position_neighbour[2];
     double sqrDistance;
@@ -236,6 +236,10 @@ void BoidHelper::getNeighbors() {
         neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
         neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
     }
+    for(int i = 0; i < parameters->countNeighbours; ++i){
+            delete [] nearest[i];
+    }
+    delete [] nearest;
     kd_res_free(result);
 }
 void BoidHelper::getNeighbours() {
@@ -248,7 +252,7 @@ void BoidHelper::getNeighbours() {
         nearest[i] = new double[5];
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+    result = kd_nearest_range(*tree, position, parameters->countNeighbours);
 
     int i = 0;
     while(!kd_res_end(result)) {
@@ -258,8 +262,11 @@ void BoidHelper::getNeighbours() {
         kd_res_next(result);
         i++;
     }
-    i = 0;
     kd_res_free(result);
+    for(int i = 0; i < parameters->countNeighbours; ++i){
+            delete [] nearest[i];
+    }
+    delete [] nearest;
 }
 /**
  * @brief Calculate squared distance between two boids
