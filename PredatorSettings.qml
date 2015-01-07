@@ -55,7 +55,7 @@ Rectangle {
                 value: 0
                 activeFocusOnPress: true
                 stepSize: 1
-                maximumValue: 10
+                maximumValue: 5
                 anchors.verticalCenter: parent.verticalCenter
 
                 onValueChanged: {

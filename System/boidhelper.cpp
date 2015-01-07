@@ -71,7 +71,7 @@ double &BoidHelper::getCanvasWidth() const {
  * @brief Prepares required data
  *
  * This function is called before each boid has its boid::Update() function called.
- * It refreshes the position vector and calls the getNeighbors() function.
+ * It refreshes the position vector and calls the getNeighborsByRange() function.
  */
 void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
@@ -184,6 +184,8 @@ uint &BoidHelper::getSize() const{
  * It then finds the three closest neighbors and saves them in a sorted order.
  *
  * The neighbors are stored in the boidHelper::neighbors array.
+ *
+ * Furthermore it stores Predator Objects in the boidHelper::predator array.
  */
 void BoidHelper::getNeighboursByRange() {
     struct kdres *result;

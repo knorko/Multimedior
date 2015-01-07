@@ -186,6 +186,7 @@ Rectangle {
         y: 322
         height: 32
         text: qsTr("About")
+        visible: false
         anchors.bottomMargin: 8
         anchors.bottom: parent.bottom
         anchors.rightMargin: 8
@@ -262,7 +263,6 @@ Rectangle {
                 anchors.leftMargin: 8
                 opacity: 1
             }
-
             PropertyChanges {
                 target: colorPicker1
                 width: 197
@@ -308,6 +308,7 @@ Rectangle {
 
             PropertyChanges {
                 target: button_about
+                visible: true
                 opacity: 1
             }
         }
