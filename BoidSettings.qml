@@ -21,7 +21,7 @@ GroupBox {
     x: 8
     y: 30
     width: 212
-    height: 57
+    height: 52
     visible: false
     title: qsTr("Misc.")
     opacity: 0
@@ -29,6 +29,7 @@ GroupBox {
     Item {
         id: count_settings
         height: 22
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
@@ -50,7 +51,7 @@ GroupBox {
         Slider {
             id: slider_count
             x: 45
-            width: 136
+            width: 125
             minimumValue: 15
             value: 15
             activeFocusOnPress: true
@@ -63,6 +64,7 @@ GroupBox {
                     controls1.boidCount = value
 
                 label_currentcount.text = value
+
             }
         }
     }
@@ -72,6 +74,7 @@ GroupBox {
     id: velocityBox
     x: 8
     width: 212
+    height: 52
     visible: false
     anchors.top: miscBox.bottom
     anchors.topMargin: -84
@@ -82,15 +85,16 @@ GroupBox {
         id: speed_max_settings
         y: -57
         height: 22
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
 
         Label {
             id: label_MAXSPEED
-            x: -8
             y: -20
             text: "Limit:"
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -105,7 +109,7 @@ GroupBox {
         Slider {
             id: slider_speed_max
             x: 45
-            width: 117
+            width: 125
             updateValueWhileDragging: true
             activeFocusOnPress: true
             minimumValue: 0.5
@@ -126,6 +130,7 @@ GroupBox {
     id: mouseFollowBox
     x: 8
     width: 212
+    height: 52
     visible: false
     anchors.top: velocityBox.bottom
     anchors.topMargin: -84
@@ -135,7 +140,7 @@ GroupBox {
     Item {
         id: continuous_settings
         height: 25
-        anchors.top: parent.top
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
@@ -159,7 +164,8 @@ GroupBox {
     id: behaviorBox
     x: 8
     width: 212
-    height: 139
+    height: 136
+    visible: false
     title: "Behavior"
     anchors.top: mouseFollowBox.bottom
     anchors.topMargin: -56
@@ -361,13 +367,12 @@ states: [
 
         PropertyChanges {
             target: rectangle1
-            height: 367
+            height: 350
         }
 
             PropertyChanges {
                 target: label_title
                 x: 8
-                y: 8
                 text: "Boids:"
                 anchors.verticalCenterOffset: -97
                 anchors.horizontalCenterOffset: -90
@@ -375,8 +380,6 @@ states: [
 
             PropertyChanges {
                 target: slider_count
-                width: 125
-                height: 22
                 anchors.verticalCenterOffset: 0
                 anchors.horizontalCenterOffset: 9
             }
@@ -400,15 +403,8 @@ states: [
             }
 
             PropertyChanges {
-                target: slider_speed_max
-                x: 53
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
                 target: label_currentspeedmax
                 x: 172
-                anchors.verticalCenterOffset: 0
             }
 
             PropertyChanges {
@@ -419,8 +415,6 @@ states: [
 
             PropertyChanges {
                 target: velocityBox
-                width: 212
-                height: 57
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
@@ -428,7 +422,6 @@ states: [
 
             PropertyChanges {
                 target: label_MAXSPEED
-                x: 0
                 anchors.verticalCenterOffset: 0
             }
 
@@ -441,8 +434,6 @@ states: [
 
             PropertyChanges {
                 target: mouseFollowBox
-                width: 212
-                height: 57
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
@@ -456,6 +447,8 @@ states: [
 
             PropertyChanges {
                 target: behaviorBox
+                width: 212
+                visible: true
                 anchors.topMargin: 6
                 opacity: 1
             }
@@ -464,6 +457,7 @@ states: [
                 target: beh_avoidBox
                 opacity: 1
                 anchors.topMargin: 6
+                anchors.verticalCenterOffset: 0
             }
 
             PropertyChanges {
@@ -477,6 +471,9 @@ states: [
             PropertyChanges {
                 target: beh_targetBox
                 anchors.topMargin: 6
+                x: -248
+                width: 212
+                visible: true
                 opacity: 1
             }
 

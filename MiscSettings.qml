@@ -31,7 +31,9 @@ Rectangle {
         Label {
             id: label_currentspeed
             x: 187
-            text: "0.00"
+            text: "1.00"
+            anchors.right: parent.right
+            horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -95,67 +97,100 @@ Rectangle {
         opacity: 0
     }
 
-        id: rectangle1
-        width: 228
-        height: 32
-        color: sysPalette.window
-        radius: 1
-        border.color: sysPalette.mid
+    GroupBox {
+        id: color_settings
+        x: 8
+        width: 212
+        height: 149
+        visible: false
+        anchors.topMargin: -149
+        anchors.top: size_settings.bottom
+        opacity: 0
+        title: qsTr("Boid color")
 
-        states: [
-            State {
-                name: "VISIBLE"
-
-                PropertyChanges {
-                    target: rectangle1
-                    height: 225
-                }
-
-                PropertyChanges {
-                    target: label_title
-                    x: 8
-                    y: 8
-                    text: "Miscellaneous:"
-                    anchors.verticalCenterOffset: -97
-                    anchors.horizontalCenterOffset: -67
-                }
-
-                PropertyChanges {
-                    target: speed_settings
-                    visible: true
-                    anchors.topMargin: 6
-                    opacity: 1
-                }
-
-                PropertyChanges {
-                    target: slider_speed
-                    anchors.verticalCenterOffset: 0
-                }
-
-                PropertyChanges {
-                    target: label_currentspeed
-                    anchors.verticalCenterOffset: 0
-                }
-
-                PropertyChanges {
-                    target: size_settings
-                    y: 58
-                    height: 22
-                    anchors.topMargin: 6
-                    visible: true
-                    anchors.rightMargin: 8
-                    anchors.leftMargin: 8
-                    opacity: 1
-                }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                NumberAnimation {
-                    easing.type: Easing.OutExpo
-                    properties: {"x, y, topMargin, opacity, height"}
-                }
-            }
-        ]
+        ColorPicker {
+            id: colorPicker1
+            height: 122
+            anchors.right: parent.right
+            anchors.left: parent.left
+            opacity: 0
+        }
     }
+
+    id: rectangle1
+    width: 228
+    height: 32
+    color: sysPalette.window
+    radius: 1
+    border.color: sysPalette.mid
+
+    states: [
+        State {
+            name: "VISIBLE"
+
+            PropertyChanges {
+                target: rectangle1
+                height: 335
+            }
+
+            PropertyChanges {
+                target: label_title
+                x: 8
+                y: 8
+                text: "Miscellaneous:"
+                anchors.verticalCenterOffset: -97
+                anchors.horizontalCenterOffset: -67
+            }
+
+            PropertyChanges {
+                target: speed_settings
+                visible: true
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: slider_speed
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: label_currentspeed
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: size_settings
+                y: 58
+                height: 22
+                anchors.topMargin: 6
+                visible: true
+                anchors.rightMargin: 8
+                anchors.leftMargin: 8
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: colorPicker1
+                width: 200
+                anchors.horizontalCenterOffset: 2
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: color_settings
+                anchors.topMargin: 6
+                opacity: 1
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            NumberAnimation {
+                easing.type: Easing.OutExpo
+                properties: {"x, y, topMargin, opacity, height"}
+            }
+        }
+    ]
+}

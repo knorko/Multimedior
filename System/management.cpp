@@ -119,9 +119,8 @@ void Management::setSpeed(double speed) {
 }
 
 /**
- * @brief Set the velocity and variance.
+ * @brief Set the velocity.
  * @param average Average velocity.
- * @param variance Variance.
  */
 void Management::setVelocity(double average) {
     parameters.velocity_max = average;
@@ -159,6 +158,10 @@ void Management::setVelocityMatchFactor(double match) {
 
 void Management::setTargetFactor(double target) {
     parameters.factor_target = target;
+}
+
+void Management::setColor(QColor color){
+    parameters.mainColor = color;
 }
 
 /**

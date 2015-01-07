@@ -1,6 +1,7 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 #include "vector2.h"
+#include "QColor"
 
 
 /**
@@ -36,6 +37,7 @@ typedef struct Parameter_S{
     double factor_avoidance = 80.0;
     double factor_match = 80.0;
     double factor_target = 50.0;
+    QColor mainColor = QColor(128, 255, 64);
 
 } Parameter;
 
