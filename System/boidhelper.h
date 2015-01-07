@@ -74,6 +74,7 @@ protected:
     double getAvoidanceFactor() const;
     double getVelocityMatchFactor() const;
     double getTargetFactor() const;
+    double getAwarenessRadius() const;
 
 public:
     /**

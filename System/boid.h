@@ -5,7 +5,7 @@
 
 
 #define BORDER_THRESHOLD 100.0
-#define PREDATOR_THRESHOLD 50.0
+#define PREDATOR_THRESHOLD 80.0
 
 /**
  * @brief The boid class contains all boid logic.

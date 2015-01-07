@@ -31,7 +31,7 @@ void Predator::update() {
 
     //IF Boid found then follow else random
     for(int i = 0; i < 3; i++){
-        if((position - neighbours[i].position2).getMagnitude() < position.getMagnitude() * radius && neighbours[i].isBoid)
+        if((position - neighbours[i].position2).getMagnitude() < position.getMagnitude() * getAwarenessRadius() && neighbours[i].isBoid)
             center = neighbours[i].position2;
     }
 
