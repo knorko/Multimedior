@@ -31,7 +31,9 @@ Rectangle {
         Label {
             id: label_currentspeed
             x: 187
-            text: "0.00"
+            text: "1.00"
+            anchors.right: parent.right
+            horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -48,6 +50,56 @@ Rectangle {
             onValueChanged: {
                 label_currentspeed.text = value.toFixed(2)
                 management.setSpeed(value)
+            }
+        }
+    }
+
+    Item {
+        id: awareness_rad_settings
+        height: 22
+        anchors.rightMargin: 8
+        anchors.leftMargin: 8
+        anchors.top: size_settings.bottom
+        anchors.topMargin: -22
+        visible: false
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        Label {
+            id: label_RADIUS
+            y: 183
+            text: qsTr("Radius:")
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentradius
+            text: qsTr("20")
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+        }
+
+        Slider {
+            id: sliderHorizontal1
+            x: 45
+            width: 136
+            stepSize: 1
+            minimumValue: 10
+            value: 20
+            maximumValue: 100
+            activeFocusOnPress: true
+            tickmarksEnabled: false
+            updateValueWhileDragging: true
+            opacity: 0
+            anchors.verticalCenter: parent.verticalCenter
+            onValueChanged: {
+                management.setAwarenessRadius(value)
+                label_currentradius.text = value
             }
         }
     }
@@ -95,67 +147,145 @@ Rectangle {
         opacity: 0
     }
 
-        id: rectangle1
-        width: 228
-        height: 32
-        color: sysPalette.window
-        radius: 1
-        border.color: sysPalette.mid
 
-        states: [
-            State {
-                name: "VISIBLE"
+    CheckBox {
+        id: toggle_showRadius
+        x: 8
+        text: qsTr("Show radius")
+        anchors.top: awareness_rad_settings.bottom
+        anchors.topMargin: -21
+        activeFocusOnPress: true
+        opacity: 0
 
-                PropertyChanges {
-                    target: rectangle1
-                    height: 225
-                }
-
-                PropertyChanges {
-                    target: label_title
-                    x: 8
-                    y: 8
-                    text: "Miscellaneous:"
-                    anchors.verticalCenterOffset: -97
-                    anchors.horizontalCenterOffset: -67
-                }
-
-                PropertyChanges {
-                    target: speed_settings
-                    visible: true
-                    anchors.topMargin: 6
-                    opacity: 1
-                }
-
-                PropertyChanges {
-                    target: slider_speed
-                    anchors.verticalCenterOffset: 0
-                }
-
-                PropertyChanges {
-                    target: label_currentspeed
-                    anchors.verticalCenterOffset: 0
-                }
-
-                PropertyChanges {
-                    target: size_settings
-                    y: 58
-                    height: 22
-                    anchors.topMargin: 6
-                    visible: true
-                    anchors.rightMargin: 8
-                    anchors.leftMargin: 8
-                    opacity: 1
-                }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                NumberAnimation {
-                    easing.type: Easing.OutExpo
-                    properties: {"x, y, topMargin, opacity, height"}
-                }
-            }
-        ]
+        onCheckedChanged: management.setAwarenessRadiusVisualization(checked)
     }
+
+
+    GroupBox {
+        id: color_settings
+        x: 8
+        width: 212
+        height: 149
+        visible: false
+        anchors.topMargin: -149
+        anchors.top: toggle_showRadius.bottom
+        opacity: 0
+        title: qsTr("Boid color")
+
+        ColorPicker {
+            id: colorPicker1
+            anchors.right: parent.right
+            anchors.left: parent.left
+            opacity: 0
+        }
+    }
+
+
+
+    id: rectangle1
+    width: 228
+    height: 32
+    color: sysPalette.window
+    radius: 1
+    border.color: sysPalette.mid
+
+    states: [
+        State {
+            name: "VISIBLE"
+
+            PropertyChanges {
+                target: rectangle1
+                height: 335
+            }
+
+            PropertyChanges {
+                target: label_title
+                x: 8
+                y: 8
+                text: "Miscellaneous:"
+                anchors.verticalCenterOffset: -97
+                anchors.horizontalCenterOffset: -67
+            }
+
+            PropertyChanges {
+                target: speed_settings
+                visible: true
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: slider_speed
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: label_currentspeed
+                anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: size_settings
+                y: 58
+                height: 22
+                anchors.topMargin: 6
+                visible: true
+                anchors.rightMargin: 8
+                anchors.leftMargin: 8
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: colorPicker1
+                width: 197
+                anchors.horizontalCenterOffset: 2
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: color_settings
+                visible: true
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: sliderHorizontal1
+                anchors.verticalCenterOffset: 0
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_RADIUS
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: awareness_rad_settings
+                anchors.topMargin: 6
+                visible: true
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_currentradius
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: toggle_showRadius
+                anchors.topMargin: 6
+                opacity: 1
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            NumberAnimation {
+                easing.type: Easing.OutExpo
+                properties: {"x, y, topMargin, opacity, height"}
+            }
+        }
+    ]
+}

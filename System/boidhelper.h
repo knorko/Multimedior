@@ -46,9 +46,13 @@ private:
      */
     static Parameter *parameters;
 
-
     void getNeighbors();
+    void getNeighboursByRange();
+    void getNeighborsAlt();
     double dist_sq(double *a1, double *a2, int dims);
+    void setColor();
+    void setRadius();
+    void setRadiusVisualization();
 
 protected:
     /**
@@ -71,10 +75,6 @@ protected:
     Neighbors predator[3];
 
     bool isPredator = false;
-    /**
-     * @brief Search radius of the boids
-     */
-    double radius = 240;
 
     Vector2& getMousePosition() const;
     double getFlockingFactor() const;

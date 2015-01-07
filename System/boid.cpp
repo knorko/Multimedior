@@ -58,7 +58,6 @@ void Boid::update(){
         }
     }
     v2 = center;
-
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
         v3 = v3 + neighbours[i].velocity2;

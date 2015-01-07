@@ -88,10 +88,10 @@ Window {
 
         RenderCanvas {
             id: renderCanvas1
-            anchors.rightMargin: 2
-            anchors.leftMargin: 2
-            anchors.bottomMargin: 2
-            anchors.topMargin: 2
+            anchors.rightMargin: 0
+            anchors.leftMargin: 4
+            anchors.bottomMargin: 0
+            anchors.topMargin: 4
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
