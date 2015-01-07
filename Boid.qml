@@ -1,6 +1,16 @@
 import QtQuick 2.0
 
 Rectangle {
+    property bool visualizeRadius: false
+    onVisualizeRadiusChanged: awarenessRadius.opacity = visualizeRadius ? 1.0 : 0.0
+
+    property real rad: 10
+
+    onRadChanged: {
+        awarenessRadius.height = rad
+        awarenessRadius.width = rad
+    }
+
     id: rectangle1
     width: 7
     height: 7
@@ -22,5 +32,25 @@ Rectangle {
         mainColor = ("000000" + mainColor).slice(-6);   // Pad with leading zeros
         mainColor = "#" + mainColor;
         border.color = mainColor;
+    }
+
+    Rectangle {
+        id: awarenessRadius
+        x: -92
+        y: -92
+        width: 50
+        height: 50
+        color: "#00000000"
+        radius: 25
+        opacity: 0
+        border.width: 1
+        border.color: "#805ff500"
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        z: -1
+
+        onWidthChanged: radius = width * 0.5
+
+        Behavior on opacity { NumberAnimation { duration: 750;  easing.type: Easing.OutExpo} }
     }
 }

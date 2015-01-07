@@ -16,6 +16,7 @@ Item {
         width: 32
         height: 32
         radius: 16
+        rad: 0
         border.width: 5
     }
 
@@ -58,8 +59,8 @@ Item {
 
             onValueChanged: {
                 label_currentred.text = value.toFixed(2)
-                boid_preview.color = Qt.rgba(value,slider_green.value,slider_blue.value,1)
-                boid_preview.border.color = Qt.rgba(1-slider_red.value,1-slider_green.value,1-value,1)
+                boid_preview.color = Qt.rgba(value, slider_green.value, slider_blue.value, 1)
+                boid_preview.border.color = Qt.rgba(1-value, 1-slider_green.value, 1-slider_blue.value, 1)
                 management.setColor(boid_preview.color, boid_preview.border.color)
             }
         }
@@ -105,8 +106,8 @@ Item {
 
             onValueChanged: {
                 label_currentgreen.text = value.toFixed(2)
-                boid_preview.color = Qt.rgba(slider_red.value, value, slider_blue.value,1)
-                boid_preview.border.color = Qt.rgba(1-slider_red.value,1-slider_green.value,1-value,1)
+                boid_preview.color = Qt.rgba(slider_red.value, value, slider_blue.value, 1)
+                boid_preview.border.color = Qt.rgba(1-slider_red.value, 1-value, 1-slider_blue.value, 1)
                 management.setColor(boid_preview.color, boid_preview.border.color)
             }
         }
@@ -134,8 +135,6 @@ Item {
             x: 160
             text: "0.25"
             anchors.right: parent.right
-            anchors.top: rectangle1.bottom
-            anchors.topMargin: -179
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
             font.pixelSize: 12

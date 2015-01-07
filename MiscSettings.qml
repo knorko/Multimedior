@@ -55,6 +55,56 @@ Rectangle {
     }
 
     Item {
+        id: awareness_rad_settings
+        height: 22
+        anchors.rightMargin: 8
+        anchors.leftMargin: 8
+        anchors.top: size_settings.bottom
+        anchors.topMargin: -22
+        visible: false
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        Label {
+            id: label_RADIUS
+            y: 183
+            text: qsTr("Radius:")
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+        }
+
+        Label {
+            id: label_currentradius
+            text: qsTr("20")
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+        }
+
+        Slider {
+            id: sliderHorizontal1
+            x: 45
+            width: 136
+            stepSize: 1
+            minimumValue: 10
+            value: 20
+            maximumValue: 100
+            activeFocusOnPress: true
+            tickmarksEnabled: false
+            updateValueWhileDragging: true
+            opacity: 0
+            anchors.verticalCenter: parent.verticalCenter
+            onValueChanged: {
+                management.setAwarenessRadius(value)
+                label_currentradius.text = value
+            }
+        }
+    }
+
+    Item {
         id: size_settings
         height: 22
         visible: false
@@ -97,6 +147,20 @@ Rectangle {
         opacity: 0
     }
 
+
+    CheckBox {
+        id: toggle_showRadius
+        x: 8
+        text: qsTr("Show radius")
+        anchors.top: awareness_rad_settings.bottom
+        anchors.topMargin: -21
+        activeFocusOnPress: true
+        opacity: 0
+
+        onCheckedChanged: management.setAwarenessRadiusVisualization(checked)
+    }
+
+
     GroupBox {
         id: color_settings
         x: 8
@@ -104,18 +168,19 @@ Rectangle {
         height: 149
         visible: false
         anchors.topMargin: -149
-        anchors.top: size_settings.bottom
+        anchors.top: toggle_showRadius.bottom
         opacity: 0
         title: qsTr("Boid color")
 
         ColorPicker {
             id: colorPicker1
-            height: 122
             anchors.right: parent.right
             anchors.left: parent.left
             opacity: 0
         }
     }
+
+
 
     id: rectangle1
     width: 228
@@ -172,13 +237,43 @@ Rectangle {
 
             PropertyChanges {
                 target: colorPicker1
-                width: 200
+                width: 197
                 anchors.horizontalCenterOffset: 2
                 opacity: 1
             }
 
             PropertyChanges {
                 target: color_settings
+                visible: true
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: sliderHorizontal1
+                anchors.verticalCenterOffset: 0
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_RADIUS
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: awareness_rad_settings
+                anchors.topMargin: 6
+                visible: true
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: label_currentradius
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: toggle_showRadius
                 anchors.topMargin: 6
                 opacity: 1
             }

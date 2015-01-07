@@ -11,15 +11,15 @@ typedef struct Parameter_S{
     /**
      * @brief Holds the height of the canvas object.
      */
-    double canvasHeight = 592;
+    double canvasHeight = 592.0;
     /**
      * @brief Holds the width of the canvas object.
      */
-    double canvasWidth = 772;
+    double canvasWidth = 772.0;
     /**
     * @brief Factor by which every boid movement is multiplied.
     */
-    double speedFactor = 1;
+    double speedFactor = 1.0;
     /**
      * @brief Boid size.
      */
@@ -32,6 +32,11 @@ typedef struct Parameter_S{
      * @brief Mouse Position.
      */
     Vector2 mousePosition = Vector2();
+    /**
+     * @brief Neighbours Count
+     */
+    double awarenessRadius = 20.0;
+    bool visualizeAwarenessRadius = false;
 
     double factor_flocking = 30.0;
     double factor_avoidance = 80.0;
