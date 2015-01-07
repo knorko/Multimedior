@@ -45,7 +45,8 @@ void Predator::update() {
 
     center += neighbours[0].pos;
 
-    v1 = center - position;
+    if(center != Vector2())
+        v1 = center - position;
 
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
