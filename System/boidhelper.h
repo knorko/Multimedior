@@ -11,7 +11,7 @@
 #include "parameter.h"
 
 #define BORDER_THRESHOLD 100.0
-#define PREDATOR_THRESHOLD 10
+#define PREDATOR_THRESHOLD 80.0
 
 /**
   * @brief The Neighbors struct stores the position and the velocity

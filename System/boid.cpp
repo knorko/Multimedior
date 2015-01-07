@@ -123,12 +123,12 @@ void Boid::update(){
         }
     }
 //TODO
-    double fleeingPower = 0.0;
+    double fleeingPower2 = 0.0;
     if(!(mp == Vector2(0, 0))) {
         double sqrDist = (mp - position).getSqrMagnitude();
         if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
             v7 = position - mp;
-            fleeingPower = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+            fleeingPower2 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
 
