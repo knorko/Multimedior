@@ -27,8 +27,10 @@ typedef struct Neighbors_s{
      * @brief Velocity of the neighbor
      */
     Vector2 velocity2;
-
-    bool isBoid = false;
+    /**
+     * @brief boid or predator
+     */
+   bool isBoid = false;
 
 } Neighbors;
 
@@ -55,22 +57,11 @@ private:
      */
     static Parameter *parameters;
 
-    /**
-     * @brief gets Neighbours by range
-     */
+
     void getNeighboursByRange();
     double dist_sq(double *a1, double *a2, int dims);
-    /**
-     * @brief sets the color
-     */
     void setColor();
-    /**
-     * @brief sets the view radius
-     */
     void setRadius();
-    /**
-     * @brief sets the visualization for the radius
-     */
     void setRadiusVisualization();
 
 protected:
@@ -90,37 +81,23 @@ protected:
      * @brief The three closest neighbors of the boid (sorted).
      */
     Neighbors neighbours[3];
-
+    /**
+     * @brief The three closest neighbors of the predator
+     */
     Neighbors predator[3];
-
+    /**
+     * @brief boid or predator
+     */
     bool isPredator = false;
 
-    /**
-     * @brief gets the current mouse position
-     * @return Vector2&
-     */
+
     Vector2& getMousePosition() const;
-    /**
-     * @brief getFlockingFactor
-     * @return double
-     */
     double getFlockingFactor() const;
-    /**
-     * @brief getAvoidanceFactor
-     * @return double
-     */
     double getAvoidanceFactor() const;
-    /**
-     * @brief getVelocityMatchFactor
-     * @return double
-     */
     double getVelocityMatchFactor() const;
-    /**
-     * @brief getTargetFactor
-     * @return double
-     */
     double getTargetFactor() const;
     double getAwarenessRadius() const;
+    bool followMouse() const;
 
 public:
     /**
