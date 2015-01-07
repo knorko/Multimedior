@@ -146,6 +146,22 @@ Rectangle {
                 __handlePos = value
                 management.setAwarenessRadius(value)
                 label_currentradius.text = value
+
+                if(pressed && !timer_showAwarenessRadius.running) {
+                    management.setAwarenessRadiusVisualization(true)
+                    timer_showAwarenessRadius.start()
+                }
+            }
+        }
+
+        Timer {
+            id: timer_showAwarenessRadius
+            interval: 500
+            repeat: false
+            running: false
+
+            onTriggered: {
+                management.setAwarenessRadiusVisualization(toggle_showRadius.checked)
             }
         }
     }
