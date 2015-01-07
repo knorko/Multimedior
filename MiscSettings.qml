@@ -263,6 +263,12 @@ Rectangle {
                 anchors.leftMargin: 8
                 opacity: 1
             }
+            PropertyChanges {
+                target: colorPicker1
+                width: 197
+                anchors.horizontalCenterOffset: 2
+                opacity: 1
+            }
 
             PropertyChanges {
                 target: color_settings
