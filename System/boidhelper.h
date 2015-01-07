@@ -22,11 +22,11 @@ typedef struct Neighbors_s{
     /**
      * @brief Position of the neighbor
      */
-    Vector2 position2;
+    Vector2 pos;
     /**
      * @brief Velocity of the neighbor
      */
-    Vector2 velocity2;
+    Vector2 vel;
     /**
      * @brief boid or predator
      */

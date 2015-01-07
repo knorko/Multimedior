@@ -49,6 +49,17 @@ Boid::~Boid() {
  * Finally these Vectors are Normalised, Added and Interpolated and Form the steering Behaviour of a single Boid.
  */
 void Boid::update(){
+
+    double forceX = 0.0;
+    double forceY = 0.0;
+    double fleeingPowerv6 = 0.0;
+    double fleeingPowerv7 = 0.0;
+    double fleeingPowerv8 = 0.0;
+
+    double sqrDistv6;
+    double sqrDistv7;
+    double sqrDistv8;
+
     Vector2 v1 = Vector2();
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
@@ -62,7 +73,7 @@ void Boid::update(){
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
     for(int i = 0; i < 3; i++){
-        center = center + neighbours[i].position2;
+        center = center + neighbours[i].pos;
     }
     center /= 3;
 
@@ -71,14 +82,14 @@ void Boid::update(){
     // Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
     for(int i = 0; i < 3; i++){
-        if ((neighbours[i].position2 - position).getSqrMagnitude() < (getSize() + 10.0) * (getSize() + 10.0)){
-            center = center - (neighbours[i].position2 - position);
+        if ((neighbours[i].pos - position).getSqrMagnitude() < (getSize() + 10.0) * (getSize() + 10.0)){
+            center = center - (neighbours[i].pos - position);
         }
     }
     v2 = center;
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
-        v3 = v3 + neighbours[i].velocity2;
+        v3 = v3 + neighbours[i].vel;
     }
     v3 = v3/3;
 
@@ -118,42 +129,34 @@ void Boid::update(){
         v5.setY(-1);
     }
 
-    //Replace position with mouse position and look through the force-parameter with the mouse
-    double powerx = 0.0;
-    double powery = 0.0;
-
     if(position.getX() < BORDER_THRESHOLD)
-        powerx = BORDER_THRESHOLD - position.getX();
+        forceX = BORDER_THRESHOLD - position.getX();
     else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
-        powerx = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
+        forceX = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
     else if(position.getY() < BORDER_THRESHOLD)
-        powery = BORDER_THRESHOLD - position.getY();
+        forceY = BORDER_THRESHOLD - position.getY();
     else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
-        powery = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
+        forceY = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
 
-    double force = 3.0 * (powerx + powery);
+    double force = 3.0 * (forceX + forceY);
 
     //Rule 7: Avoid Predator
-    double fleeingPowerv6 = 0.0;
-    double fleeingPowerv7 = 0.0;
-    double fleeingPowerv8 = 0.0;
 
-    double sqrDistv6 = (predator[0].position2 - position).getSqrMagnitude();
-
-    double sqrDistv7 = (predator[1].position2 -position).getSqrMagnitude();
-    double sqrDistv8 = (predator[2].position2 - position).getSqrMagnitude();
-
+    sqrDistv6 = (predator[0].pos - position).getSqrMagnitude();
     if(sqrDistv6 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v6 = position - predator[0].position2;
+        v6 = position - predator[0].pos;
         fleeingPowerv6 = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
 
+    sqrDistv7 = (predator[1].pos -position).getSqrMagnitude();
     if(sqrDistv7 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v7 = position - predator[1].position2;
+        v7 = position - predator[1].pos;
         fleeingPowerv7 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
+
+    sqrDistv8 = (predator[2].pos - position).getSqrMagnitude();
     if(sqrDistv8 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v8 = position - predator[2].position2;
+        v8 = position - predator[2].pos;
         fleeingPowerv8 = velocity.getMagnitude()*(v8.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
 

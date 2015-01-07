@@ -34,18 +34,22 @@ Predator::~Predator() {
  * v3: Holds Information so that every Predator doesn't collide with the boundaries.
  */
 void Predator::update() {
+    double forceX = 0.0;
+    double forceY = 0.0;
+    double force;
+
     Vector2 v1 = Vector2();
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
     Vector2 center = Vector2();
 
-    center = center + neighbours[0].position2;
+    center += neighbours[0].pos;
 
     v1 = center - position;
 
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
-        v2 = v2 + neighbours[i].velocity2;
+        v2 = v2 + neighbours[i].vel;
     }
     v2 = (v2/3)*1.3;
     if(position.getX() < PREDATOR_ATTENUATION)
@@ -58,21 +62,16 @@ void Predator::update() {
     else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
         v3.setY(-1);
 
-
-    //Replace position with mouse position and look through the force-parameter with the mouse
-    double powerx = 0.0;
-    double powery = 0.0;
-
     if(position.getX() < PREDATOR_ATTENUATION)
-        powerx = PREDATOR_ATTENUATION - position.getX();
+        forceX = PREDATOR_ATTENUATION - position.getX();
     else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
-        powerx = PREDATOR_ATTENUATION + position.getX() - getCanvasWidth() ;
+        forceX = PREDATOR_ATTENUATION + position.getX() - getCanvasWidth() ;
     else if(position.getY() < PREDATOR_ATTENUATION)
-        powery = PREDATOR_ATTENUATION - position.getY();
+        forceY = PREDATOR_ATTENUATION - position.getY();
     else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
-        powery = PREDATOR_ATTENUATION + position.getY() - getCanvasHeight();
+        forceY = PREDATOR_ATTENUATION + position.getY() - getCanvasHeight();
 
-    double force = 3.0 * (powerx + powery);
+    force = 3.0 * (forceX + forceY);
 
   velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3 + v3.normalize() * force, 0.016f);
 

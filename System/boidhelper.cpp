@@ -193,8 +193,8 @@ void BoidHelper::getNeighboursByRange() {
     double sqrDistance;
 
     // Content: (x, y, squared distance, velocity.X, velocity.Y)
-    double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
-    double nearest2[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    double nearestBoid[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    double nearestPredator[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
     double position[2] = { getX(), getY() };
     result = kd_nearest_range(*tree, position, parameters->awarenessRadius);
@@ -209,30 +209,30 @@ void BoidHelper::getNeighboursByRange() {
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
         if(sqrDistance > 0) {
-            double greatest = nearest[0][2];
+            double greatest = nearestBoid[0][2];
             int greatestIndex = 0;
 
             for(int i = 0; i < 3; i++) {
-                if(nearest[i][2] == 0) {
-                    greatest = nearest[i][2];
+                if(nearestBoid[i][2] == 0) {
+                    greatest = nearestBoid[i][2];
                     greatestIndex = i;
-                    nearest[i][4] = b->velocity.getY();
-                    nearest[i][3] = b->velocity.getX();
+                    nearestBoid[i][4] = b->velocity.getY();
+                    nearestBoid[i][3] = b->velocity.getX();
                     break;
                 }
-                else if(greatest < nearest[i][2]) {
-                    greatest = nearest[i][2];
-                    nearest[i][3] = b->velocity.getX();
-                    nearest[i][4] = b->velocity.getY();
+                else if(greatest < nearestBoid[i][2]) {
+                    greatest = nearestBoid[i][2];
+                    nearestBoid[i][3] = b->velocity.getX();
+                    nearestBoid[i][4] = b->velocity.getY();
                     greatestIndex = i;
                 }
             }
-            if(nearest[greatestIndex][2] > sqrDistance || nearest[greatestIndex][2] == 0) {
-                nearest[greatestIndex][0] = position_neighbour[0];
-                nearest[greatestIndex][1] = position_neighbour[1];
-                nearest[greatestIndex][2] = sqrDistance;
-                nearest[greatestIndex][3] = b->velocity.getX();
-                nearest[greatestIndex][4] = b->velocity.getY();
+            if(nearestBoid[greatestIndex][2] > sqrDistance || nearestBoid[greatestIndex][2] == 0) {
+                nearestBoid[greatestIndex][0] = position_neighbour[0];
+                nearestBoid[greatestIndex][1] = position_neighbour[1];
+                nearestBoid[greatestIndex][2] = sqrDistance;
+                nearestBoid[greatestIndex][3] = b->velocity.getX();
+                nearestBoid[greatestIndex][4] = b->velocity.getY();
             }
         }
 
@@ -241,8 +241,8 @@ void BoidHelper::getNeighboursByRange() {
 
     // Finally build the neighbor vectors and free the kd-tree
     for(int i=0; i<3; i++){
-        neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
-        neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
+        neighbours[i].pos = Vector2(nearestBoid[i][0], nearestBoid[i][1]);
+        neighbours[i].vel = Vector2(nearestBoid[i][3], nearestBoid[i][4]);
         neighbours[i].isBoid = true;
     }
 
@@ -260,30 +260,30 @@ void BoidHelper::getNeighboursByRange() {
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
         if(sqrDistance > 0) {
-            double greatest = nearest2[0][2];
+            double greatest = nearestPredator[0][2];
             int greatestIndex = 0;
 
             for(int i = 0; i < 3; i++) {
-                if(nearest2[i][2] == 0) {
-                    greatest = nearest2[i][2];
+                if(nearestPredator[i][2] == 0) {
+                    greatest = nearestPredator[i][2];
                     greatestIndex = i;
-                    nearest2[i][4] = b->velocity.getY();
-                    nearest2[i][3] = b->velocity.getX();
+                    nearestPredator[i][4] = b->velocity.getY();
+                    nearestPredator[i][3] = b->velocity.getX();
                     break;
                 }
-                else if(greatest < nearest2[i][2]) {
-                    greatest = nearest2[i][2];
-                    nearest2[i][3] = b->velocity.getX();
-                    nearest2[i][4] = b->velocity.getY();
+                else if(greatest < nearestPredator[i][2]) {
+                    greatest = nearestPredator[i][2];
+                    nearestPredator[i][3] = b->velocity.getX();
+                    nearestPredator[i][4] = b->velocity.getY();
                     greatestIndex = i;
                 }
             }
-            if(nearest2[greatestIndex][2] > sqrDistance || nearest2[greatestIndex][2] == 0) {
-                nearest2[greatestIndex][0] = position_neighbour[0];
-                nearest2[greatestIndex][1] = position_neighbour[1];
-                nearest2[greatestIndex][2] = sqrDistance;
-                nearest2[greatestIndex][3] = b->velocity.getX();
-                nearest2[greatestIndex][4] = b->velocity.getY();
+            if(nearestPredator[greatestIndex][2] > sqrDistance || nearestPredator[greatestIndex][2] == 0) {
+                nearestPredator[greatestIndex][0] = position_neighbour[0];
+                nearestPredator[greatestIndex][1] = position_neighbour[1];
+                nearestPredator[greatestIndex][2] = sqrDistance;
+                nearestPredator[greatestIndex][3] = b->velocity.getX();
+                nearestPredator[greatestIndex][4] = b->velocity.getY();
             }
         }
 
@@ -292,8 +292,8 @@ void BoidHelper::getNeighboursByRange() {
 
     // Finally build the neighbor vectors and free the kd-tree
     for(int i=0; i<3; i++){
-        predator[i].position2 = Vector2(nearest2[i][0], nearest2[i][1]);
-        predator[i].velocity2 = Vector2(nearest2[i][3], nearest2[i][4]);
+        predator[i].pos = Vector2(nearestPredator[i][0], nearestPredator[i][1]);
+        predator[i].vel = Vector2(nearestPredator[i][3], nearestPredator[i][4]);
         predator[i].isBoid = false;
     }
 
