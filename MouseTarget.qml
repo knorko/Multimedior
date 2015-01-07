@@ -4,6 +4,7 @@ Item {
     id: item1
     width: 48
     height: 48
+    opacity: 0.0
 
     Rectangle {
         id: rectangle1

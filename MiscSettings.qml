@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.2
 
 Rectangle {
@@ -54,7 +55,6 @@ Rectangle {
         }
     }
 
-
     Item {
         id: size_settings
         height: 22
@@ -97,7 +97,6 @@ Rectangle {
         }
         opacity: 0
     }
-
 
     Item {
         id: awareness_rad_settings
@@ -151,8 +150,6 @@ Rectangle {
         }
     }
 
-
-
     CheckBox {
         id: toggle_showRadius
         x: 8
@@ -164,7 +161,6 @@ Rectangle {
 
         onCheckedChanged: management.setAwarenessRadiusVisualization(checked)
     }
-
 
     GroupBox {
         id: color_settings
@@ -185,7 +181,34 @@ Rectangle {
         }
     }
 
+    Button {
+        id: button_about
+        y: 322
+        height: 32
+        text: qsTr("About")
+        anchors.bottomMargin: 8
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 8
+        anchors.leftMargin: 8
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
 
+        onClicked: {
+            var component = Qt.createComponent("AboutPopup.qml");
+            if (component.status === Component.Ready) {
+                var dialog = component.createObject(parent);
+                dialog.show();
+            }
+        }
+    }
+
+    MessageDialog {
+        id: aboutDiag
+        title: "About"
+        width: 100
+        height: 100
+    }
 
     id: rectangle1
     width: 228
@@ -200,7 +223,7 @@ Rectangle {
 
             PropertyChanges {
                 target: rectangle1
-                height: 335
+                height: 350
             }
 
             PropertyChanges {
@@ -280,6 +303,11 @@ Rectangle {
             PropertyChanges {
                 target: toggle_showRadius
                 anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: button_about
                 opacity: 1
             }
         }
