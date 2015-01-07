@@ -72,14 +72,14 @@ void Boid::update(){
     // Rule 5: Stray away from the boundaries
     Vector2 v5 = Vector2();
 
-    if(position.getX() < 80)
+    if(position.getX() < BORDER_THRESHOLD)
         v5.setX(1);
-    else if(position.getX() >= getCanvasWidth() - 80)
+    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
         v5.setX(-1);
 
-    if(position.getY() <  80)
+    if(position.getY() <  BORDER_THRESHOLD)
         v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - 80){
+    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
         v5.setY(-1);
     }
 

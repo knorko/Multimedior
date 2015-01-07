@@ -55,7 +55,6 @@ Window {
         }
     }
 
-
     id: root
     objectName: "rootWindow"
     visible: true
