@@ -350,3 +350,7 @@ double BoidHelper::getAwarenessRadius() const
     return parameters->awarenessRadius;
 
 }
+
+bool BoidHelper::followMouse() const {
+    return parameters->followMouse;
+}

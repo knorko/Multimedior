@@ -130,17 +130,54 @@ GroupBox {
     id: mouseFollowBox
     x: 8
     width: 212
-    height: 52
+    height: 72
     visible: false
     anchors.top: velocityBox.bottom
-    anchors.topMargin: -84
+    anchors.topMargin: -92
     opacity: 0
     title: qsTr("Mouse following")
 
     Item {
+        id: mouse_mode
+        width: 150
+        height: 22
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        opacity: 0
+
+        ExclusiveGroup { id: mouseModeGroup }
+
+        RadioButton {
+            id: radio_follow
+            text: qsTr("Follow")
+            anchors.left: parent.left
+            activeFocusOnPress: true
+            checked: true
+            anchors.top: parent.top
+            opacity: 0
+            exclusiveGroup: mouseModeGroup
+
+            onCheckedChanged: management.setMouseFollowMode(checked)
+        }
+
+        RadioButton {
+            id: radio_avoid
+            text: qsTr("Avoid")
+            anchors.right: parent.right
+            activeFocusOnPress: true
+            anchors.top: parent.top
+            opacity: 0
+            exclusiveGroup: mouseModeGroup
+
+            onCheckedChanged: management.setMouseFollowMode(!checked)
+        }
+    }
+
+    Item {
         id: continuous_settings
         height: 25
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: mouse_mode.bottom
+        anchors.topMargin: -22
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
@@ -158,6 +195,7 @@ GroupBox {
             }
         }
     }
+
 }
 
 GroupBox {
@@ -367,7 +405,7 @@ states: [
 
         PropertyChanges {
             target: rectangle1
-            height: 350
+            height: 372
         }
 
             PropertyChanges {
@@ -434,6 +472,7 @@ states: [
 
             PropertyChanges {
                 target: mouseFollowBox
+                height: 72
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
@@ -442,6 +481,10 @@ states: [
             PropertyChanges {
                 target: continuous_settings
                 width: 200
+                anchors.topMargin: 6
+                anchors.verticalCenterOffset: 42
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
                 opacity: 1
             }
 
@@ -489,6 +532,30 @@ states: [
 
             PropertyChanges {
                 target: checkBox1
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: mouse_mode
+                y: 0
+                height: 20
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: radio_follow
+                x: 0
+                y: 17
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: radio_avoid
+                x: 131
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
                 opacity: 1
             }
 

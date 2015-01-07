@@ -74,6 +74,7 @@ public:
     Q_INVOKABLE void setColor(QColor color);
     Q_INVOKABLE void setAwarenessRadius(double radius);
     Q_INVOKABLE void setAwarenessRadiusVisualization(bool value);
+    Q_INVOKABLE void setMouseFollowMode(bool follow);
 };
 
 #endif // MANAGEMENT_H

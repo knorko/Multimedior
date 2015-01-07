@@ -120,6 +120,7 @@ protected:
      */
     double getTargetFactor() const;
     double getAwarenessRadius() const;
+    bool followMouse() const;
 
 public:
     /**

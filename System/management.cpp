@@ -189,6 +189,10 @@ void Management::setAwarenessRadius(double radius){
 void Management::setAwarenessRadiusVisualization(bool value) {
     parameters.visualizeAwarenessRadius = value;
 }
+
+void Management::setMouseFollowMode(bool follow) {
+    parameters.followMouse = follow;
+}
 /**
  * @brief Sets the boid color
  * @param color current boid color

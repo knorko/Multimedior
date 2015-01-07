@@ -2,8 +2,6 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 
 Rectangle {
-    SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
-
     Label {
         id: label_title
         x: 77
@@ -11,6 +9,8 @@ Rectangle {
         text: "Miscellaneous"
         opacity: 1
     }
+
+    SystemPalette { id: sysPalette; colorGroup: SystemPalette.Active }
 
     Item {
         id: speed_settings
@@ -53,6 +53,51 @@ Rectangle {
             }
         }
     }
+
+
+    Item {
+        id: size_settings
+        height: 22
+        visible: false
+        anchors.topMargin: -22
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.top: speed_settings.bottom
+        Label {
+            id: label_SIZE
+            text: "Size:"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentsize
+            x: 187
+            text: "7"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_size
+            x: 45
+            width: 136
+            activeFocusOnPress: true
+            tickmarksEnabled: true
+            updateValueWhileDragging: true
+            stepSize: 1
+            minimumValue: 5
+            anchors.verticalCenter: parent.verticalCenter
+            maximumValue: 10
+            value: 7
+
+            onValueChanged: {
+                management.setSize(value)
+                label_currentsize.text = value
+            }
+        }
+        opacity: 0
+    }
+
 
     Item {
         id: awareness_rad_settings
@@ -106,48 +151,6 @@ Rectangle {
         }
     }
 
-    Item {
-        id: size_settings
-        height: 22
-        visible: false
-        anchors.topMargin: -22
-        anchors.right: parent.right
-        anchors.left: parent.left
-        anchors.top: speed_settings.bottom
-        Label {
-            id: label_SIZE
-            text: "Size:"
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: label_currentsize
-            x: 187
-            text: "7"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Slider {
-            id: slider_size
-            x: 45
-            width: 136
-            activeFocusOnPress: true
-            tickmarksEnabled: true
-            updateValueWhileDragging: true
-            stepSize: 1
-            minimumValue: 5
-            anchors.verticalCenter: parent.verticalCenter
-            maximumValue: 10
-            value: 7
-
-            onValueChanged: {
-                management.setSize(value)
-                label_currentsize.text = value
-            }
-        }
-        opacity: 0
-    }
 
 
     CheckBox {
