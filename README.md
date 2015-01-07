@@ -7,7 +7,8 @@ We decided to use C++ and Qt Quick.
 
 Instructions:
 
-1.Create a new Folder.
-2. Exectute the command "git checkout testing".
-3. Then execute qmake
-4. Lastly execute make
+1. Create a new Folder.
+2. Execute "git clone http://github.com/knorko/Multimedior.git".
+3. Exectute the command "git checkout testing".
+4. Then execute qmake.
+5. Lastly execute make.
