@@ -7,7 +7,7 @@ We decided to use C++ and Qt Quick.
 
 Instructions:
 
-1.Create a new Order.
+1.Create a new Folder.
 2. Exectute the command "git checkout testing".
 3. Then execute qmake
 4. Lastly execute make
