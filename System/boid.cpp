@@ -72,13 +72,15 @@ void Boid::update(){
     Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
-    for(int i = 0; i < 3; i++){
-        center = center + neighbours[i].pos;
+    int i=0;
+    while(i<3 && neighbours[i].pos != Vector2()) {
+        center += neighbours[i].pos;
+        i++;
     }
-    center /= 3;
-
-    if(center != Vector2())
+    if(i>0) {
+        center /= i;
         v1 = center - position;
+    }
 
     // Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
