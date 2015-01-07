@@ -33,15 +33,33 @@ typedef struct Parameter_S{
      */
     Vector2 mousePosition = Vector2();
     /**
-     * @brief Neighbours Count
+     * @brief awarenessRadius
      */
     double awarenessRadius = 20.0;
+    /**
+     * @brief visualisation of the AwarenessRadius
+     */
     bool visualizeAwarenessRadius = false;
 
+    /**
+     * @brief factor_flocking
+     */
     double factor_flocking = 30.0;
+    /**
+     * @brief factor_avoidance
+     */
     double factor_avoidance = 80.0;
+    /**
+     * @brief factor_match
+     */
     double factor_match = 80.0;
+    /**
+     * @brief factor_target
+     */
     double factor_target = 50.0;
+    /**
+     * @brief Main boid color
+     */
     QColor mainColor = QColor(128, 255, 64);
 
 } Parameter;

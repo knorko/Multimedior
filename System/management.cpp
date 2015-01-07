@@ -143,31 +143,56 @@ void Management::setMousePosition(double x, double y) {
 void Management::setSize(uint size) {
     parameters.size = size;
 }
-
+/**
+ * @brief Sets the flocking factor
+ * @param flock current flocking factor
+ */
 
 void Management::setFlockingFactor(double flock) {
     parameters.factor_flocking = flock;
 }
-
+/**
+ * @brief Sets the avoidance factor
+ * @param avoid current avoidance factor
+ */
 void Management::setAvoidanceFactor(double avoid) {
     parameters.factor_avoidance = avoid;
 }
 
+/**
+ * @brief Sets the velocity match factor
+ * @param match current match factor
+ */
 void Management::setVelocityMatchFactor(double match) {
     parameters.factor_match = match;
 }
 
+/**
+ * @brief Sets the target factor
+ * @param target current target factor
+ */
 void Management::setTargetFactor(double target) {
     parameters.factor_target = target;
 }
+/**
+ * @brief Sets the awareness radius
+ * @param radius current awareness radius
+ */
 void Management::setAwarenessRadius(double radius){
     parameters.awarenessRadius = radius;
 }
 
+/**
+ * @brief Sets the visualization of the radius
+ * @param value
+ */
 void Management::setAwarenessRadiusVisualization(bool value) {
     parameters.visualizeAwarenessRadius = value;
 }
-
+/**
+ * @brief Sets the boid color
+ * @param color current boid color
+ */
 void Management::setColor(QColor color){
     parameters.mainColor = color;
 }
@@ -202,6 +227,9 @@ void Management::removePredator() {
     predList.pop_back();
 }
 
+/**
+ * @brief inserts boid objects and their position into a kd-tree
+ */
 void Management::prepareTree() {
     tree = kd_create(2);
 

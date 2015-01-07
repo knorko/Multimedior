@@ -177,8 +177,7 @@ uint &BoidHelper::getSize() const{
 }
 
 /**
- * @brief DEPRECATED !!! Get the three closest neighbors for each boid
- * @param Oh noes! We totally forgot to update this deprecated piece of documentation! D:
+ * @brief Get the three closest neighbors for each boid
  *
  * This function builds a two-dimensional kd-tree from the current position of each
  * boid.
