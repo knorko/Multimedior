@@ -7,7 +7,7 @@ Window {
 
     id: mypopDialog
     title: "About"
-    width: 536
+    width: 579
     height: 444
     flags: Qt.Dialog
     modality: Qt.WindowModal
@@ -30,7 +30,7 @@ GroupBox {
 
         text: "The MIT License (MIT)
 
-Copyright (c) {{{year}}} {{{fullname}}}
+Copyright (c) 2015 Nils Gerrit Riklef Gesinn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \"Software\"), to deal
@@ -49,7 +49,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE."
-        anchors.bottomMargin: 1
         anchors.fill: parent
 
 
@@ -59,9 +58,11 @@ SOFTWARE."
 
 GroupBox {
     id: thrd_license
-    x: 2
-    width: 532
     height: 37
+    anchors.left: parent.left
+    anchors.leftMargin: 2
+    anchors.right: parent.right
+    anchors.rightMargin: 2
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 2
     anchors.top: mult_license.bottom
@@ -72,7 +73,8 @@ GroupBox {
         id: license_kdtree
         color: sysPalette.text
         text: "Qt by Qt Project: http://qt-project.org/
-        kdtree library by John Tsiombikas: https://code.google.com/p/kdtree/"
+kdtree library by John Tsiombikas: https://code.google.com/p/kdtree/"
+
         anchors.fill: parent
         font.pixelSize: 12
     }
