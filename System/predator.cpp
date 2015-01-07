@@ -15,9 +15,11 @@ Predator::Predator() {
 
     isPredator = true;
 
-    velocity = Vector2(0.5,1);
+    // Randomize staring velocity to sweep
+    velocity.setX(2.0 + ((double)rand()/(double)(RAND_MAX)) * -4.0);
+    velocity.setY(2.0 + ((double)rand()/(double)(RAND_MAX)) * -4.0);
 
-    lastVel = Vector2();
+    lastVel = velocity;
 }
 
 Predator::~Predator() {
