@@ -1,11 +1,14 @@
+#include <ctime>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
 #include "System/management.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+    srand((unsigned)time(NULL));
+
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
