@@ -77,7 +77,8 @@ void Boid::update(){
     }
     center /= 3;
 
-    v1 = center - position;
+    if(center != Vector2())
+        v1 = center - position;
 
     // Rule2: Avoidance : if distance to next boid smaller than threshold T boid changes course.
     center = Vector2();
