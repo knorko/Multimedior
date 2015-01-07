@@ -22,6 +22,8 @@ Boid::Boid() {
     setY(50 + ((double)rand()/(double)(RAND_MAX)) * (getCanvasHeight() - 100));
     setX(50 + ((double)rand()/(double)(RAND_MAX)) * (getCanvasWidth() - 100));
 
+    isPredator = false;
+
     lastVel = Vector2();
 }
 
@@ -100,30 +102,7 @@ void Boid::update(){
 
     double force = 3.0 * (powerx + powery);
 
-    //    //RULE X
-    //    center = Vector2();
-    //    int predCount = 0;
-    //    for(int i = 0; i < 3; i++){
-    //        if((predator[i].position2 - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-    //            center = center - predator[i].position2;
-    //            predCount++;
-    //        }
-    //    }
-    //    if(predCount > 0) {
-    //        center /= predCount;
-    //        v6 = position - center;
-    //    }
-    //Rule 6: Stay away from (Mouse)Predator
-    double fleeingPower = 0.0;
-    if(!(mp == Vector2(0, 0))) {
-        double sqrDist = (mp - position).getSqrMagnitude();
-        if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-            v6 = position - mp;
-            fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
-        }
-    }
-
-    //Rule 7:
+    //Rule 6: Avoid Mouse
     double fleeingPower2 = 0.0;
     if(!(mp == Vector2(0, 0))) {
         double sqrDist = (mp - position).getSqrMagnitude();
@@ -132,10 +111,22 @@ void Boid::update(){
             fleeingPower2 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
+    //Rule 7: Avoid Predator
+    double fleeingPower = 0.0;
+    double sqrDist = (predator[0].position2 - position).getSqrMagnitude();
+    if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+        v6 = position - predator[0].position2;
+        fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+    }
+
+
+
+
+
 
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
                              v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force +
-                             v6 * fleeingPower, 0.016f);
+                             v6 * fleeingPower + v7 * fleeingPower2, 0.016f);
     lastVel = velocity;
 }

@@ -199,8 +199,10 @@ void BoidHelper::getNeighboursByRange() {
 
     while(!kd_res_end(result)) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
-        if(b->isPredator)
-            break;
+        if(b->isPredator){
+            kd_res_next(result);
+            continue;
+        }
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
@@ -232,6 +234,7 @@ void BoidHelper::getNeighboursByRange() {
             }
         }
 
+END:
         kd_res_next(result);
     }
 
@@ -249,8 +252,10 @@ void BoidHelper::getNeighboursByRange() {
 
     while(!kd_res_end(result)) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
-        if(!(b->isPredator))
-            break;
+        if(!(b->isPredator)){
+            kd_res_next(result);
+            continue;
+        }
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
         if(sqrDistance > 0) {
@@ -291,7 +296,6 @@ void BoidHelper::getNeighboursByRange() {
         predator[i].isBoid = false;
     }
 
-    //else copy paste
     kd_res_free(result);
 }
 /**
