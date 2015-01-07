@@ -189,12 +189,15 @@ void BoidHelper::getNeighbors() {
 
     // Content: (x, y, squared distance, velocity.X, velocity.Y)
     double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    double nearest2[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
     double position[2] = { getX(), getY() };
     result = kd_nearest_range(*tree, position, parameters->canvasWidth);
 
     while(!kd_res_end(result)) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        if(b->isPredator)
+            break;
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
@@ -235,6 +238,55 @@ void BoidHelper::getNeighbors() {
         neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
         neighbours[i].isBoid = true;
     }
+
+
+    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+
+    while(!kd_res_end(result)) {
+        BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        if(!(b->isPredator))
+            break;
+
+        sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
+        if(sqrDistance > 0) {
+            double greatest = nearest2[0][2];
+            int greatestIndex = 0;
+
+            for(int i = 0; i < 3; i++) {
+                if(nearest2[i][2] == 0) {
+                    greatest = nearest2[i][2];
+                    greatestIndex = i;
+                    nearest2[i][4] = b->velocity.getY();
+                    nearest2[i][3] = b->velocity.getX();
+                    break;
+                }
+                else if(greatest < nearest2[i][2]) {
+                    greatest = nearest2[i][2];
+                    nearest2[i][3] = b->velocity.getX();
+                    nearest2[i][4] = b->velocity.getY();
+                    greatestIndex = i;
+                }
+            }
+            if(nearest2[greatestIndex][2] > sqrDistance || nearest2[greatestIndex][2] == 0) {
+                nearest2[greatestIndex][0] = position_neighbour[0];
+                nearest2[greatestIndex][1] = position_neighbour[1];
+                nearest2[greatestIndex][2] = sqrDistance;
+                nearest2[greatestIndex][3] = b->velocity.getX();
+                nearest2[greatestIndex][4] = b->velocity.getY();
+            }
+        }
+
+        kd_res_next(result);
+    }
+
+    // Finally build the neighbor vectors and free the kd-tree
+    for(int i=0; i<3; i++){
+        predator[i].position2 = Vector2(nearest2[i][0], nearest2[i][1]);
+        predator[i].velocity2 = Vector2(nearest2[i][3], nearest2[i][4]);
+        predator[i].isBoid = false;
+    }
+
+    //else copy paste
     kd_res_free(result);
 }
 

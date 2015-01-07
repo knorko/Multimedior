@@ -3,7 +3,7 @@
 /**
  * @brief Create a new boid
  *
- * Creates a new QQmlComponent using the main QQmlApplicationEngine of the program and
+ * Creates a new QQmlCopositiononent using the main QQmlApplicationEngine of the program and
  * the Boid.qml file.
  * After the component is created and ready, the QObject is created and parented to the
  * canvas object.
@@ -38,6 +38,8 @@ void Boid::update(){
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
     Vector2 v4 = Vector2();
+    Vector2 v5 = Vector2();
+    Vector2 v6 = Vector2();
     Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
@@ -71,16 +73,15 @@ void Boid::update(){
     }
 
     // Rule 5: Stray away from the boundaries
-    Vector2 v5 = Vector2();
 
-    if(position.getX() < 80)
+    if(position.getX() < BORDER_THRESHOLD)
         v5.setX(1);
-    else if(position.getX() >= getCanvasWidth() - 80)
+    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
         v5.setX(-1);
 
-    if(position.getY() <  80)
+    if(position.getY() <  BORDER_THRESHOLD)
         v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - 80){
+    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
         v5.setY(-1);
     }
 
@@ -99,10 +100,24 @@ void Boid::update(){
 
     double force = 3.0 * (powerx + powery);
 
+    //RULE X
+    center = Vector2();
+    int predCount = 0;
+    for(int i = 0; i < 3; i++){
+        if((predator[i].position2 - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+            center = center - predator[i].position2;
+            predCount++;
+        }
+    }
+    if(predCount > 0) {
+        center /= predCount;
+        v6 = position - center;
+    }
+
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
-                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force,
-                             0.016f);
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force +
+                             v6 * 20.0, 0.016f);
 
     lastVel = velocity;
 }

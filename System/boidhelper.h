@@ -10,6 +10,9 @@
 #include "kdtree.h"
 #include "parameter.h"
 
+#define BORDER_THRESHOLD 100.0
+#define PREDATOR_THRESHOLD 10
+
 typedef struct Neighbors_s{
 
     Vector2 position2;
@@ -64,6 +67,10 @@ protected:
      * @brief The three closest neighbors of the boid (sorted).
      */
     Neighbors neighbours[3];
+
+    Neighbors predator[3];
+
+    bool isPredator = false;
     /**
      * @brief Search radius of the boids
      */

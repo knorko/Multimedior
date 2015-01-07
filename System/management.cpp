@@ -198,6 +198,10 @@ void Management::prepareTree() {
         double position[2] = { obj->getX(), obj->getY()};
         kd_insert( tree, position, obj);
     }
+    foreach (Predator *pred, predList) {
+        double position2[2] = {pred->getX(), pred->getY()};
+        kd_insert(tree, position2, pred);
+    }
 }
 
 

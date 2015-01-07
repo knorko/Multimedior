@@ -3,8 +3,6 @@
 
 #include "boidhelper.h"
 
-#define BORDER_THRESHOLD 200.0
-
 /**
  * @brief The boid class contains all boid logic.
  *
