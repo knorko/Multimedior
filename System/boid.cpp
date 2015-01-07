@@ -38,6 +38,8 @@ void Boid::update(){
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
     Vector2 v4 = Vector2();
+    Vector2 v5 = Vector2();
+    Vector2 v6 = Vector2();
     Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
@@ -71,7 +73,7 @@ void Boid::update(){
     }
 
     // Rule 5: Stray away from the boundaries
-    Vector2 v5 = Vector2();
+
 
     if(position.getX() < 80)
         v5.setX(1);
@@ -99,10 +101,21 @@ void Boid::update(){
 
     double force = 3.0 * (powerx + powery);
 
+    //Rule 6: Stay away from Predators
+    double fleeingPower = 0.0;
+    if(!(mp == Vector2(0, 0))) {
+        double sqrDist = (mp - position).getSqrMagnitude();
+        if(sqrDist > PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+            v6 = position - mp;
+            fleeingPower = sqrDist;
+        }
+    }
+
+
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
-                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force,
-                             0.016f);
+                             v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force +
+                             v6 * fleeingPower, 0.016f);
 
     lastVel = velocity;
 }
