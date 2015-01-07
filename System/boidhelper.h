@@ -13,10 +13,18 @@
 #define BORDER_THRESHOLD 100.0
 #define PREDATOR_THRESHOLD 10
 
+/**
+  * @brief The Neighbors struct stores the position and the velocity
+  *
+  * */
 typedef struct Neighbors_s{
-
+    /**
+     * @brief Position of the neighbor
+     */
     Vector2 position2;
-
+    /**
+     * @brief Velocity of the neighbor
+     */
     Vector2 velocity2;
 
     bool isBoid = false;
@@ -46,12 +54,22 @@ private:
      */
     static Parameter *parameters;
 
-    void getNeighbors();
+    /**
+     * @brief gets Neighbours by range
+     */
     void getNeighboursByRange();
-    void getNeighborsAlt();
     double dist_sq(double *a1, double *a2, int dims);
+    /**
+     * @brief sets the color
+     */
     void setColor();
+    /**
+     * @brief sets the view radius
+     */
     void setRadius();
+    /**
+     * @brief sets the visualization for the radius
+     */
     void setRadiusVisualization();
 
 protected:
@@ -76,10 +94,30 @@ protected:
 
     bool isPredator = false;
 
+    /**
+     * @brief gets the current mouse position
+     * @return Vector2&
+     */
     Vector2& getMousePosition() const;
+    /**
+     * @brief getFlockingFactor
+     * @return double
+     */
     double getFlockingFactor() const;
+    /**
+     * @brief getAvoidanceFactor
+     * @return double
+     */
     double getAvoidanceFactor() const;
+    /**
+     * @brief getVelocityMatchFactor
+     * @return double
+     */
     double getVelocityMatchFactor() const;
+    /**
+     * @brief getTargetFactor
+     * @return double
+     */
     double getTargetFactor() const;
 
 public:

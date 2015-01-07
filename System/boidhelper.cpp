@@ -177,8 +177,7 @@ uint &BoidHelper::getSize() const{
 }
 
 /**
- * @brief DEPRECATED !!! Get the three closest neighbors for each boid
- * @param Oh noes! We totally forgot to update this deprecated piece of documentation! D:
+ * @brief Get the three closest neighbors for each boid
  *
  * This function builds a two-dimensional kd-tree from the current position of each
  * boid.
@@ -198,8 +197,7 @@ void BoidHelper::getNeighboursByRange() {
     double position[2] = { getX(), getY() };
     result = kd_nearest_range(*tree, position, parameters->awarenessRadius);
 
-    int i = 0;
-    while(!kd_res_end(result)&&i<3) {
+    while(!kd_res_end(result)) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
         if(b->isPredator)
             break;

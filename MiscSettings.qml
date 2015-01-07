@@ -85,19 +85,21 @@ Rectangle {
         }
 
         Slider {
-            id: sliderHorizontal1
+            id: slider_awarenessRadius
             x: 45
             width: 136
+            maximumValue: root.width
             stepSize: 1
-            minimumValue: 10
-            value: 20
-            maximumValue: 100
+            minimumValue: 7
+            value: 100
             activeFocusOnPress: true
             tickmarksEnabled: false
             updateValueWhileDragging: true
             opacity: 0
             anchors.verticalCenter: parent.verticalCenter
+
             onValueChanged: {
+                __handlePos = value
                 management.setAwarenessRadius(value)
                 label_currentradius.text = value
             }
@@ -250,7 +252,7 @@ Rectangle {
             }
 
             PropertyChanges {
-                target: sliderHorizontal1
+                target: slider_awarenessRadius
                 anchors.verticalCenterOffset: 0
                 opacity: 1
             }
