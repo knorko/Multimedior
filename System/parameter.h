@@ -62,6 +62,8 @@ typedef struct Parameter_S{
      */
     QColor mainColor = QColor(128, 255, 64);
 
+    bool followMouse = true;
+
 } Parameter;
 
 #endif // DEFINE_H
