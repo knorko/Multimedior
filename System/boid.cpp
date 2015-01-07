@@ -33,7 +33,20 @@ Boid::~Boid() {
 }
 
 /**
- * @brief Boid logic
+ * @brief Boid logic Calculates Movementvectors and adds them according to Weight.
+ *
+ * The Vectors Calculated are:
+ * v1:  Flocking: Describes the Average Center of Mass of the Boid and its Neighbours
+ * v2:  Avoidance: Describes the Avoidance Behaviour of the Boid
+ * v3:  Matching: Averages the the Velocity Vector of the Boid and its Neighbours
+ * v4a: Describes Distance to Mouse Cursor
+ * v4b: Describes Distance to Mouse Cursor
+ * v5:  Stores Information to Control steering behaviour near Canvas Borders.
+ * v6:  Describes Distance to Predator
+ * v6:  Describes Distance to Predator
+ * v7:  Describes Distance to Predator
+ *
+ * Finally these Vectors are Normalised, Added and Interpolated and Form the steering Behaviour of a single Boid.
  */
 void Boid::update(){
     Vector2 v1 = Vector2();
@@ -42,9 +55,9 @@ void Boid::update(){
     Vector2 v4a = Vector2();
     Vector2 v4b = Vector2();
     Vector2 v5 = Vector2();
+    Vector2 v6 = Vector2();
     Vector2 v7 = Vector2();
     Vector2 v8 = Vector2();
-    Vector2 v9 = Vector2();
     Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
@@ -121,40 +134,40 @@ void Boid::update(){
     double force = 3.0 * (powerx + powery);
 
     //Rule 7: Avoid Predator
+    double fleeingPowerv6 = 0.0;
     double fleeingPowerv7 = 0.0;
     double fleeingPowerv8 = 0.0;
-    double fleeingPowerv9 = 0.0;
 
-    double sqrDistv7 = (predator[0].position2 - position).getSqrMagnitude();
+    double sqrDistv6 = (predator[0].position2 - position).getSqrMagnitude();
 
-    double sqrDistv8 = (predator[1].position2 -position).getSqrMagnitude();
-    double sqrDistv9 = (predator[2].position2 - position).getSqrMagnitude();
+    double sqrDistv7 = (predator[1].position2 -position).getSqrMagnitude();
+    double sqrDistv8 = (predator[2].position2 - position).getSqrMagnitude();
+
+    if(sqrDistv6 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+        v6 = position - predator[0].position2;
+        fleeingPowerv6 = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+    }
 
     if(sqrDistv7 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v7 = position - predator[0].position2;
+        v7 = position - predator[1].position2;
         fleeingPowerv7 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
-
     if(sqrDistv8 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v8 = position - predator[1].position2;
+        v8 = position - predator[2].position2;
         fleeingPowerv8 = velocity.getMagnitude()*(v8.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
-    if(sqrDistv9 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v9 = position - predator[2].position2;
-        fleeingPowerv9 = velocity.getMagnitude()*(v9.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
-    }
 
 
-
+    //Normalize, Add, and Interpolate the Vectors to Form the new Velocity Vector
     velocity = Vector2::lerp(lastVel,
                              velocity
                              + v1.normalize()*getFlockingFactor()
                              + v2.normalize()*getAvoidanceFactor()
                              + v3.normalize()*getVelocityMatchFactor()
                              + v5 * force
-                             + v7 * fleeingPowerv7
-                             + v8 *fleeingPowerv8
-                             + v9 * fleeingPowerv9
+                             + v6 * fleeingPowerv6
+                             + v7 *fleeingPowerv7
+                             + v8 * fleeingPowerv8
                              + v4a.normalize()*getTargetFactor()
                              + v4b * fleeingPower, 0.016f);
     lastVel = velocity;
