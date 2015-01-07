@@ -30,9 +30,11 @@ Predator::~Predator() {
  */
 void Predator::update() {
     Vector2 v5 = Vector2();
-//    Vector2 v1 = Vector2();
-//    Vector2 v2 = Vector2();
-//    Vector2 center = Vector2();
+    Vector2 v1 = Vector2();
+    Vector2 v2 = Vector2();
+    Vector2 v3 = Vector2();
+    Vector2 v4 = Vector2();
+    Vector2 center = Vector2();
 
 //    //IF Boid found then follow else random
 //    for(int i = 0; i < 3; i++){
@@ -49,6 +51,19 @@ void Predator::update() {
 //    velocity = Vector2::lerp(lastVel, velocity + v1 + v2, 0.016f);
 
 //    lastVel = velocity;
+    // Rule1: move to local center of mass ( center becomes average of surrounding boids)
+    for(int i = 0; i < 3; i++){
+        center = center + neighbours[i].position2;
+    }
+    center /= 3;
+
+    v1 = center - position;
+
+    // Rule3: Match velocity to surrounding Boids
+    for(int i = 0; i < 3; i++){
+        v3 = v3 + neighbours[i].velocity2;
+    }
+    v3 = (v3/3)*1.3;
     if(position.getX() < BORDER_THRESHOLD)
         v5.setX(1);
     else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
@@ -56,9 +71,9 @@ void Predator::update() {
 
     if(position.getY() <  BORDER_THRESHOLD)
         v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
+    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
         v5.setY(-1);
-    }
+
 
     //Replace position with mouse position and look through the force-parameter with the mouse
     double powerx = 0.0;

@@ -69,10 +69,10 @@ void Boid::update(){
 
     // Rule 4: Follow mouse position
     Vector2 mp = getMousePosition();
-    //    if(!(mp == Vector2(0, 0))) {
-    //        if((mp - position).getSqrMagnitude() > 7500)
-    //            v4 = mp - position;
-    //    }
+        if(!(mp == Vector2(0, 0))) {
+            if((mp - position).getSqrMagnitude() > 7500)
+                v4 = mp - position;
+        }
 
     // Rule 5: Stray away from the boundaries
 
@@ -103,21 +103,27 @@ void Boid::update(){
     double force = 3.0 * (powerx + powery);
 
     //Rule 6: Avoid Mouse
-    double fleeingPower2 = 0.0;
+    double fleeingPower = 0.0;
     if(!(mp == Vector2(0, 0))) {
         double sqrDist = (mp - position).getSqrMagnitude();
         if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-            v7 = position - mp;
-            fleeingPower2 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+            v6 = position - mp;
+            fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
     //Rule 7: Avoid Predator
-    double fleeingPower = 0.0;
+    double fleeingPower2 = 0.0;
     double sqrDist = (predator[0].position2 - position).getSqrMagnitude();
     if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-        v6 = position - predator[0].position2;
-        fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+        v7 = position - predator[0].position2;
+        fleeingPower2 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
+//    for(int i = 0; i < 3; i++){
+//        center = center + neighbours[i].position2;
+//    }
+//    center /= 3;
+
+//    v1 = center - position;
 
 
 
