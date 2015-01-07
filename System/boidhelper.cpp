@@ -242,6 +242,8 @@ void BoidHelper::getNeighboursByRange() {
         neighbours[i].isBoid = true;
     }
 
+    kd_res_free(result);
+
 
     result = kd_nearest_range(*tree, position, parameters->canvasWidth);
 

@@ -122,7 +122,8 @@ void Boid::update(){
             fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
-//TODO
+
+    //Rule 7:
     double fleeingPower2 = 0.0;
     if(!(mp == Vector2(0, 0))) {
         double sqrDist = (mp - position).getSqrMagnitude();
