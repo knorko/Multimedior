@@ -310,14 +310,23 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
     return dist_sq;
 }
 
+/**
+ * @brief sets Color of the boids
+ */
 void BoidHelper::setColor() {
     object->setProperty("color", parameters->mainColor);
 }
 
+/**
+ * @brief sets awareness radius
+ */
 void BoidHelper::setRadius() {
     object->setProperty("rad", parameters->awarenessRadius);
 }
 
+/**
+ * @brief sets visualisation radius
+ */
 void BoidHelper::setRadiusVisualization() {
     object->setProperty("visualizeRadius", parameters->visualizeAwarenessRadius);
 }
@@ -328,29 +337,41 @@ void BoidHelper::setRadiusVisualization() {
 Vector2 &BoidHelper::getMousePosition() const {
     return parameters->mousePosition;
 }
-
+/**
+ * @return factor_flocking
+ */
 double BoidHelper::getFlockingFactor() const {
     return parameters->factor_flocking;
 }
-
+/**
+ * @return factor_avoidance
+ */
 double BoidHelper::getAvoidanceFactor() const {
     return parameters->factor_avoidance;
 }
-
+/**
+ * @return factor_match
+ */
 double BoidHelper::getVelocityMatchFactor() const {
     return parameters->factor_match;
 }
-
+/**
+ * @return factor_target
+ */
 double BoidHelper::getTargetFactor() const {
     return parameters->factor_target;
 }
-
+/**
+ * @return awarenessRadius
+ */
 double BoidHelper::getAwarenessRadius() const
 {
     return parameters->awarenessRadius;
 
 }
-
+/**
+ * @return followMouse
+ */
 bool BoidHelper::followMouse() const {
     return parameters->followMouse;
 }

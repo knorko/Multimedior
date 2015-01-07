@@ -61,7 +61,9 @@ typedef struct Parameter_S{
      * @brief Main boid color
      */
     QColor mainColor = QColor(128, 255, 64);
-
+    /**
+     * @brief stores if boids follow/avoid the mouse
+     */
     bool followMouse = true;
 
 } Parameter;

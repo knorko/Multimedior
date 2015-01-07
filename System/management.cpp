@@ -189,7 +189,10 @@ void Management::setAwarenessRadius(double radius){
 void Management::setAwarenessRadiusVisualization(bool value) {
     parameters.visualizeAwarenessRadius = value;
 }
-
+/**
+ * @brief Sets the followmode of the mouse
+ * @param follow follow or avoid
+ */
 void Management::setMouseFollowMode(bool follow) {
     parameters.followMouse = follow;
 }
