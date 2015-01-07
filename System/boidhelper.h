@@ -16,6 +16,8 @@ typedef struct Neighbors_s{
 
     Vector2 velocity2;
 
+    bool isBoid = false;
+
 } Neighbors;
 
 /**

@@ -51,8 +51,8 @@ GroupBox {
             id: slider_count
             x: 45
             width: 136
-            minimumValue: 15
-            value: 15
+            minimumValue: 1
+            value: 1
             activeFocusOnPress: true
             stepSize: 1
             maximumValue: 150

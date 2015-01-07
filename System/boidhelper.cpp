@@ -233,6 +233,7 @@ void BoidHelper::getNeighbors() {
     for(int i=0; i<3; i++){
         neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
         neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
+        neighbours[i].isBoid = true;
     }
     kd_res_free(result);
 }

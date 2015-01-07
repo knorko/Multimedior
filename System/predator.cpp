@@ -25,11 +25,26 @@ Predator::~Predator() {
  * @brief Predator logic
  */
 void Predator::update() {
-    Vector2 mp = getMousePosition();
-    if(mp != Vector2(0,0) && (mp - position).getSqrMagnitude() > 10.0f) {
-        velocity = Vector2::lerp(lastVel, mp - position, 0.016f);
+    Vector2 v1 = Vector2();
+    Vector2 v2 = Vector2();
+    Vector2 center = Vector2();
+
+    //IF Boid found then follow else random
+    for(int i = 0; i < 3; i++){
+        if((position - neighbours[i].position2).getMagnitude() < position.getMagnitude() * radius && neighbours[i].isBoid)
+            center = neighbours[i].position2;
     }
-    else
-        velocity = Vector2();
-}
+
+    v1 = center - position;
+
+
+    Vector2 mp = getMousePosition();
+    if(mp != Vector2(0,0))
+        if((mp - position).getSqrMagnitude() > 10.0f)
+            v2 = mp-position;
+
+    velocity = Vector2::lerp(lastVel, velocity + v1 + v2, 0.016f);
+
+    lastVel = velocity;
+ }
 
