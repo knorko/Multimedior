@@ -36,26 +36,7 @@ void Predator::update() {
     Vector2 v4 = Vector2();
     Vector2 center = Vector2();
 
-//    //IF Boid found then follow else random
-//    for(int i = 0; i < 3; i++){
-//        center = center + neighbours[i].position2;
-//    }
-//    center /= 3;
-
-//    v1 = center - position;
-//    Vector2 mp = getMousePosition();
-//    if(mp != Vector2(0,0))
-//        if((mp - position).getSqrMagnitude() > 10.0f)
-//            v2 = mp-position;
-
-//    velocity = Vector2::lerp(lastVel, velocity + v1 + v2, 0.016f);
-
-//    lastVel = velocity;
-    // Rule1: move to local center of mass ( center becomes average of surrounding boids)
-    for(int i = 0; i < 3; i++){
-        center = center + neighbours[i].position2;
-    }
-    center /= 3;
+    center = center + neighbours[0].position2;
 
     v1 = center - position;
 
@@ -64,14 +45,14 @@ void Predator::update() {
         v3 = v3 + neighbours[i].velocity2;
     }
     v3 = (v3/3)*1.3;
-    if(position.getX() < BORDER_THRESHOLD)
+    if(position.getX() < PREDATOR_ATTENUATION)
         v5.setX(1);
-    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
+    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
         v5.setX(-1);
 
-    if(position.getY() <  BORDER_THRESHOLD)
+    if(position.getY() <  PREDATOR_ATTENUATION)
         v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
+    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
         v5.setY(-1);
 
 
@@ -79,17 +60,19 @@ void Predator::update() {
     double powerx = 0.0;
     double powery = 0.0;
 
-    if(position.getX() < BORDER_THRESHOLD)
-        powerx = BORDER_THRESHOLD - position.getX();
-    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
-        powerx = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
-    else if(position.getY() < BORDER_THRESHOLD)
-        powery = BORDER_THRESHOLD - position.getY();
-    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
-        powery = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
+    if(position.getX() < PREDATOR_ATTENUATION)
+        powerx = PREDATOR_ATTENUATION - position.getX();
+    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
+        powerx = PREDATOR_ATTENUATION + position.getX() - getCanvasWidth() ;
+    else if(position.getY() < PREDATOR_ATTENUATION)
+        powery = PREDATOR_ATTENUATION - position.getY();
+    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
+        powery = PREDATOR_ATTENUATION + position.getY() - getCanvasHeight();
 
     double force = 3.0 * (powerx + powery);
 
-  velocity = velocity + v5.normalize() * force;
+  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v3.normalize() * 1.3 + v5.normalize() * force, 0.016f);
+
+  lastVel = velocity;
  }
 

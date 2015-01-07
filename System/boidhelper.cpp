@@ -234,7 +234,6 @@ void BoidHelper::getNeighboursByRange() {
             }
         }
 
-END:
         kd_res_next(result);
     }
 

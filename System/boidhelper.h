@@ -12,6 +12,7 @@
 
 #define BORDER_THRESHOLD 100.0
 #define PREDATOR_THRESHOLD 80.0
+#define PREDATOR_ATTENUATION 20.0
 
 /**
   * @brief The Neighbors struct stores the position and the velocity

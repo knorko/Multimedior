@@ -111,28 +111,38 @@ void Boid::update(){
             fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
+    Vector2 v8 = Vector2();
+    Vector2 v9 = Vector2();
     //Rule 7: Avoid Predator
-    double fleeingPower2 = 0.0;
-    double sqrDist = (predator[0].position2 - position).getSqrMagnitude();
-    if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+    double fleeingPowerv7 = 0.0;
+
+    double fleeingPowerv8 = 0.0;
+    double fleeingPowerv9 = 0.0;
+
+    double sqrDistv7 = (predator[0].position2 - position).getSqrMagnitude();
+
+    double sqrDistv8 = (predator[1].position2 -position).getSqrMagnitude();
+    double sqrDistv9 = (predator[2].position2 - position).getSqrMagnitude();
+
+    if(sqrDistv7 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
         v7 = position - predator[0].position2;
-        fleeingPower2 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+        fleeingPowerv7 = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
     }
-//    for(int i = 0; i < 3; i++){
-//        center = center + neighbours[i].position2;
-//    }
-//    center /= 3;
 
-//    v1 = center - position;
-
-
-
+    if(sqrDistv8 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+        v8 = position - predator[1].position2;
+        fleeingPowerv8 = velocity.getMagnitude()*(v8.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+    }
+    if(sqrDistv9 < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+        v9 = position - predator[2].position2;
+        fleeingPowerv9 = velocity.getMagnitude()*(v9.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+    }
 
 
 
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
                              v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force +
-                             v6 * fleeingPower + v7 * fleeingPower2, 0.016f);
+                             v6 * fleeingPower + v7 * fleeingPowerv7 + v8 *fleeingPowerv8 + v9 * fleeingPowerv9, 0.016f);
     lastVel = velocity;
 }
