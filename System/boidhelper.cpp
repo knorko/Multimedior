@@ -342,3 +342,9 @@ double BoidHelper::getVelocityMatchFactor() const {
 double BoidHelper::getTargetFactor() const {
     return parameters->factor_target;
 }
+
+double BoidHelper::getAwarenessRadius() const
+{
+    return parameters->awarenessRadius;
+
+}

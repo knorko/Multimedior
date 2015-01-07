@@ -40,6 +40,7 @@ void Boid::update(){
     Vector2 v4 = Vector2();
     Vector2 v5 = Vector2();
     Vector2 v6 = Vector2();
+    Vector2 v7 = Vector2();
     Vector2 center = Vector2();
 
     // Rule1: move to local center of mass ( center becomes average of surrounding boids)
@@ -66,10 +67,10 @@ void Boid::update(){
 
     // Rule 4: Follow mouse position
     Vector2 mp = getMousePosition();
-    if(!(mp == Vector2(0, 0))) {
-        if((mp - position).getSqrMagnitude() > 7500)
-            v4 = mp - position;
-    }
+    //    if(!(mp == Vector2(0, 0))) {
+    //        if((mp - position).getSqrMagnitude() > 7500)
+    //            v4 = mp - position;
+    //    }
 
     // Rule 5: Stray away from the boundaries
 
@@ -99,24 +100,41 @@ void Boid::update(){
 
     double force = 3.0 * (powerx + powery);
 
-    //RULE X
-    center = Vector2();
-    int predCount = 0;
-    for(int i = 0; i < 3; i++){
-        if((predator[i].position2 - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-            center = center - predator[i].position2;
-            predCount++;
+    //    //RULE X
+    //    center = Vector2();
+    //    int predCount = 0;
+    //    for(int i = 0; i < 3; i++){
+    //        if((predator[i].position2 - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+    //            center = center - predator[i].position2;
+    //            predCount++;
+    //        }
+    //    }
+    //    if(predCount > 0) {
+    //        center /= predCount;
+    //        v6 = position - center;
+    //    }
+    //Rule 6: Stay away from (Mouse)Predator
+    double fleeingPower = 0.0;
+    if(!(mp == Vector2(0, 0))) {
+        double sqrDist = (mp - position).getSqrMagnitude();
+        if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+            v6 = position - mp;
+            fleeingPower = velocity.getMagnitude()*(v6.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
         }
     }
-    if(predCount > 0) {
-        center /= predCount;
-        v6 = position - center;
+//TODO
+    double fleeingPower = 0.0;
+    if(!(mp == Vector2(0, 0))) {
+        double sqrDist = (mp - position).getSqrMagnitude();
+        if(sqrDist < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+            v7 = position - mp;
+            fleeingPower = velocity.getMagnitude()*(v7.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+        }
     }
 
     velocity = Vector2::lerp(lastVel,
                              velocity + v1.normalize()*getFlockingFactor() + v2.normalize()*getAvoidanceFactor() +
                              v3.normalize()*getVelocityMatchFactor() + v4.normalize()*getTargetFactor() + v5 * force +
-                             v6 * 20.0, 0.016f);
-
+                             v6 * fleeingPower, 0.016f);
     lastVel = velocity;
 }

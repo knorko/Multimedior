@@ -119,6 +119,7 @@ protected:
      * @return double
      */
     double getTargetFactor() const;
+    double getAwarenessRadius() const;
 
 public:
     /**

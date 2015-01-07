@@ -41,8 +41,6 @@ void Predator::update() {
 //    center /= 3;
 
 //    v1 = center - position;
-
-
 //    Vector2 mp = getMousePosition();
 //    if(mp != Vector2(0,0))
 //        if((mp - position).getSqrMagnitude() > 10.0f)
