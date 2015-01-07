@@ -58,7 +58,6 @@ void Boid::update(){
         }
     }
     v2 = center;
-
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
         v3 = v3 + neighbours[i].velocity2;
@@ -75,14 +74,14 @@ void Boid::update(){
     // Rule 5: Stray away from the boundaries
 
 
-    if(position.getX() < 80)
+    if(position.getX() < BORDER_THRESHOLD)
         v5.setX(1);
-    else if(position.getX() >= getCanvasWidth() - 80)
+    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
         v5.setX(-1);
 
-    if(position.getY() <  80)
+    if(position.getY() <  BORDER_THRESHOLD)
         v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - 80){
+    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
         v5.setY(-1);
     }
 

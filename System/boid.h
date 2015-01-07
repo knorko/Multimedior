@@ -3,7 +3,8 @@
 
 #include "boidhelper.h"
 
-#define BORDER_THRESHOLD 200.0
+
+#define BORDER_THRESHOLD 100.0
 #define PREDATOR_THRESHOLD 50.0
 
 /**

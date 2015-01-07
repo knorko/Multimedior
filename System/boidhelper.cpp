@@ -76,8 +76,11 @@ double &BoidHelper::getCanvasWidth() const {
 void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
     setSize(parameters->size);
+    setColor();
+    setRadius();
+    setRadiusVisualization();
 
-    getNeighbors();
+    getNeighboursByRange();
 }
 
 /**
@@ -174,7 +177,8 @@ uint &BoidHelper::getSize() const{
 }
 
 /**
- * @brief Get the three closest neighbors for each boid
+ * @brief DEPRECATED !!! Get the three closest neighbors for each boid
+ * @param Oh noes! We totally forgot to update this deprecated piece of documentation! D:
  *
  * This function builds a two-dimensional kd-tree from the current position of each
  * boid.
@@ -182,7 +186,7 @@ uint &BoidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
-void BoidHelper::getNeighbors() {
+void BoidHelper::getNeighboursByRange() {
     struct kdres *result;
     double position_neighbour[2];
     double sqrDistance;
@@ -191,7 +195,7 @@ void BoidHelper::getNeighbors() {
     double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+    result = kd_nearest_range(*tree, position, parameters->awarenessRadius);
 
     while(!kd_res_end(result)) {
         BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
@@ -237,7 +241,6 @@ void BoidHelper::getNeighbors() {
     }
     kd_res_free(result);
 }
-
 /**
  * @brief Calculate squared distance between two boids
  * @param a1 First vector
@@ -252,6 +255,18 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
         dist_sq += diff*diff;
     }
     return dist_sq;
+}
+
+void BoidHelper::setColor() {
+    object->setProperty("color", parameters->mainColor);
+}
+
+void BoidHelper::setRadius() {
+    object->setProperty("rad", parameters->awarenessRadius);
+}
+
+void BoidHelper::setRadiusVisualization() {
+    object->setProperty("visualizeRadius", parameters->visualizeAwarenessRadius);
 }
 
 /**

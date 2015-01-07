@@ -4,6 +4,8 @@
 #include <vector>
 
 #include <QObject>
+#include <QColor>
+#include <QString>
 #include <QQmlApplicationEngine>
 
 #include "boid.h"
@@ -69,6 +71,9 @@ public:
     Q_INVOKABLE void setAvoidanceFactor(double avoid);
     Q_INVOKABLE void setVelocityMatchFactor(double match);
     Q_INVOKABLE void setTargetFactor(double target);
+    Q_INVOKABLE void setColor(QColor color);
+    Q_INVOKABLE void setAwarenessRadius(double radius);
+    Q_INVOKABLE void setAwarenessRadiusVisualization(bool value);
 };
 
 #endif // MANAGEMENT_H
