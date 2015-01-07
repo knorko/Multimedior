@@ -235,7 +235,7 @@ void Management::removePredator() {
 }
 
 /**
- * @brief inserts boid objects and their position into a kd-tree
+ * @brief inserts boid objects and their position into a kd-tree and then predators and their positions
  */
 void Management::prepareTree() {
     tree = kd_create(2);

@@ -26,14 +26,17 @@ Predator::~Predator() {
 }
 
 /**
- * @brief Predator logic
+ * @brief Predator logic Calculate the Movement of Vectors relativ to Boids and set them accordingly.
+ *
+ * The Vectors are:
+ * v1: Describes the closest boid and set their velocity according to their position.
+ * v2: Describes the Velocity of other Boids nearby and matches it.
+ * v3: Holds Information so that every Predator doesn't collide with the boundaries.
  */
 void Predator::update() {
-    Vector2 v5 = Vector2();
     Vector2 v1 = Vector2();
     Vector2 v2 = Vector2();
     Vector2 v3 = Vector2();
-    Vector2 v4 = Vector2();
     Vector2 center = Vector2();
 
     center = center + neighbours[0].position2;
@@ -42,18 +45,18 @@ void Predator::update() {
 
     // Rule3: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
-        v3 = v3 + neighbours[i].velocity2;
+        v2 = v2 + neighbours[i].velocity2;
     }
-    v3 = (v3/3)*1.3;
+    v2 = (v2/3)*1.3;
     if(position.getX() < PREDATOR_ATTENUATION)
-        v5.setX(1);
+        v3.setX(1);
     else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
-        v5.setX(-1);
+        v3.setX(-1);
 
     if(position.getY() <  PREDATOR_ATTENUATION)
-        v5.setY(1);
+        v3.setY(1);
     else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
-        v5.setY(-1);
+        v3.setY(-1);
 
 
     //Replace position with mouse position and look through the force-parameter with the mouse
@@ -71,7 +74,7 @@ void Predator::update() {
 
     double force = 3.0 * (powerx + powery);
 
-  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v3.normalize() * 1.3 + v5.normalize() * force, 0.016f);
+  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3 + v3.normalize() * force, 0.016f);
 
   lastVel = velocity;
  }
