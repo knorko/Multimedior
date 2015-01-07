@@ -1,5 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>Boid.qml</file>
+        <file>RenderCanvas.qml</file>
+        <file>SettingsPanel.qml</file>
+        <file>BoidSettings.qml</file>
+        <file>MiscSettings.qml</file>
+        <file>PredatorSettings.qml</file>
+        <file>Controls.qml</file>
+        <file>Predator.qml</file>
+        <file>ColorPicker.qml</file>
+        <file>MouseTarget.qml</file>
+        <file>AboutPopup.qml</file>
     </qresource>
 </RCC>
