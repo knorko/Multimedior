@@ -10,11 +10,27 @@
 #include "kdtree.h"
 #include "parameter.h"
 
+#define BORDER_THRESHOLD 100.0
+#define PREDATOR_THRESHOLD 80.0
+#define PREDATOR_ATTENUATION 20.0
+
+/**
+  * @brief The Neighbors struct stores the position and the velocity
+  *
+  * */
 typedef struct Neighbors_s{
-
+    /**
+     * @brief Position of the neighbor
+     */
     Vector2 position2;
-
+    /**
+     * @brief Velocity of the neighbor
+     */
     Vector2 velocity2;
+    /**
+     * @brief boid or predator
+     */
+   bool isBoid = false;
 
 } Neighbors;
 
@@ -42,8 +58,11 @@ private:
     static Parameter *parameters;
 
 
-    void getNeighbors();
+    void getNeighboursByRange();
     double dist_sq(double *a1, double *a2, int dims);
+    void setColor();
+    void setRadius();
+    void setRadiusVisualization();
 
 protected:
     /**
@@ -63,11 +82,22 @@ protected:
      */
     Neighbors neighbours[3];
     /**
-     * @brief Search radius of the boids
+     * @brief The three closest neighbors of the predator
      */
-    double radius = 240;
+    Neighbors predator[3];
+    /**
+     * @brief boid or predator
+     */
+    bool isPredator = false;
+
 
     Vector2& getMousePosition() const;
+    double getFlockingFactor() const;
+    double getAvoidanceFactor() const;
+    double getVelocityMatchFactor() const;
+    double getTargetFactor() const;
+    double getAwarenessRadius() const;
+    bool followMouse() const;
 
 public:
     /**

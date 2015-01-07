@@ -9,5 +9,8 @@
         <file>PredatorSettings.qml</file>
         <file>Controls.qml</file>
         <file>Predator.qml</file>
+        <file>ColorPicker.qml</file>
+        <file>MouseTarget.qml</file>
+        <file>AboutPopup.qml</file>
     </qresource>
 </RCC>

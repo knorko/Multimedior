@@ -21,7 +21,7 @@ GroupBox {
     x: 8
     y: 30
     width: 212
-    height: 57
+    height: 52
     visible: false
     title: qsTr("Misc.")
     opacity: 0
@@ -29,6 +29,7 @@ GroupBox {
     Item {
         id: count_settings
         height: 22
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
@@ -42,7 +43,7 @@ GroupBox {
         Label {
             id: label_currentcount
             x: 187
-            text: "5"
+            text: "15"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -50,17 +51,20 @@ GroupBox {
         Slider {
             id: slider_count
             x: 45
-            width: 136
-            minimumValue: 5
-            value: 5
+            width: 125
+            minimumValue: 15
+            value: 15
             activeFocusOnPress: true
             stepSize: 1
-            maximumValue: 100
+            maximumValue: 300
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                controls1.boidCount = value
+                if(controls1)
+                    controls1.boidCount = value
+
                 label_currentcount.text = value
+
             }
         }
     }
@@ -70,7 +74,7 @@ GroupBox {
     id: velocityBox
     x: 8
     width: 212
-    height: 84
+    height: 52
     visible: false
     anchors.top: miscBox.bottom
     anchors.topMargin: -84
@@ -78,136 +82,315 @@ GroupBox {
     opacity: 0
 
     Item {
-        id: speed_avg_settings
+        id: speed_max_settings
         y: -57
         height: 22
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
 
         Label {
-            id: label_AVG
-            x: -8
+            id: label_MAXSPEED
             y: -20
-            text: "Average:"
+            text: "Limit:"
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Label {
-            id: label_currentspeedavg
+            id: label_currentspeedmax
             x: 187
-            text: "0.00"
+            text: "1.5"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Slider {
-            id: slider_speed_avg
+            id: slider_speed_max
             x: 45
-            width: 117
-            updateValueWhileDragging: false
+            width: 125
+            updateValueWhileDragging: true
             activeFocusOnPress: true
-            minimumValue: 0.1
-            value: 1
+            minimumValue: 0.5
+            value: 1.5
             maximumValue: 2
             anchors.verticalCenter: parent.verticalCenter
 
             onValueChanged: {
-                label_currentspeedavg.text = value.toFixed(2)
-                management.setVelocity(value, slider_speed_var.value);
+                label_currentspeedmax.text = value.toFixed(2)
+                management.setVelocity(value);
             }
         }
 
-    }
-
-    Item {
-        id: speed_var_settings
-        x: 0
-        y: 28
-        height: 22
-        anchors.top: speed_avg_settings.bottom
-        anchors.topMargin: -22
-        anchors.left: parent.left
-        opacity: 0
-        anchors.right: parent.right
-        Label {
-            id: label_VAR
-            x: -8
-            y: -20
-            text: "Variance:"
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: label_currentspeedvar
-            x: 187
-            text: "0.00"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Slider {
-            id: slider_speed_var
-            x: 45
-            width: 117
-            updateValueWhileDragging: false
-            value: 0.1
-            maximumValue: 0.5
-            activeFocusOnPress: true
-            minimumValue: 0
-            anchors.verticalCenter: parent.verticalCenter
-
-            onValueChanged: {
-                label_currentspeedvar.text = value.toFixed(2)
-                management.setVelocity(slider_speed_avg.value, value);
-            }
-        }
     }
 }
 
 GroupBox {
-    id: targetBox
+    id: mouseFollowBox
     x: 8
     width: 212
-    height: 160
+    height: 82
     visible: false
     anchors.top: velocityBox.bottom
-    anchors.topMargin: -84
+    anchors.topMargin: -92
     opacity: 0
-    title: qsTr("Target")
+    title: qsTr("Mouse following")
 
     Item {
-        id: globalTarget_settings
+        id: mouse_mode
+        width: 150
+        height: 22
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        opacity: 0
+
+        ExclusiveGroup { id: mouseModeGroup }
+
+        RadioButton {
+            id: radio_follow
+            text: qsTr("Follow")
+            anchors.left: parent.left
+            activeFocusOnPress: true
+            checked: true
+            anchors.top: parent.top
+            opacity: 0
+            exclusiveGroup: mouseModeGroup
+
+            onCheckedChanged: management.setMouseFollowMode(checked)
+        }
+
+        RadioButton {
+            id: radio_avoid
+            text: qsTr("Avoid")
+            anchors.right: parent.right
+            activeFocusOnPress: true
+            anchors.top: parent.top
+            opacity: 0
+            exclusiveGroup: mouseModeGroup
+
+            onCheckedChanged: management.setMouseFollowMode(!checked)
+        }
+    }
+
+    Item {
+        id: continuous_settings
         height: 25
+        anchors.top: mouse_mode.bottom
+        anchors.topMargin: -22
+        anchors.right: parent.right
+        anchors.left: parent.left
+        opacity: 0
+
+        CheckBox {
+            id: checkBox1
+            text: qsTr("Continuous")
+            activeFocusOnPress: true
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+
+            onCheckedChanged: {
+                renderCanvas1.continuous = checked
+            }
+        }
+    }
+
+}
+
+GroupBox {
+    id: behaviorBox
+    x: 8
+    width: 212
+    height: 136
+    visible: false
+    title: "Behavior"
+    anchors.top: mouseFollowBox.bottom
+    anchors.topMargin: -56
+    opacity: 0
+
+
+    Item {
+        id: beh_flockBox
+        x: 8
+        y: 219
+        height: 22
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: parent.left
         opacity: 0
 
         Label {
-            id: label_GLOBAL
-            y: 8
-            text: qsTr("Global")
+            id: label_FLOCK
+            y: -20
+            text: "Flock:"
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            opacity: 0
         }
 
-        ComboBox {
-            id: comboBox1
-            currentIndex: 0
-            width: 152
+        Label {
+            id: label_currentflock
+            x: 187
+            text: "30"
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-            model: ListModel {
-                id: globalTarget
-                ListElement { text: "Mouse (click)"; property bool value: false }
-                ListElement { text: "Mouse (continuous)"; property bool value: true }
+        Slider {
+            id: slider_beh_flock
+            x: 45
+            width: 117
+            value: 30
+            maximumValue: 100
+            activeFocusOnPress: true
+            minimumValue: 0
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentflock.text = value.toFixed(0)
+                management.setFlockingFactor(value);
             }
-            onCurrentIndexChanged: renderCanvas1.continuous = globalTarget.get(currentIndex).value
         }
     }
+
+    Item {
+        id: beh_avoidBox
+        x: 8
+        y: 219
+        height: 22
+        anchors.topMargin: -22
+        anchors.top: beh_flockBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+
+        Label {
+            id: label_AVOID
+            y: -20
+            text: "Avoid:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentavoid
+            x: 187
+            text: "80"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_avoid
+            x: 45
+            width: 117
+            minimumValue: 0
+            value: 80
+            maximumValue: 100
+            activeFocusOnPress: true
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentavoid.text = value.toFixed(0)
+                management.setAvoidanceFactor(value)
+            }
+        }
+    }
+
+    Item {
+        id: beh_matchBox
+        x: 17
+        y: 213
+        height: 22
+        anchors.top: beh_avoidBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+        anchors.topMargin: -22
+
+        Label {
+            id: label_MATCH
+            y: -20
+            text: "Match:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currentmatch
+            x: 187
+            text: "80"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_match
+            x: 45
+            width: 117
+            value: 80
+            maximumValue: 100
+            activeFocusOnPress: true
+            minimumValue: 0
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currentmatch.text = value.toFixed(0)
+                management.setVelocityMatchFactor(value)
+            }
+        }
+    }
+
+    Item {
+        id: beh_targetBox
+        x: 17
+        y: 222
+        height: 22
+        anchors.top: beh_matchBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        opacity: 0
+        anchors.topMargin: -22
+
+        Label {
+            id: label_beh_TARGET
+            y: -20
+            text: "Target:"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            id: label_currenttarget
+            x: 187
+            text: "50"
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Slider {
+            id: slider_beh_target
+            x: 45
+            width: 117
+            value: 50
+            maximumValue: 100
+            minimumValue: 0
+            activeFocusOnPress: true
+            updateValueWhileDragging: true
+            anchors.verticalCenter: parent.verticalCenter
+
+            onValueChanged: {
+                label_currenttarget.text = value.toFixed(0)
+                management.setTargetFactor(value)
+            }
+        }
+    }
+
 }
+
 
 id: rectangle1
 width: 228
@@ -222,13 +405,12 @@ states: [
 
         PropertyChanges {
             target: rectangle1
-            height: 384
+            height: 372
         }
 
             PropertyChanges {
                 target: label_title
                 x: 8
-                y: 8
                 text: "Boids:"
                 anchors.verticalCenterOffset: -97
                 anchors.horizontalCenterOffset: -90
@@ -236,8 +418,6 @@ states: [
 
             PropertyChanges {
                 target: slider_count
-                width: 125
-                height: 22
                 anchors.verticalCenterOffset: 0
                 anchors.horizontalCenterOffset: 9
             }
@@ -253,7 +433,7 @@ states: [
             }
 
             PropertyChanges {
-                target: speed_avg_settings
+                target: speed_max_settings
                 y: 0
                 anchors.horizontalCenterOffset: 8
                 anchors.topMargin: 127
@@ -261,17 +441,8 @@ states: [
             }
 
             PropertyChanges {
-                target: slider_speed_avg
-                x: 53
-                width: 117
-                height: 22
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: label_currentspeedavg
+                target: label_currentspeedmax
                 x: 172
-                anchors.verticalCenterOffset: 0
             }
 
             PropertyChanges {
@@ -288,36 +459,7 @@ states: [
             }
 
             PropertyChanges {
-                target: label_AVG
-                x: 0
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: speed_var_settings
-                y: 28
-                anchors.topMargin: 6
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                opacity: 1
-            }
-
-            PropertyChanges {
-                target: label_VAR
-                x: 0
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: slider_speed_var
-                x: 53
-                anchors.verticalCenterOffset: 0
-            }
-
-            PropertyChanges {
-                target: label_currentspeedvar
-                x: 172
-                width: 24
+                target: label_MAXSPEED
                 anchors.verticalCenterOffset: 0
             }
 
@@ -329,29 +471,91 @@ states: [
             }
 
             PropertyChanges {
-                target: targetBox
-                width: 212
-                height: 160
+                target: mouseFollowBox
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
             }
 
             PropertyChanges {
-                target: globalTarget_settings
+                target: continuous_settings
                 width: 200
+                anchors.topMargin: 6
+                anchors.verticalCenterOffset: 42
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
                 opacity: 1
             }
 
             PropertyChanges {
-                target: label_GLOBAL
+                target: behaviorBox
+                width: 212
+                visible: true
+                anchors.topMargin: 6
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: beh_avoidBox
+                opacity: 1
+                anchors.topMargin: 6
                 anchors.verticalCenterOffset: 0
+            }
+
+            PropertyChanges {
+                target: beh_matchBox
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 6
                 opacity: 1
             }
 
             PropertyChanges {
-                target: comboBox1
-                activeFocusOnPress: true
+                target: beh_targetBox
+                anchors.topMargin: 6
+                x: -248
+                width: 212
+                visible: true
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: beh_flockBox
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: slider_beh_flock
+                updateValueWhileDragging: true
+            }
+
+            PropertyChanges {
+                target: checkBox1
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: mouse_mode
+                y: 0
+                height: 20
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: radio_follow
+                x: 0
+                y: 17
+                opacity: 1
+            }
+
+            PropertyChanges {
+                target: radio_avoid
+                x: 131
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                opacity: 1
             }
 
     }

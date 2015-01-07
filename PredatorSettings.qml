@@ -79,7 +79,8 @@ Rectangle {
 
             PropertyChanges {
                 target: rectangle1
-                height: 225
+                height: 96
+                radius: 0
             }
 
             PropertyChanges {

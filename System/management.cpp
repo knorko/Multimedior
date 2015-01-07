@@ -4,8 +4,12 @@ vector<Boid*> Management::boidList;
 vector<Predator*> Management::predList;
 kdtree *Management::tree = nullptr;
 
+bool initialized = false;
 Parameter parameters;
 
+
+Management::Management() {
+}
 
 /**
  * @brief Initialize the boidHelper class.
@@ -15,8 +19,11 @@ Parameter parameters;
  * @param engine Main QQmlApplicationEngine of the application.
  * @param canvas QObject of the canvas.
  */
-Management::Management(QQmlApplicationEngine *engine, QObject *canvas) {
-    BoidHelper::initialize(engine, canvas, &tree, &parameters);
+void Management::initialize(QQmlApplicationEngine *engine, QObject *canvas) {
+    if(!initialized) {
+        initialized = true;
+        BoidHelper::initialize(engine, canvas, &tree, &parameters);
+    }
 }
 
 /**
@@ -112,13 +119,11 @@ void Management::setSpeed(double speed) {
 }
 
 /**
- * @brief Set the velocity and variance.
+ * @brief Set the velocity.
  * @param average Average velocity.
- * @param variance Variance.
  */
-void Management::setVelocity(double average, double variance) {
-    parameters.velocity_var = variance;
-    parameters.velocity_avg = average;
+void Management::setVelocity(double average) {
+    parameters.velocity_max = average;
 }
 
 /**
@@ -137,6 +142,66 @@ void Management::setMousePosition(double x, double y) {
  */
 void Management::setSize(uint size) {
     parameters.size = size;
+}
+/**
+ * @brief Sets the flocking factor
+ * @param flock current flocking factor
+ */
+
+void Management::setFlockingFactor(double flock) {
+    parameters.factor_flocking = flock;
+}
+/**
+ * @brief Sets the avoidance factor
+ * @param avoid current avoidance factor
+ */
+void Management::setAvoidanceFactor(double avoid) {
+    parameters.factor_avoidance = avoid;
+}
+
+/**
+ * @brief Sets the velocity match factor
+ * @param match current match factor
+ */
+void Management::setVelocityMatchFactor(double match) {
+    parameters.factor_match = match;
+}
+
+/**
+ * @brief Sets the target factor
+ * @param target current target factor
+ */
+void Management::setTargetFactor(double target) {
+    parameters.factor_target = target;
+}
+/**
+ * @brief Sets the awareness radius
+ * @param radius current awareness radius
+ */
+void Management::setAwarenessRadius(double radius){
+    parameters.awarenessRadius = radius;
+}
+
+/**
+ * @brief Sets the visualization of the radius
+ * @param value
+ */
+void Management::setAwarenessRadiusVisualization(bool value) {
+    parameters.visualizeAwarenessRadius = value;
+}
+/**
+ * @brief Sets the followmode of the mouse
+ * @param follow follow or avoid
+ */
+void Management::setMouseFollowMode(bool follow) {
+    parameters.followMouse = follow;
+}
+/**
+ * @brief Sets the boid color
+ * @param color current boid color
+ */
+void Management::setColor(QColor color){
+    parameters.mainColor = color;
 }
 
 /**
@@ -169,6 +234,9 @@ void Management::removePredator() {
     predList.pop_back();
 }
 
+/**
+ * @brief inserts boid objects and their position into a kd-tree
+ */
 void Management::prepareTree() {
     tree = kd_create(2);
 
@@ -176,4 +244,10 @@ void Management::prepareTree() {
         double position[2] = { obj->getX(), obj->getY()};
         kd_insert( tree, position, obj);
     }
+    foreach (Predator *pred, predList) {
+        double position2[2] = {pred->getX(), pred->getY()};
+        kd_insert(tree, position2, pred);
+    }
 }
+
+

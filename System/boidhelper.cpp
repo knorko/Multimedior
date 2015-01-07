@@ -35,7 +35,7 @@ void BoidHelper::initialize(QQmlApplicationEngine *engine, QObject *canvas, kdtr
         BoidHelper::tree = tree;
     }
     else {
-      qDebug() << "boidHelper already initialized!";
+        qDebug() << "boidHelper already initialized!";
     }
 }
 
@@ -76,8 +76,11 @@ double &BoidHelper::getCanvasWidth() const {
 void BoidHelper::prepare() {
     position = Vector2(getX(), getY());
     setSize(parameters->size);
+    setColor();
+    setRadius();
+    setRadiusVisualization();
 
-    getNeighbors();
+    getNeighboursByRange();
 }
 
 /**
@@ -88,9 +91,9 @@ void BoidHelper::prepare() {
  */
 void BoidHelper::finalize() {
     // Clamp the speed
-    if(velocity != Vector2(0, 0)) {
+    if(velocity.getSqrMagnitude() > parameters->velocity_max * parameters->velocity_max) {
         velocity.normalize();
-        velocity *= parameters->velocity_avg + (parameters->velocity_var + ((double)rand()/(double)(RAND_MAX)) * (-2 * parameters->velocity_var));
+        velocity *= parameters->velocity_max;
     }
 
     // Set the position based on the velocity
@@ -99,22 +102,22 @@ void BoidHelper::finalize() {
 
     // Stay within the boundaries
     double x = getX();
-    if(x <= 0) {
-        setX(0);
+    if(x <= -20) {
+        setX(-20);
         velocity.setX(-velocity.getX());
     }
-    else if(x >= getCanvasWidth() - parameters->size) {
-        setX(getCanvasWidth() - parameters->size);
+    else if(x >= getCanvasWidth() - parameters->size + 20) {
+        setX(getCanvasWidth() - parameters->size + 20);
         velocity.setX(-velocity.getX());
     }
 
     double y = getY();
-    if(y <= 0) {
-        setY(0);
+    if(y <= -20) {
+        setY(-20);
         velocity.setY(-velocity.getY());
     }
-    else if(y >= getCanvasHeight() - parameters->size) {
-        setY(getCanvasHeight() - parameters->size);
+    else if(y >= getCanvasHeight() - parameters->size + 20) {
+        setY(getCanvasHeight() - parameters->size + 20);
         velocity.setY(-velocity.getY());
     }
 }
@@ -182,19 +185,24 @@ uint &BoidHelper::getSize() const{
  *
  * The neighbors are stored in the boidHelper::neighbors array.
  */
-void BoidHelper::getNeighbors() {
+void BoidHelper::getNeighboursByRange() {
     struct kdres *result;
     double position_neighbour[2];
     double sqrDistance;
 
     // Content: (x, y, squared distance, velocity.X, velocity.Y)
     double nearest[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    double nearest2[3][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
     double position[2] = { getX(), getY() };
-    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+    result = kd_nearest_range(*tree, position, parameters->awarenessRadius);
 
     while(!kd_res_end(result)) {
-       BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        if(b->isPredator){
+            kd_res_next(result);
+            continue;
+        }
 
         sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
 
@@ -233,10 +241,62 @@ void BoidHelper::getNeighbors() {
     for(int i=0; i<3; i++){
         neighbours[i].position2 = Vector2(nearest[i][0], nearest[i][1]);
         neighbours[i].velocity2 = Vector2(nearest[i][3], nearest[i][4]);
+        neighbours[i].isBoid = true;
     }
+
+    kd_res_free(result);
+
+
+    result = kd_nearest_range(*tree, position, parameters->canvasWidth);
+
+    while(!kd_res_end(result)) {
+        BoidHelper *b = (BoidHelper*) kd_res_item(result, position_neighbour);
+        if(!(b->isPredator)){
+            kd_res_next(result);
+            continue;
+        }
+
+        sqrDistance = sqrt(dist_sq(position, position_neighbour, 2));
+        if(sqrDistance > 0) {
+            double greatest = nearest2[0][2];
+            int greatestIndex = 0;
+
+            for(int i = 0; i < 3; i++) {
+                if(nearest2[i][2] == 0) {
+                    greatest = nearest2[i][2];
+                    greatestIndex = i;
+                    nearest2[i][4] = b->velocity.getY();
+                    nearest2[i][3] = b->velocity.getX();
+                    break;
+                }
+                else if(greatest < nearest2[i][2]) {
+                    greatest = nearest2[i][2];
+                    nearest2[i][3] = b->velocity.getX();
+                    nearest2[i][4] = b->velocity.getY();
+                    greatestIndex = i;
+                }
+            }
+            if(nearest2[greatestIndex][2] > sqrDistance || nearest2[greatestIndex][2] == 0) {
+                nearest2[greatestIndex][0] = position_neighbour[0];
+                nearest2[greatestIndex][1] = position_neighbour[1];
+                nearest2[greatestIndex][2] = sqrDistance;
+                nearest2[greatestIndex][3] = b->velocity.getX();
+                nearest2[greatestIndex][4] = b->velocity.getY();
+            }
+        }
+
+        kd_res_next(result);
+    }
+
+    // Finally build the neighbor vectors and free the kd-tree
+    for(int i=0; i<3; i++){
+        predator[i].position2 = Vector2(nearest2[i][0], nearest2[i][1]);
+        predator[i].velocity2 = Vector2(nearest2[i][3], nearest2[i][4]);
+        predator[i].isBoid = false;
+    }
+
     kd_res_free(result);
 }
-
 /**
  * @brief Calculate squared distance between two boids
  * @param a1 First vector
@@ -254,8 +314,67 @@ double BoidHelper::dist_sq( double *a1, double *a2, int dims ) {
 }
 
 /**
+ * @brief sets Color of the boids
+ */
+void BoidHelper::setColor() {
+    object->setProperty("color", parameters->mainColor);
+}
+
+/**
+ * @brief sets awareness radius
+ */
+void BoidHelper::setRadius() {
+    object->setProperty("rad", parameters->awarenessRadius);
+}
+
+/**
+ * @brief sets visualisation radius
+ */
+void BoidHelper::setRadiusVisualization() {
+    object->setProperty("visualizeRadius", parameters->visualizeAwarenessRadius);
+}
+
+/**
  * @return Current mouse position
  */
 Vector2 &BoidHelper::getMousePosition() const {
     return parameters->mousePosition;
+}
+/**
+ * @return factor_flocking
+ */
+double BoidHelper::getFlockingFactor() const {
+    return parameters->factor_flocking;
+}
+/**
+ * @return factor_avoidance
+ */
+double BoidHelper::getAvoidanceFactor() const {
+    return parameters->factor_avoidance;
+}
+/**
+ * @return factor_match
+ */
+double BoidHelper::getVelocityMatchFactor() const {
+    return parameters->factor_match;
+}
+/**
+ * @return factor_target
+ */
+double BoidHelper::getTargetFactor() const {
+    return parameters->factor_target;
+}
+/**
+ * @return awarenessRadius
+ */
+double BoidHelper::getAwarenessRadius() const
+{
+    return parameters->awarenessRadius;
+
+}
+/**
+ * @return followMouse
+ */
+bool BoidHelper::followMouse() const {
+    return parameters->followMouse;
 }
