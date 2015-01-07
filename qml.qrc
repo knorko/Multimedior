@@ -10,5 +10,6 @@
         <file>Controls.qml</file>
         <file>Predator.qml</file>
         <file>ColorPicker.qml</file>
+        <file>MouseTarget.qml</file>
     </qresource>
 </RCC>

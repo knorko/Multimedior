@@ -130,7 +130,7 @@ GroupBox {
     id: mouseFollowBox
     x: 8
     width: 212
-    height: 72
+    height: 82
     visible: false
     anchors.top: velocityBox.bottom
     anchors.topMargin: -92
@@ -472,7 +472,6 @@ states: [
 
             PropertyChanges {
                 target: mouseFollowBox
-                height: 72
                 visible: true
                 anchors.topMargin: 6
                 opacity: 1
