@@ -176,6 +176,7 @@ uint &BoidHelper::getSize() const{
     return parameters->size;
 }
 
+
 /**
  * @brief Get the three closest neighbors for each boid
  *
@@ -380,6 +381,11 @@ double BoidHelper::getAwarenessRadius() const
 bool BoidHelper::followMouse() const {
     return parameters->followMouse;
 }
-Vector2* BoidHelper::getMousePositions() {
+Vector2 *BoidHelper::getMousePositions()
+{
     return parameters->mousePositions;
+}
+
+int BoidHelper::getMousePositionCount(){
+    return parameters->mousePositionCount;
 }

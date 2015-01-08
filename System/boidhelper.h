@@ -134,6 +134,7 @@ public:
 
     uint &getSize() const;
     Vector2* getMousePositions();
+    int getMousePositionCount();
 };
 
 #endif // BOIDHELPER_H

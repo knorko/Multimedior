@@ -32,6 +32,10 @@ Item {
 
     MouseArea {
         id: mouseArea1
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -45,7 +49,7 @@ Item {
                     mouseTarget1.opacity = 1.0
                 }
                 else {
-                    management.removeMousePosition()
+                    management.removeMousePosition(0, 0)
                     mouseTarget1.opacity = 0.0
                 }
             }
@@ -68,4 +72,90 @@ Item {
             Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
         }
     }
+
+    MouseArea {
+        id: mouseArea2
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        hoverEnabled: true
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        onClicked: {
+            if(!continuous){
+                if(mouse.button == Qt.LeftButton) {
+                    management.addMousePosition(mouseX, mouseY)
+                    mouseTarget2.x = mouseX - 24
+                    mouseTarget2.y = mouseY - 24
+                    mouseTarget2.opacity = 1.0
+                }
+                else {
+                    management.removeMousePosition(0, 0)
+                    mouseTarget2.opacity = 0.0
+                }
+            }
+        }
+
+        onPositionChanged: {
+            if(continuous) management.setMousePosition(mouseX, mouseY)
+        }
+
+        onExited: {
+            if(continuous) management.setMousePosition(0, 0)
+        }
+
+        MouseTarget {
+            id: mouseTarget2
+            x: 76
+            y: 76
+            opacity: 0
+
+            Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
+        }
+    }
+
+    MouseArea {
+        id: mouseArea3
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+        hoverEnabled: true
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        onClicked: {
+            if(!continuous){
+                if(mouse.button == Qt.LeftButton) {
+                    management.addMousePosition(mouseX, mouseY)
+                    mouseTarget3.x = mouseX - 24
+                    mouseTarget3.y = mouseY - 24
+                    mouseTarget3.opacity = 1.0
+                }
+                else {
+                    management.removeMousePosition(0, 0)
+                    mouseTarget3.opacity = 0.0
+                }
+            }
+        }
+
+        onPositionChanged: {
+            if(continuous) management.setMousePosition(mouseX, mouseY)
+        }
+
+        onExited: {
+            if(continuous) management.setMousePosition(0, 0)
+        }
+
+        MouseTarget {
+            id: mouseTarget3
+            x: 76
+            y: 76
+            opacity: 0
+
+            Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
+        }
+}
 }

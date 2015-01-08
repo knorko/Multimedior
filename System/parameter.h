@@ -37,6 +37,10 @@ typedef struct Parameter_S{
      */
     Vector2 mousePositions[3] = { Vector2(), Vector2(), Vector2() };
     /**
+     * @brief mousePositionCount stores the number of curretnly held Mouse Positions
+     */
+    int mousePositionCount = 0;
+    /**
      * @brief awarenessRadius
      */
     double awarenessRadius = 20.0;
