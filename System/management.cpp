@@ -143,7 +143,8 @@ void Management::addMousePosition(double x, double y) {
     }
     parameters.mousePositions[i].setX(x);
     parameters.mousePositions[i].setY(y);
-    parameters.mousePositionCount = i;
+    parameters.mousePositionCount = i+1;
+    int deb;
 }
 void Management::removeMousePosition() {
     int i = 0;
@@ -153,6 +154,10 @@ void Management::removeMousePosition() {
     }
     parameters.mousePositions[i-1] = Vector2();
     parameters.mousePositionCount = i;
+    int deb;
+}
+int Management::getMousePositionCount(){
+    return parameters.mousePositionCount;
 }
 /**
  * @brief Sets the size of the boids and predators

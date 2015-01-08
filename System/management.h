@@ -77,6 +77,7 @@ public:
     Q_INVOKABLE void setMouseFollowMode(bool follow);
     Q_INVOKABLE void addMousePosition(double x, double y);
     Q_INVOKABLE void removeMousePosition();
+    Q_INVOKABLE int getMousePositionCount();
 };
 
 #endif // MANAGEMENT_H

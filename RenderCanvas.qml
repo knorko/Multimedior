@@ -41,16 +41,42 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked: {
-            if(!continuous){
+            if(!continuous && management.getMousePositionCount() == 0){
                 if(mouse.button == Qt.LeftButton) {
                     management.addMousePosition(mouseX, mouseY)
                     mouseTarget1.x = mouseX - 24
                     mouseTarget1.y = mouseY - 24
                     mouseTarget1.opacity = 1.0
                 }
-                else {
+            }
+            else if(!continuous && management.getMousePositionCount() == 1){
+                if(mouse.button == Qt.LeftButton) {
+                    management.addMousePosition(mouseX, mouseY)
+                    mouseTarget2.x = mouseX - 24
+                    mouseTarget2.y = mouseY - 24
+                    mouseTarget2.opacity = 1.0
+                }
+            }
+            else if(!continuous && management.getMousePositionCount() == 2){
+                if(mouse.button == Qt.LeftButton) {
+                    management.addMousePosition(mouseX, mouseY)
+                    mouseTarget3.x = mouseX - 24
+                    mouseTarget3.y = mouseY - 24
+                    mouseTarget3.opacity = 1.0
+                }
+            }
+            else {
+                if(management.getMousePositionCount() == 0){
                     management.removeMousePosition()
                     mouseTarget1.opacity = 0.0
+                }
+                if(management.getMousePositionCount() == 1){
+                    management.removeMousePosition()
+                    mouseTarget2.opacity = 0.0
+                }
+                if(management.getMousePositionCount() == 2){
+                    management.removeMousePosition()
+                    mouseTarget3.opacity = 0.0
                 }
             }
         }
@@ -71,40 +97,6 @@ Item {
 
             Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
         }
-    }
-
-    MouseArea {
-        id: mouseArea2
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
-        hoverEnabled: true
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-        onClicked: {
-            if(!continuous){
-                if(mouse.button == Qt.LeftButton) {
-                    management.addMousePosition(mouseX, mouseY)
-                    mouseTarget2.x = mouseX - 24
-                    mouseTarget2.y = mouseY - 24
-                    mouseTarget2.opacity = 1.0
-                }
-                else {
-                    management.removeMousePosition()
-                    mouseTarget2.opacity = 0.0
-                }
-            }
-        }
-
-        onPositionChanged: {
-            if(continuous) management.setMousePosition(mouseX, mouseY)
-        }
-
-        onExited: {
-            if(continuous) management.setMousePosition(0, 0)
-        }
 
         MouseTarget {
             id: mouseTarget2
@@ -113,40 +105,6 @@ Item {
             opacity: 0
 
             Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
-        }
-    }
-
-    MouseArea {
-        id: mouseArea3
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
-        hoverEnabled: true
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-        onClicked: {
-            if(!continuous){
-                if(mouse.button == Qt.LeftButton) {
-                    management.addMousePosition(mouseX, mouseY)
-                    mouseTarget3.x = mouseX - 24
-                    mouseTarget3.y = mouseY - 24
-                    mouseTarget3.opacity = 1.0
-                }
-                else {
-                    management.removeMousePosition()
-                    mouseTarget3.opacity = 0.0
-                }
-            }
-        }
-
-        onPositionChanged: {
-            if(continuous) management.setMousePosition(mouseX, mouseY)
-        }
-
-        onExited: {
-            if(continuous) management.setMousePosition(0, 0)
         }
 
         MouseTarget {
@@ -157,5 +115,6 @@ Item {
 
             Behavior on opacity { NumberAnimation { duration: 750; easing.type: Easing.OutExpo } }
         }
-}
+    }
+
 }
