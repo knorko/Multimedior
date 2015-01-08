@@ -96,21 +96,23 @@ void Boid::update(){
 
 
     // Rule 4: Mouse behavior
-    Vector2 mp = getMousePosition();
+    //Vector2 mp = getMousePosition();
     double fleeingPower = 0.0;
 
-    if(!(mp == Vector2(0, 0))) {
-        if(followMouse()){
-            // Rule 4a: Follow mouse position
-            if((mp - position).getSqrMagnitude() > 7500){
-                v4a = mp - position;
+    for(int i = 0; i < 3; i++){
+        if(!(getMousePositions()[i] == Vector2(0, 0))) {
+            if(followMouse()){
+                // Rule 4a: Follow mouse position
+                if((getMousePositions()[i] - position).getSqrMagnitude() > 7500){
+                    v4a = getMousePositions()[i] - position;
+                }
             }
-        }
-        else {
-            //Rule 4b: Stay away from Mouse position
-            if((mp - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
-                v4b = position - mp;
-                fleeingPower = velocity.getMagnitude()*(v4b.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+            else {
+                //Rule 4b: Stay away from Mouse position
+                if((getMousePositions()[i] - position).getSqrMagnitude() < PREDATOR_THRESHOLD * PREDATOR_THRESHOLD) {
+                    v4b = position - getMousePositions()[i];
+                    fleeingPower = velocity.getMagnitude()*(v4b.normalize() * PREDATOR_THRESHOLD).getMagnitude() ;
+                }
             }
         }
     }

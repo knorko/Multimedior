@@ -380,3 +380,6 @@ double BoidHelper::getAwarenessRadius() const
 bool BoidHelper::followMouse() const {
     return parameters->followMouse;
 }
+Vector2* BoidHelper::getMousePositions() {
+    return parameters->mousePositions;
+}

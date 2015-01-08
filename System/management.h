@@ -75,6 +75,8 @@ public:
     Q_INVOKABLE void setAwarenessRadius(double radius);
     Q_INVOKABLE void setAwarenessRadiusVisualization(bool value);
     Q_INVOKABLE void setMouseFollowMode(bool follow);
+    Q_INVOKABLE void addMousePosition(double x, double y);
+    Q_INVOKABLE void removeMousePosition();
 };
 
 #endif // MANAGEMENT_H

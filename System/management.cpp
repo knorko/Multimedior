@@ -135,6 +135,24 @@ void Management::setMousePosition(double x, double y) {
     parameters.mousePosition.setX(x);
     parameters.mousePosition.setY(y);
 }
+void Management::addMousePosition(double x, double y) {
+    int i = 0;
+    Vector2 nil = Vector2(0 , 0);
+    while(parameters.mousePositions[i] != nil && i < 3){
+        i++;
+    }
+    parameters.mousePositions[i].setX(x);
+    parameters.mousePositions[i].setY(y);
+}
+void Management::removeMousePosition() {
+    int i = 0;
+    Vector2 nil = Vector2(0 , 0);
+    while(parameters.mousePositions[i] != nil){
+        i++;
+    }
+    if(i == 3) parameters.mousePositions[i-1] = Vector2();
+    else parameters.mousePositions[i] = Vector2();
+}
 
 /**
  * @brief Sets the size of the boids and predators

@@ -39,13 +39,13 @@ Item {
         onClicked: {
             if(!continuous){
                 if(mouse.button == Qt.LeftButton) {
-                    management.setMousePosition(mouseX, mouseY)
+                    management.addMousePosition(mouseX, mouseY)
                     mouseTarget1.x = mouseX - 24
                     mouseTarget1.y = mouseY - 24
                     mouseTarget1.opacity = 1.0
                 }
                 else {
-                    management.setMousePosition(0, 0)
+                    management.removeMousePosition()
                     mouseTarget1.opacity = 0.0
                 }
             }

@@ -133,6 +133,7 @@ public:
     void setSize(uint size);
 
     uint &getSize() const;
+    Vector2* getMousePositions();
 };
 
 #endif // BOIDHELPER_H
