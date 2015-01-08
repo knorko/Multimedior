@@ -66,15 +66,15 @@ Item {
                 }
             }
             else {
-                if(management.getMousePositionCount() == 0){
+                if(management.getMousePositionCount() == 1){
                     management.removeMousePosition()
                     mouseTarget1.opacity = 0.0
                 }
-                if(management.getMousePositionCount() == 1){
+                if(management.getMousePositionCount() == 2){
                     management.removeMousePosition()
                     mouseTarget2.opacity = 0.0
                 }
-                if(management.getMousePositionCount() == 2){
+                if(management.getMousePositionCount() == 3){
                     management.removeMousePosition()
                     mouseTarget3.opacity = 0.0
                 }

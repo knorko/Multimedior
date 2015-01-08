@@ -143,7 +143,7 @@ void Management::addMousePosition(double x, double y) {
     }
     parameters.mousePositions[i].setX(x);
     parameters.mousePositions[i].setY(y);
-    parameters.mousePositionCount = i+1;
+    ++parameters.mousePositionCount;
     int deb;
 }
 void Management::removeMousePosition() {
@@ -153,7 +153,7 @@ void Management::removeMousePosition() {
         i++;
     }
     parameters.mousePositions[i-1] = Vector2();
-    parameters.mousePositionCount = i;
+    --parameters.mousePositionCount;
     int deb;
 }
 int Management::getMousePositionCount(){
