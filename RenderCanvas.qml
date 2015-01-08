@@ -49,7 +49,7 @@ Item {
                     mouseTarget1.opacity = 1.0
                 }
                 else {
-                    management.removeMousePosition(0, 0)
+                    management.removeMousePosition()
                     mouseTarget1.opacity = 0.0
                 }
             }
@@ -92,7 +92,7 @@ Item {
                     mouseTarget2.opacity = 1.0
                 }
                 else {
-                    management.removeMousePosition(0, 0)
+                    management.removeMousePosition()
                     mouseTarget2.opacity = 0.0
                 }
             }
@@ -135,7 +135,7 @@ Item {
                     mouseTarget3.opacity = 1.0
                 }
                 else {
-                    management.removeMousePosition(0, 0)
+                    management.removeMousePosition()
                     mouseTarget3.opacity = 0.0
                 }
             }
