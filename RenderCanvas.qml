@@ -41,24 +41,21 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked: {
-            if(!continuous && management.getMousePositionCount() == 0){
-                if(mouse.button == Qt.LeftButton) {
+            if(!continuous && mouse.button == Qt.LeftButton){
+                if(management.getMousePositionCount() == 0) {
                     management.addMousePosition(mouseX, mouseY)
                     mouseTarget1.x = mouseX - 24
                     mouseTarget1.y = mouseY - 24
                     mouseTarget1.opacity = 1.0
                 }
-            }
-            else if(!continuous && management.getMousePositionCount() == 1){
-                if(mouse.button == Qt.LeftButton) {
+                else if(management.getMousePositionCount() == 1){
+
                     management.addMousePosition(mouseX, mouseY)
                     mouseTarget2.x = mouseX - 24
                     mouseTarget2.y = mouseY - 24
                     mouseTarget2.opacity = 1.0
                 }
-            }
-            else if(!continuous && management.getMousePositionCount() == 2){
-                if(mouse.button == Qt.LeftButton) {
+                else if(management.getMousePositionCount() == 2){
                     management.addMousePosition(mouseX, mouseY)
                     mouseTarget3.x = mouseX - 24
                     mouseTarget3.y = mouseY - 24
