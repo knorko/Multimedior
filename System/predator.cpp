@@ -76,7 +76,7 @@ void Predator::update() {
 
     force = 3.0 * (forceX + forceY);
 
-  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3 + v3.normalize() * force, 0.016f);
+  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3 + v3.normalize() * force, 0.128f);
 
   lastVel = velocity;
  }
