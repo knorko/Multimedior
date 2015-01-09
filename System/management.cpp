@@ -132,8 +132,8 @@ void Management::setVelocity(double average) {
  * @param y y-Position
  */
 void Management::setMousePosition(double x, double y) {
-    parameters.mousePosition.setX(x);
-    parameters.mousePosition.setY(y);
+    parameters.mousePositions[0].setX(x);
+    parameters.mousePositions[0].setY(y);
 }
 void Management::addMousePosition(double x, double y) {
     int i = 0;
@@ -144,7 +144,6 @@ void Management::addMousePosition(double x, double y) {
     parameters.mousePositions[i].setX(x);
     parameters.mousePositions[i].setY(y);
     ++parameters.mousePositionCount;
-    int deb;
 }
 void Management::removeMousePosition() {
     int i = 0;
@@ -154,7 +153,6 @@ void Management::removeMousePosition() {
     }
     parameters.mousePositions[i-1] = Vector2();
     --parameters.mousePositionCount;
-    int deb;
 }
 int Management::getMousePositionCount(){
     return parameters.mousePositionCount;

@@ -45,12 +45,13 @@ void Predator::update() {
     Vector2 v3 = Vector2();
     Vector2 center = Vector2();
 
+    //Rule1: Hunt the nearest Boid
     center += neighbours[0].pos;
 
     if(center != Vector2())
         v1 = center - position;
 
-    // Rule3: Match velocity to surrounding Boids
+    // Rule2: Match velocity to surrounding Boids
     for(int i = 0; i < 3; i++){
         v2 = v2 + neighbours[i].vel;
     }
