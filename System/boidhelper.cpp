@@ -103,22 +103,22 @@ void BoidHelper::finalize() {
     // Stay within the boundaries
     double x = getX();
     if(x <= -20) {
-        setX(-20);
-        velocity.setX(-velocity.getX());
+        setX(getCanvasWidth()+20);
+//        velocity.setX(-velocity.getX());
     }
-    else if(x >= getCanvasWidth() - parameters->size + 20) {
-        setX(getCanvasWidth() - parameters->size + 20);
-        velocity.setX(-velocity.getX());
+    else if(x >= getCanvasWidth() + 20) {
+        setX(-20);
+//        velocity.setX(-velocity.getX());
     }
 
     double y = getY();
     if(y <= -20) {
-        setY(-20);
-        velocity.setY(-velocity.getY());
+        setY(getCanvasHeight() + 20);
+//        velocity.setY(-velocity.getY());
     }
-    else if(y >= getCanvasHeight() - parameters->size + 20) {
-        setY(getCanvasHeight() - parameters->size + 20);
-        velocity.setY(-velocity.getY());
+    else if(y >= getCanvasHeight() + 20) {
+        setY(-20);
+//        velocity.setY(-velocity.getY());
     }
 }
 

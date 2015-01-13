@@ -42,7 +42,6 @@ void Predator::update() {
 
     Vector2 v1 = Vector2();
     Vector2 v2 = Vector2();
-    Vector2 v3 = Vector2();
     Vector2 center = Vector2();
 
     //Rule1: Hunt the nearest Boid
@@ -56,28 +55,28 @@ void Predator::update() {
         v2 = v2 + neighbours[i].vel;
     }
     v2 = (v2/3)*1.3;
-    if(position.getX() < PREDATOR_ATTENUATION)
-        v3.setX(1);
-    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
-        v3.setX(-1);
+//    if(position.getX() < PREDATOR_ATTENUATION)
+//        v3.setX(1);
+//    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
+//        v3.setX(-1);
 
-    if(position.getY() <  PREDATOR_ATTENUATION)
-        v3.setY(1);
-    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
-        v3.setY(-1);
+//    if(position.getY() <  PREDATOR_ATTENUATION)
+//        v3.setY(1);
+//    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
+//        v3.setY(-1);
 
-    if(position.getX() < PREDATOR_ATTENUATION)
-        forceX = PREDATOR_ATTENUATION - position.getX();
-    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
-        forceX = PREDATOR_ATTENUATION + position.getX() - getCanvasWidth() ;
-    else if(position.getY() < PREDATOR_ATTENUATION)
-        forceY = PREDATOR_ATTENUATION - position.getY();
-    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
-        forceY = PREDATOR_ATTENUATION + position.getY() - getCanvasHeight();
+//    if(position.getX() < PREDATOR_ATTENUATION)
+//        forceX = PREDATOR_ATTENUATION - position.getX();
+//    else if(position.getX() >= getCanvasWidth() - PREDATOR_ATTENUATION)
+//        forceX = PREDATOR_ATTENUATION + position.getX() - getCanvasWidth() ;
+//    else if(position.getY() < PREDATOR_ATTENUATION)
+//        forceY = PREDATOR_ATTENUATION - position.getY();
+//    else if(position.getY() >= getCanvasHeight() - PREDATOR_ATTENUATION)
+//        forceY = PREDATOR_ATTENUATION + position.getY() - getCanvasHeight();
 
     force = 3.0 * (forceX + forceY);
 
-  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3 + v3.normalize() * force, 0.128f);
+  velocity = Vector2::lerp(lastVel, velocity + v1.normalize() * 1.3 + v2.normalize() * 1.3, 0.128f);
 
   lastVel = velocity;
  }

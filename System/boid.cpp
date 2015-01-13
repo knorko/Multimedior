@@ -65,7 +65,7 @@ void Boid::update(){
     Vector2 v3 = Vector2();
     Vector2 v4a = Vector2();
     Vector2 v4b = Vector2();
-    Vector2 v5 = Vector2();
+//    Vector2 v5 = Vector2();
     Vector2 v6 = Vector2();
     Vector2 v7 = Vector2();
     Vector2 v8 = Vector2();
@@ -120,28 +120,28 @@ void Boid::update(){
 
 
 
-    // Rule 5: Stray away from the boundaries
-    if(position.getX() < BORDER_THRESHOLD)
-        v5.setX(1);
-    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
-        v5.setX(-1);
+//    // Rule 5: Stray away from the boundaries
+//    if(position.getX() < BORDER_THRESHOLD)
+//        v5.setX(1);
+//    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
+//        v5.setX(-1);
 
-    if(position.getY() <  BORDER_THRESHOLD)
-        v5.setY(1);
-    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
-        v5.setY(-1);
-    }
+//    if(position.getY() <  BORDER_THRESHOLD)
+//        v5.setY(1);
+//    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD){
+//        v5.setY(-1);
+//    }
 
-    if(position.getX() < BORDER_THRESHOLD)
-        forceX = BORDER_THRESHOLD - position.getX();
-    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
-        forceX = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
-    else if(position.getY() < BORDER_THRESHOLD)
-        forceY = BORDER_THRESHOLD - position.getY();
-    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
-        forceY = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
+//    if(position.getX() < BORDER_THRESHOLD)
+//        forceX = BORDER_THRESHOLD - position.getX();
+//    else if(position.getX() >= getCanvasWidth() - BORDER_THRESHOLD)
+//        forceX = BORDER_THRESHOLD + position.getX() - getCanvasWidth() ;
+//    else if(position.getY() < BORDER_THRESHOLD)
+//        forceY = BORDER_THRESHOLD - position.getY();
+//    else if(position.getY() >= getCanvasHeight() - BORDER_THRESHOLD)
+//        forceY = BORDER_THRESHOLD + position.getY() - getCanvasHeight();
 
-    double force = 3.0 * (forceX + forceY);
+//    double force = 3.0 * (forceX + forceY);
 
     //Rule 7: Avoid Predator
 
@@ -170,7 +170,7 @@ void Boid::update(){
                              + v1.normalize()*getFlockingFactor()
                              + v2.normalize()*getAvoidanceFactor()
                              + v3.normalize()*getVelocityMatchFactor()
-                             + v5 * force
+//                             + v5 * force
                              + v6 * fleeingPowerv6
                              + v7 *fleeingPowerv7
                              + v8 * fleeingPowerv8
